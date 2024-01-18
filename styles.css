@@ -5,12 +5,22 @@
     src: 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Roboto:wght@300&display=swap';
 } */
 
+:root {
+    --bg-color: #d9d9d9;
+    --primary: #c3ffb4;
+    --secondary: #959595;
+    --font-primary: #7d7d7d;
+    --font-secondary: #dadada;
+}
+
 * {
     font-family: "Poppins";
+    border-radius: 7px;
+    border: solid 0px transparent;
 }
 
 body {
-    background-color: #d9d9d9;
+    background-color: var(--bg-color);
 }
 
 input {
@@ -22,19 +32,19 @@ input {
 button {
     height: 3em;
     margin-bottom: 10px;
-    color: #959595;
+    color: var(--font-primary);
     font-size: 1.05em;
     font-weight: 600;
-    background-color: #c3ffb4;
+    background-color: var(--primary);
 }
 
 .secondary {
     height: 1.9em;
-    width: 15em;
+    width: 13em;
     font-size: 0.75em;
     font-weight: 500;
-    color: #dadada;
-    background-color: #959595;
+    color: var(--font-secondary);
+    background-color: var(--secondary);
 }
 
 .conteiner {
@@ -43,29 +53,43 @@ button {
     justify-content: center;
     box-sizing: border-box;
     height: 80vh;
-    width: 35%;
+    width: 90%;
     margin: auto;
-}
-
-.conteiner * {
-    border-radius: 5px;
-    border: solid 0px transparent;
 }
 
 div.buttons {
     display: flex;
-    flex-direction: row;
     justify-content: space-evenly;
 }
 
 div.icon {
     display: flex;
-    flex-direction: row;
     justify-content: center;
-    height: 8em;
     margin-bottom: 15px;
+    font-size: 7rem;
+    color: var(--secondary);
 }
 
-.icon img {
-    width: 7em;
+@media (min-width: 600px) {
+    .conteiner {
+        width: 60%;
+    }
+}
+
+@media (min-width: 762px) {
+    .conteiner {
+        width: 50%;
+    }
+}
+
+@media (min-width: 992px) {
+    .conteiner {
+        width: 40%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .conteiner {
+        width: 30%;
+    }
 }
