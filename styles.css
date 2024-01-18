@@ -38,6 +38,11 @@ button {
     background-color: var(--primary);
 }
 
+button a {
+    color: inherit;
+    text-decoration: none;
+}
+
 .secondary {
     height: 1.9em;
     width: 13em;
@@ -47,14 +52,36 @@ button {
     background-color: var(--secondary);
 }
 
-.conteiner {
+.container {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     justify-content: center;
     box-sizing: border-box;
     height: 80vh;
     width: 90%;
     margin: auto;
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.boxes {
+    display: inline-flex;
+    flex-wrap: wrap;
+    /* height: 80vh;
+    width: 90%; */
+    gap: 15px;
+}
+
+.optionbox {
+    height: 20vh;
+    width: 20vw;
+    background-color: var(--primary);
 }
 
 div.buttons {
@@ -71,25 +98,25 @@ div.icon {
 }
 
 @media (min-width: 600px) {
-    .conteiner {
+    .login {
         width: 60%;
     }
 }
 
 @media (min-width: 762px) {
-    .conteiner {
+    .login {
         width: 50%;
     }
 }
 
 @media (min-width: 992px) {
-    .conteiner {
+    .login {
         width: 40%;
     }
 }
 
 @media (min-width: 1200px) {
-    .conteiner {
+    .login {
         width: 30%;
     }
 }
