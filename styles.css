@@ -54,11 +54,13 @@ button a {
 
 .container {
     display: flex;
-    /* flex-direction: column; */
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
     justify-content: center;
     box-sizing: border-box;
-    height: 80vh;
-    width: 90%;
+    min-height: 90vh;
+    width: 90vw;
     margin: auto;
 }
 
@@ -70,17 +72,37 @@ button a {
     width: 100%;
 }
 
-.boxes {
-    display: inline-flex;
+.home {
+    display: flex;
     flex-wrap: wrap;
-    /* height: 80vh;
-    width: 90%; */
-    gap: 15px;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
 }
 
-.optionbox {
-    height: 20vh;
-    width: 20vw;
+.boxes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    width: 60%;
+    gap: 20px;
+}
+
+.box {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    height: 12vw;
+    width: 12vw;
+    padding: 10px 15px 0;
+    gap: 10px;
+
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: var(--font-primary);
     background-color: var(--primary);
 }
 
@@ -118,5 +140,17 @@ div.icon {
 @media (min-width: 1200px) {
     .login {
         width: 30%;
+    }
+}
+
+@media (max-width: 992px) {
+    .boxes {
+        width: 100%;
+    }
+
+    .box {
+        width: 100%;
+        font-size: 0.95em;
+        justify-content: start;
     }
 }
