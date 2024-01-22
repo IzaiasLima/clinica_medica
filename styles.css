@@ -80,7 +80,8 @@ button a {
     align-content: center;
 }
 
-.boxes {
+.cards,
+.content {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -89,7 +90,7 @@ button a {
     gap: 20px;
 }
 
-.box {
+.card {
     display: flex;
     flex-wrap: wrap;
     align-content: center;
@@ -97,13 +98,17 @@ button a {
     height: 12vw;
     width: 12vw;
     padding: 10px 15px 0;
-    gap: 10px;
+    /* gap: 10px; */
+    background-color: var(--primary);
+}
 
+.card a {
     text-align: center;
     font-size: 1.1em;
     font-weight: 600;
+    text-decoration: none;
     color: var(--font-primary);
-    background-color: var(--primary);
+    gap: 10px;
 }
 
 div.buttons {
@@ -118,6 +123,36 @@ div.icon {
     font-size: 7rem;
     color: var(--secondary);
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table tbody tr td:first-child {
+    white-space: nowrap;
+}
+
+th,
+td {
+    padding: 0.2em 0.2em 0.2em 0;
+    text-align: left;
+    border-bottom: 1px solid var(--secondary);
+    border-radius: 0;
+}
+
+th {
+    border-bottom: 2px solid var(--secondary);
+}
+
+/* td.icon {
+    text-align: center;
+} */
+
+/* tr.htmx-swapping td {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+} */
 
 @media (min-width: 600px) {
     .login {
@@ -144,13 +179,32 @@ div.icon {
 }
 
 @media (max-width: 992px) {
-    .boxes {
+
+    .cards,
+    .content {
         width: 100%;
     }
 
-    .box {
+    .content {
+        justify-content: start;
+    }
+
+    .card {
         width: 100%;
+        justify-content: start;
+    }
+
+    .card a {
+        display: inline-flex;
+        flex-wrap: nowrap;
+        text-align: start;
         font-size: 0.95em;
         justify-content: start;
+    }
+
+    table {
+        width: 70%;
+        font-size: 0.9em;
+        overflow-x: auto;
     }
 }
