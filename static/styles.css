@@ -23,35 +23,6 @@ body {
     background-color: var(--bg-color);
 }
 
-input {
-    height: 2em;
-    margin-bottom: 15px;
-    padding-left: 10px;
-}
-
-button {
-    height: 3em;
-    margin-bottom: 10px;
-    color: var(--font-primary);
-    font-size: 1.05em;
-    font-weight: 600;
-    background-color: var(--primary);
-}
-
-button a {
-    color: inherit;
-    text-decoration: none;
-}
-
-.secondary {
-    height: 1.9em;
-    width: 13em;
-    font-size: 0.75em;
-    font-weight: 500;
-    color: var(--font-secondary);
-    background-color: var(--secondary);
-}
-
 .container {
     display: flex;
     flex-wrap: wrap;
@@ -80,6 +51,15 @@ button a {
     align-content: center;
 }
 
+.secondary {
+    height: 1.9em;
+    width: 13em;
+    font-size: 0.75em;
+    font-weight: 500;
+    color: var(--font-secondary);
+    background-color: var(--secondary);
+}
+
 .cards,
 .content {
     display: flex;
@@ -97,7 +77,7 @@ button a {
     justify-content: center;
     height: 12vw;
     width: 12vw;
-    padding: 10px 15px 0;
+    padding: 25px 15px 0;
     /* gap: 10px; */
     background-color: var(--primary);
 }
@@ -109,6 +89,32 @@ button a {
     text-decoration: none;
     color: var(--font-primary);
     gap: 10px;
+}
+
+input {
+    height: 2em;
+    margin-bottom: 15px;
+    padding-left: 10px;
+}
+
+div.button {
+    height: 3em;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    margin-bottom: 10px;
+    color: var(--font-primary);
+    font-size: 1.05em;
+    font-weight: 600;
+    background-color: var(--primary);
+}
+
+div.button a {
+    color: inherit;
+    text-align: center;
+    text-decoration: none;
 }
 
 div.buttons {
@@ -191,6 +197,7 @@ th {
 
     .card {
         width: 100%;
+        padding: 10px 30px 0;
         justify-content: start;
     }
 
