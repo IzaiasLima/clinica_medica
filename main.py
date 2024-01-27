@@ -21,3 +21,28 @@ async def api():
         </head>
         </html>
     """
+
+
+@app.get("/api/medicos")
+async def medicos():
+    return get_medicos()
+
+
+def get_medicos():
+    dados = {
+        "nome": "Kaio Oliveira",
+        "crm": "123456",
+        "especialidade": "cardiologia",
+        "turno": "noturno",
+        "status": "ativo",
+    }
+
+    return dados
+
+
+"""
+    Nome	CRM	Especialidade	Turno	Situação	 
+    Dileyciane Monteiro	234567	Dermatologia	Diurno	Em análise	 
+    Naelle Monteiro	345678	Pediatria	Diurno	Ativo	 
+    Lidia Monteiro	456789	Nutrição	Vespertino	Inativo	 
+"""
