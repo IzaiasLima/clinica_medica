@@ -11,21 +11,45 @@ async def root():
     return "/app/login.html"
 
 
-@app.get("/api", response_class=HTMLResponse)
-async def api():
-    return """
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta http-equiv="refresh" content="0; URL='./app/login.html'">
-        </head>
-        </html>
+@app.get("/api", response_class=RedirectResponse)
+async def root():
+    return "/app/login.html"
+
+
+@app.get("/api/medicos", response_class=HTMLResponse)
+async def medicos():
+    dados_html = """
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>CRM</th>
+                <th>Especialidade</th>
+                <th>Turno</th>
+                <th>Situação</th>
+                <th colspan="2">&nbsp;</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>Kaio Oliveira</td>
+                <td>123456</td>
+                <td>Cardiologia</td>
+                <td>Noturno</td>
+                <td>Ativo</td>
+                <td>
+                    <i class="fa fa-pencil"></i>
+                </td>
+                <td>
+                    <i class="fa fa-trash-o"></i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
     """
 
-
-@app.get("/api/medicos")
-async def medicos():
-    return get_medicos()
+    return dados_html
 
 
 def get_medicos():

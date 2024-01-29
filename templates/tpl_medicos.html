@@ -1,0 +1,26 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Situação</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        {% for i in dados %}
+        <tr>
+            {% for k,v in i.items() %}
+            <td>{{v}}</td>
+            {% endfor %}
+            <td class="icon">
+                <a hx-delete="/api/pacientes/1">
+                    <i class="fa fa-trash-o"></i>&nbsp;
+                    <i class="fa fa-trash-o"></i>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
