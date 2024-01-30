@@ -7,6 +7,11 @@
     <title>Clínica Médica - Pacientes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./styles.css">
+    <script src="https://unpkg.com/htmx.org@1.9.10"
+        integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
+    <script src="https://unpkg.com/mustache@latest"></script>
 </head>
 
 <body>
@@ -14,57 +19,78 @@
         <div class="content">
             <h1>Clínica Médica - Cadastro de Pacientes</h1>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>E-mail</th>
-                        <th>Situação</th>
-                        <th>&nbsp;</th>
-                    </tr>
-                </thead>
+            <div class="content">
 
-                <tbody>
-                    <tr>
-                        <td>Izaias Lima</td>
-                        <td>izaias@lima.com</td>
-                        <td>Internado</td>
-                        <td>
-                            <i class="fa fa-pencil"></i>&nbsp;
-                            <i class="fa fa-trash-o"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Luciete Lima</td>
-                        <td>luciete@lima.com</td>
-                        <td>Em atendimento</td>
-                        <td>
-                            <i class="fa fa-pencil"></i>&nbsp;
-                            <i class="fa fa-trash-o"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Natan Monteiro</td>
-                        <td>natan@monteiro.com</td>
-                        <td>Atendido</td>
-                        <td>
-                            <i class="fa fa-pencil"></i>&nbsp;
-                            <i class="fa fa-trash-o"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Luciana Monteiro</td>
-                        <td>luciana@monteiro.com</td>
-                        <td>Liberada</td>
-                        <td>
-                            <i class="fa fa-pencil"></i>&nbsp;
-                            <i class="fa fa-trash-o"></i>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                <!-- <div class="dados" hx-get="/api/pacientes" hx-trigger="load" hx-swap="innerHTML"
+                    hx-ext="client-side-templates" mustache-array-template="tpl-pacientes">
+                    Os dados serão inseridos aqui.
+                </div> -->
 
+                <div hx-ext="client-side-templates">
+                    <button hx-get="/api/pacientes" hx-swap="innerHTML" hx-target="#content"
+                        mustache-array-template="template">
+                        Clicar
+                    </button>
+                    <h3 id="content">Os dados aqui</h3>
 
+                    <template id="template">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>E-mail</th>
+                                    <th>Situação</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <!-- {{#data}} -->
+                                <tr>
+                                    <td>{{nome}}</td>
+                                    <td>{{email}}</td>
+                                    <td>{{status}}</td>
+                                </tr>
+                                <!-- {{/data}} -->
+                            </tbody>
+                        </table>
+                    </template>
+                </div>
+
+                <!-- <div hx-ext="client-side-templates">
+                    <button hx-get="https://jsonplaceholder.typicode.com/users" hx-swap="innerHTML" hx-target="#content"
+                        mustache-array-template="foo">
+                        Click Me
+                    </button>
+
+                    <p id="content">Start</p>
+
+                    <template id="foo">
+                        {{#data}}
+                        <p> {{name}} {{email}} </p>
+                        {{/data}}
+                    </template> -->
+                <!-- <template id="tpl-pacientes"> -->
+
+                <!-- <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>E-mail</th>
+                                <th>Situação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#data}}
+                            <tr>
+                                <td>{{nome}}</td>
+                                <td class="email">{{email}}</td>
+                                <td>{{status}}</td>
+                            </tr>
+                            {{/data}}
+                        </tbody>
+                    </table> -->
+                <!-- </template> -->
+            </div>
         </div>
     </div>
 </body>

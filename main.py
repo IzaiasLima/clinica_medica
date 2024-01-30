@@ -19,6 +19,11 @@ async def root():
     return "/app/login.html"
 
 
+@app.get("/api/pacientes")
+async def pacientes():
+    return get_pacientes()
+
+
 @app.get("/api/medicos", response_class=HTMLResponse)
 async def medicos(request: Request):
     medicos = get_medicos()
@@ -29,47 +34,12 @@ async def medicos(request: Request):
     return dados_html
 
 
-# @app.get("/api/medicos", response_class=HTMLResponse)
-# async def medicos():
-#     dados_html = """
-#     <table>
-#         <thead>
-#             <tr>
-#                 <th>Nome</th>
-#                 <th>CRM</th>
-#                 <th>Especialidade</th>
-#                 <th>Turno</th>
-#                 <th>Situação</th>
-#                 <th colspan="2">&nbsp;</th>
-#             </tr>
-#         </thead>
-
-#         <tbody>
-#             <tr>
-#                 <td>Kaio Oliveira</td>
-#                 <td>123456</td>
-#                 <td>Cardiologia</td>
-#                 <td>Noturno</td>
-#                 <td>Ativo</td>
-#                 <td>
-#                     <i class="fa fa-pencil"></i>
-#                 </td>
-#                 <td>
-#                     <i class="fa fa-trash-o"></i>
-#                 </td>
-#             </tr>
-#         </tbody>
-#     </table>
-#     """
-
-#     return dados_html
-
-
 def get_medicos():
     dados = [
         {
-            "nome": "Kaio Oliveira",
+            "nome": "Kaio de Oliveira",
             "crm": "123456",
+            "email": "kaio@gmail.com",
             "especialidade": "cardiologia",
             "turno": "noturno",
             "status": "ativo",
@@ -77,24 +47,58 @@ def get_medicos():
         {
             "nome": "Dileyciane Monteiro",
             "crm": "23456",
+            "email": "",
             "especialidade": "dermatologia",
             "turno": "diurno",
             "status": "em análise",
         },
         {
-            "nome": "Luciana Monteiro",
+            "nome": "luciana monteiro",
             "crm": "4445566",
+            "email": "",
             "especialidade": "dermatologia",
             "turno": "noturno",
             "status": "ativo",
+        },
+        {
+            "nome": "NATANAEL MONTEIRO",
+            "crm": "556688",
+            "email": "",
+            "especialidade": "CARDIOLOGIA",
+            "turno": "VESPERTINO",
+            "status": "ATIVO",
         },
     ]
 
     return dados
 
 
-"""
-    Nome	CRM	Especialidade	Turno	Situação	 
-    Naelle Monteiro	345678	Pediatria	Diurno	Ativo	 
-    Lidia Monteiro	456789	Nutrição	Vespertino	Inativo	 
-"""
+def get_pacientes():
+    dados = [
+        {
+            "nome": "Natanael Monteiro",
+            "email": "natan@gmail.com",
+            "status": "internado",
+        },
+        {
+            "nome": "Kaio de Oliveira",
+            "email": "kaio@gmail.com",
+            "status": "em atendimento",
+        },
+        {
+            "nome": "Izaias Lima",
+            "email": "izaias@gmail.com",
+            "status": "atendido",
+        },
+    ]
+    return dados
+
+
+@app.delete("/api/medicos/{id}", response_class=HTMLResponse)
+async def medicos(id: str):
+    return ""
+
+
+@app.delete("/api/pacientes/{id}", response_class=HTMLResponse)
+async def pacientes(id: str):
+    return ""
