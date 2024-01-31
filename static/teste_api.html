@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="htmx-config" content='{"htmx.config.requestClass":""}'>
+    <title>Clínica Médica - Pacientes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="https://unpkg.com/htmx.org@1.9.10"
+        integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
+    <script src="https://unpkg.com/mustache@latest"></script>
+</head>
+
+<body>
+    <div
+        hx-on="htmx:configRequest: event.detail.headers=''; event.detail.headers['Content-Type']='application/x-www-form-urlencoded; charset=UTF-8'" />
+
+    <div class="container">
+        <div class="content">
+            <h1>Acessando uma API externa</h1>
+        </div>
+
+        <div class="content">
+            <div hx-ext="client-side-templates" hx-get="https://bible-api.com/Salmos+150?translation=almeida"
+                hx-trigger="load" hx-swap="innerHTML" mustache-array-template="template">
+            </div>
+
+            <template id="template">
+
+                {{#data}}
+                <h3>{{reference}}</h3>
+
+                {{#verses}}
+                <p>{{verse}}. {{text}}</p>
+                {{/verses}}
+
+                {{/data}}
+            </template>
+        </div>
+    </div>
+</body>
+
+</html>
