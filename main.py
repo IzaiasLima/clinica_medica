@@ -78,17 +78,20 @@ def get_pacientes():
         {
             "nome": "Natanael Monteiro",
             "email": "natan@gmail.com",
+            "telefone": "61 98181-3390",
             "status": "internado",
         },
         {
             "nome": "Kaio de Oliveira",
-            "email": "kaio@gmail.com",
+            "email": "KAIO@gmail.com.BR",
+            "telefone": "61 98182-3393",
             "status": "em atendimento",
         },
         {
-            "nome": "Izaias Lima",
+            "nome": "Izaias lima",
             "email": "izaias@gmail.com",
             "status": "atendido",
+            "telefone": "61 98180-3090",
         },
     ]
     return dados

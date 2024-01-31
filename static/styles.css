@@ -17,10 +17,23 @@
     font-family: "Poppins";
     border-radius: 7px;
     border: solid 0px transparent;
+    box-sizing: border-box;
 }
 
 body {
     background-color: var(--bg-color);
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.ucase {
+    text-transform: uppercase;
+}
+
+.lcase {
+    text-transform: lowercase;
 }
 
 .container {
@@ -29,7 +42,6 @@ body {
     flex-direction: column;
     align-content: center;
     justify-content: center;
-    box-sizing: border-box;
     min-height: 90vh;
     width: 90vw;
     margin: auto;
@@ -61,13 +73,18 @@ body {
 }
 
 .cards,
-.content {
+.content,
+.dados {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
-    width: 60%;
+    width: 95%;
     gap: 20px;
+}
+
+.cards {
+    width: 60%;
 }
 
 .card {
@@ -78,7 +95,6 @@ body {
     height: 12vw;
     width: 12vw;
     padding: 25px 15px 0;
-    /* gap: 10px; */
     background-color: var(--primary);
 }
 
@@ -141,15 +157,35 @@ table tbody tr td:first-child {
 
 th,
 td {
-    padding: 0.2em 0.2em 0.2em 0;
+    padding: 0.3em 0.2em 0.3em 0;
     text-align: left;
     border-bottom: 1px solid var(--secondary);
     border-radius: 0;
 }
 
+
 th {
     border-bottom: 2px solid var(--secondary);
 }
+
+/* td.email {
+    text-transform: lowercase !important;
+    color: green !important;
+} */
+
+/* .dados td {
+    text-transform: capitalize;
+} */
+
+/* .dados td {
+    text-transform: uppercase;
+} */
+
+td.flcase::first-letter {
+    text-transform: uppercase;
+}
+
+
 
 /* td.icon {
     text-align: center;
@@ -185,13 +221,12 @@ th {
 }
 
 @media (max-width: 992px) {
-
-    .cards,
-    .content {
+    .cards {
         width: 100%;
     }
 
-    .content {
+    .content,
+    .dados {
         justify-content: start;
     }
 
@@ -210,7 +245,6 @@ th {
     }
 
     table {
-        width: 70%;
         font-size: 0.9em;
         overflow-x: auto;
     }
