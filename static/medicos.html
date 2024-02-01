@@ -38,7 +38,7 @@
                                 <th colspan="2">&nbsp;</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody hx-target="closest tr" hx-swap="outerHTML swap:2s">
                             <!-- {{#data}} -->
                             <tr>
                                 <td class="ucase">{{nome}}</td>
@@ -51,7 +51,7 @@
                                     <i class="fa fa-pencil"></i>
                                 </td>
                                 <td class="icon">
-                                    <a hx-delete="/api/medicos/1">
+                                    <a hx-delete="/api/medicos/{{crm}}">
                                         <i class="fa fa-trash-o"></i>
                                     </a>
                                 </td>

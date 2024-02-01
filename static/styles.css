@@ -167,36 +167,18 @@ td {
     border-radius: 0;
 }
 
-
 th {
     border-bottom: 2px solid var(--secondary);
 }
-
-/* td.email {
-    text-transform: lowercase !important;
-    color: green !important;
-} */
-
-/* .dados td {
-    text-transform: capitalize;
-} */
-
-/* .dados td {
-    text-transform: uppercase;
-} */
 
 td.flcase::first-letter {
     text-transform: uppercase;
 }
 
-/* td.icon {
-    text-align: center;
-} */
-
-/* tr.htmx-swapping td {
+tr.htmx-swapping td {
     opacity: 0;
     transition: opacity 1s ease-out;
-} */
+}
 
 @media (min-width: 600px) {
     .login {
