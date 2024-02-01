@@ -1,12 +1,9 @@
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse, HTMLResponse
-from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 app.mount("/app", StaticFiles(directory="static", html="True"), name="static")
-
-templates = Jinja2Templates(directory="templates")
 
 
 @app.get("/", response_class=RedirectResponse)
@@ -24,14 +21,10 @@ async def pacientes():
     return get_pacientes()
 
 
-@app.get("/api/medicos", response_class=HTMLResponse)
-async def medicos(request: Request):
-    medicos = get_medicos()
-    dados_html = templates.TemplateResponse(
-        "tpl_medicos.html", {"request": request, "dados": medicos}
-    )
-
-    return dados_html
+@app.get("/api/medicos")
+async def medicos():
+    dados = get_medicos()
+    return dados
 
 
 def get_medicos():
@@ -47,7 +40,7 @@ def get_medicos():
         {
             "nome": "Dileyciane Monteiro",
             "crm": "23456",
-            "email": "",
+            "email": "ciane@gmail.COM",
             "especialidade": "dermatologia",
             "turno": "diurno",
             "status": "em análise",
@@ -55,7 +48,7 @@ def get_medicos():
         {
             "nome": "luciana monteiro",
             "crm": "4445566",
-            "email": "",
+            "email": "DRA@LUCIANA.COM",
             "especialidade": "dermatologia",
             "turno": "noturno",
             "status": "ativo",
@@ -63,7 +56,7 @@ def get_medicos():
         {
             "nome": "NATANAEL MONTEIRO",
             "crm": "556688",
-            "email": "",
+            "email": "Natan@email.com",
             "especialidade": "CARDIOLOGIA",
             "turno": "VESPERTINO",
             "status": "ATIVO",

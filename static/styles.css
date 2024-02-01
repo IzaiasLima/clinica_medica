@@ -146,6 +146,10 @@ div.icon {
     color: var(--secondary);
 }
 
+td.icon {
+    cursor: pointer;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -184,8 +188,6 @@ th {
 td.flcase::first-letter {
     text-transform: uppercase;
 }
-
-
 
 /* td.icon {
     text-align: center;

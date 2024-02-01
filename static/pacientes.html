@@ -33,6 +33,7 @@
                                 <th>E-mail</th>
                                 <th>Telefone</th>
                                 <th>Situação</th>
+                                <th colspan="2">&nbsp;</th>
                             </tr>
                         </thead>
 
@@ -43,6 +44,14 @@
                                 <td class="lcase">{{email}}</td>
                                 <td>{{telefone}}</td>
                                 <td class="flcase">{{status}}</td>
+                                <td class="icon">
+                                    <i class="fa fa-pencil"></i>
+                                </td>
+                                <td class="icon">
+                                    <a hx-delete="/api/pacientes/1">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </td>
                             </tr>
                             <!-- {{/data}} -->
                         </tbody>

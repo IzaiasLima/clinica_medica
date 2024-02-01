@@ -10,6 +10,8 @@
     <script src="https://unpkg.com/htmx.org@1.9.10"
         integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
         crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
+    <script src="https://unpkg.com/mustache@latest"></script>
 </head>
 
 <body>
@@ -17,85 +19,48 @@
         <div class="content">
             <h1>Clínica Médica - Cadastro de Médicos</h1>
 
-            <div class="cards">
-                <!-- <h1>Lista de Médicos</h1>
-                <div hx-get="/api/medicos" hx-trigger="load" hx-swap="innerHTML" hx-target="#medicos">
-                    Chamada da API
-                </div>
-                <div id="medicos">Dados vão ser exibidos aqui</div>
-
-                <div hx-get="/api/medicos" hx-trigger="load delay:3s" hx-swap="innerHTML" hx-target="this">
-                    Chamada da API - Dados vão ser exibidos aqui
-                </div> -->
-
-                <div hx-get="/api/medicos" hx-trigger="load" hx-swap="innerHTML">
+            <div class="dados" hx-ext="client-side-templates">
+                <div class="w-100" hx-get="/api/medicos" hx-trigger="load" hx-swap="innerHTML"
+                    mustache-array-template="medicos">
                     Chamada da API - Dados vão ser exibidos aqui
                 </div>
+
+                <template id="medicos">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>CRM</th>
+                                <th>E-mail</th>
+                                <th>Especialidade</th>
+                                <th>Turno</th>
+                                <th>Situação</th>
+                                <th colspan="2">&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- {{#data}} -->
+                            <tr>
+                                <td class="ucase">{{nome}}</td>
+                                <td>{{crm}}</td>
+                                <td class="lcase">{{email}}</td>
+                                <td class="flcase lcase">{{especialidade}}</td>
+                                <td class="flcase lcase">{{turno}}</td>
+                                <td class="flcase lcase">{{status}}</td>
+                                <td class="icon">
+                                    <i class="fa fa-pencil"></i>
+                                </td>
+                                <td class="icon">
+                                    <a hx-delete="/api/medicos/1">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <!-- {{/data}} -->
+                        </tbody>
+                    </table>
+                </template>
             </div>
-
-            <!-- <table>
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>CRM</th>
-                        <th>Especialidade</th>
-                        <th>Turno</th>
-                        <th>Situação</th>
-                        <th>&nbsp;</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <td>Kaio Oliveira</td>
-                        <td>123456</td>
-                        <td>Cardiologia</td>
-                        <td>Noturno</td>
-                        <td>Ativo</td>
-                        <td>
-                            <i class="fa fa-pencil"></i>
-                            <i class="fa fa-trash-o"></i>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Dileyciane Monteiro</td>
-                        <td>234567</td>
-                        <td>Dermatologia</td>
-                        <td>Diurno</td>
-                        <td>Em análise</td>
-                        <td>
-                            <i class="fa fa-pencil"></i>
-                            <i class="fa fa-trash-o"></i>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Naelle Monteiro</td>
-                        <td>345678</td>
-                        <td>Pediatria</td>
-                        <td>Diurno</td>
-                        <td>Ativo</td>
-                        <td>
-                            <i class="fa fa-pencil"></i>
-                            <i class="fa fa-trash-o"></i>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Lidia Monteiro</td>
-                        <td>456789</td>
-                        <td>Nutrição</td>
-                        <td>Vespertino</td>
-                        <td>Inativo</td>
-                        <td>
-                            <i class="fa fa-pencil"></i>
-                            <i class="fa fa-trash-o"></i>
-                        </td>
-                    </tr>
-                </tbody>
-            </table> -->
-
         </div>
     </div>
 
