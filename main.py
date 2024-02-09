@@ -1,6 +1,6 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import RedirectResponse, HTMLResponse, JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse, HTMLResponse
 
 import db
 
@@ -18,16 +18,15 @@ async def root():
     return "/app/login.html"
 
 
-@app.get("/api/pacientes", response_class=JSONResponse)
+@app.get("/api/pacientes")
 async def pacientes():
     dados = db.get_pacientes()
-    return dados
+    return JSONResponse(dados)
 
 
-@app.get("/api/medicos")
+@app.get("/api/medicos", response_class=JSONResponse)
 async def medicos():
-    dados = db.get_medicos()
-    return dados
+    return db.get_medicos()
 
 
 @app.delete("/api/medicos/{id}", response_class=HTMLResponse)

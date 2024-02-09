@@ -78,7 +78,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-content: center;
+    /* align-content: center; */
     width: 95%;
     gap: 20px;
 }

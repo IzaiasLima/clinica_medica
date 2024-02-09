@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clínica Médica - Pacientes</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/app/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./styles.css">
     <script src="https://unpkg.com/htmx.org@1.9.10"
@@ -20,14 +21,10 @@
         <div class="content">
             <h1>Clínica Médica - Cadastro de Pacientes</h1>
 
-            <div class="dados">
-
-                <!-- </div>hx-ext="client-side-templates"> -->
-                <div class="w-100" hx-get="/api/pacientes" hx-trigger="load" hx-swap="innerHTML">
-
+            <div class="dados" hx-ext="client-side-templates">
+                <div class="w-100" hx-get="/api/pacientes" hx-trigger="load" hx-swap="innerHTML"
+                    mustache-array-template="template">
                 </div>
-                <!-- mustache-array-template="template">
-                </div> -->
 
                 <template id="template">
                     <table>
