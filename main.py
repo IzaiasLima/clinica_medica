@@ -3,8 +3,14 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse, RedirectResponse, HTMLResponse
 
 import db
+import db_init
 
-app = FastAPI()
+app = FastAPI(
+    title="Clinica Médica",
+    version="0.0.1",
+    summary="Proposta de desenvolvimento de uma API para gestão de uma clínica médica. ",
+)
+
 app.mount("/app", StaticFiles(directory="static", html="True"), name="static")
 
 
@@ -30,11 +36,18 @@ async def medicos():
 
 
 @app.delete("/api/medicos/{id}", response_class=HTMLResponse)
-async def medicos(id: str):
-    # bd.delete(id)
+async def del_medico(id: str):
+    db.del_medico(id)
     return ""
 
 
 @app.delete("/api/pacientes/{id}", response_class=HTMLResponse)
-async def pacientes(id: str):
+async def del_paciente(id: str):
+    db.del_paciente(id)
     return ""
+
+
+@app.get("/reset", response_class=RedirectResponse)
+def db_reset():
+    db_init.tables_init()
+    return "/app/home.html"

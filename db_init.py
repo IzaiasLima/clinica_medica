@@ -12,10 +12,17 @@ def tbl_create():
     con = sqlite3.connect("clinica.db")
     cur = con.cursor()
 
+    try:
+        cur.execute("DROP TABLE medicos")
+        cur.execute("DROP TABLE pacientes")
+    except:
+        pass
+
     cur.execute(
         """
             CREATE TABLE IF NOT EXISTS medicos
-                (nome text,
+            (   id integer PRIMARY KEY AUTOINCREMENT,
+                nome text,
                 crm text,
                 email text,
                 especialidade text,
@@ -28,7 +35,8 @@ def tbl_create():
     cur.execute(
         """
             CREATE TABLE IF NOT EXISTS pacientes
-                (nome text,
+            (   id integer PRIMARY KEY AUTOINCREMENT,
+                nome text,
                 email text,
                 telefone text,
                 status text
@@ -54,6 +62,7 @@ def tables_init():
 
     medicos = [
         (
+            None,
             "Kaio de Oliveira",
             "123456",
             "kaio@gmail.com",
@@ -62,6 +71,7 @@ def tables_init():
             "ativo",
         ),
         (
+            None,
             "Dileyciane Monteiro",
             "23456",
             "ciane@gmail.COM",
@@ -70,6 +80,7 @@ def tables_init():
             "em análise",
         ),
         (
+            None,
             "luciana monteiro",
             "4445566",
             "DRA@LUCIANA.COM",
@@ -80,15 +91,15 @@ def tables_init():
     ]
 
     pacientes = [
-        ("Natanael Monteiro", "natan@gmail.com", "61 98181-3390", "internado"),
-        ("Izaias lima", "izaias@gmail.com", "61 98180-3090", "atendido"),
+        (None, "Natanael Monteiro", "natan@gmail.com", "61 98181-3390", "internado"),
+        (None, "Izaias lima", "izaias@gmail.com", "61 98180-3090", "atendido"),
     ]
 
     cur.execute("DELETE FROM medicos")
     cur.execute("DELETE FROM pacientes")
 
-    cur.executemany("INSERT INTO medicos VALUES (?,?,?,?,?,?)", medicos)
-    cur.executemany("INSERT INTO pacientes VALUES (?,?,?,?)", pacientes)
+    cur.executemany("INSERT INTO medicos VALUES (?,?,?,?,?,?,?)", medicos)
+    cur.executemany("INSERT INTO pacientes VALUES (?,?,?,?,?)", pacientes)
 
     con.commit()
     con.close()
