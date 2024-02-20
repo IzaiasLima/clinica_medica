@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="htmx-config" content='{"htmx.config.requestClass":""}'>
-    <title>Clínica Médica - Pacientes</title>
+    <title>Clínica Médica - API Externa</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./styles.css">
     <script src="https://unpkg.com/htmx.org@1.9.10"
@@ -21,21 +21,24 @@
 
     <div class="container">
         <div class="content">
-            <h1>Acessando uma API externa</h1>
+            <h1>Teste de acesso a uma API externa</h1>
         </div>
 
         <div class="content">
-            <div hx-ext="client-side-templates" hx-get="https://bible-api.com/Salmos+150?translation=almeida"
+            <div hx-ext="client-side-templates" hx-get="https://xbible-api.com/Salmos+150?translation=almeida"
                 hx-trigger="load" hx-swap="innerHTML" mustache-array-template="template">
+
+                <img width="120px" src="./icons/spinner.svg">&nbsp;
+                <p> Obtendo dados... </p>
             </div>
 
             <template id="template">
 
                 {{#data}}
-                <h3>{{reference}}</h3>
+                <h2>{{reference}}</h2>
 
                 {{#verses}}
-                <p>{{verse}}. {{text}}</p>
+                <p style="font-size: 1.3rem">{{verse}}. {{text}}</p>
                 {{/verses}}
 
                 {{/data}}

@@ -29,8 +29,10 @@ body {
     align-content: center;
     justify-content: center;
     min-height: 90vh;
-    width: 90vw;
+    width: 85vw;
+    padding: 30px;
     margin: auto;
+    overflow-x: hidden;
 }
 
 .login {
@@ -74,25 +76,34 @@ button.swal2-cancel {
 
 /* Swal2 FIM */
 
-.material-symbols-outlined.x5 {
-    font-size: 5rem;
-}
-
 .warning {
     color: var(--warning);
     font-weight: 500;
+}
+
+
+.small-icon {
+    font-size: 1.5em;
+}
+
+.big-icon {
+    font-size: 6cqw;
 }
 
 .w-100 {
     width: 100%;
 }
 
-.ucase {
+.u-case {
     text-transform: uppercase;
 }
 
-.lcase {
+.l-case {
     text-transform: lowercase;
+}
+
+*.fl-case::first-letter {
+    text-transform: uppercase;
 }
 
 .cards,
@@ -101,7 +112,6 @@ button.swal2-cancel {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    /* align-content: center; */
     width: 95%;
     gap: 20px;
 }
@@ -115,15 +125,15 @@ button.swal2-cancel {
     flex-wrap: wrap;
     align-content: center;
     justify-content: center;
-    height: 12vw;
-    width: 12vw;
-    padding: 25px 15px 0;
+    height: 13vw;
+    width: 13vw;
+    padding: 5px 20px 0;
     background-color: var(--primary);
 }
 
 .card a {
     text-align: center;
-    font-size: 0.8em;
+    font-size: 1.4cqw;
     font-weight: 600;
     text-decoration: none;
     color: var(--font-primary);
@@ -132,6 +142,7 @@ button.swal2-cancel {
 
 .card a>p {
     margin-block-start: 0;
+    line-height: 1.2em;
 }
 
 input {
@@ -142,6 +153,10 @@ input {
 
 input:focus-visible {
     outline: var(--soft-color) solid 2px;
+}
+
+a:hover {
+    cursor: pointer;
 }
 
 button,
@@ -187,12 +202,8 @@ div.icon {
     display: flex;
     justify-content: center;
     margin-bottom: 15px;
-    font-size: 7rem;
+    font-size: 5cqw;
     color: var(--secondary);
-}
-
-td.icon {
-    cursor: pointer;
 }
 
 table {
@@ -201,24 +212,38 @@ table {
     border-collapse: collapse;
 }
 
-table tbody tr td:first-child {
+td.icon {
+    cursor: pointer;
+}
+
+td.icon div {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    gap: 7px;
+}
+
+tbody tr td:first-child {
     white-space: nowrap;
 }
 
 th,
 td {
-    padding: 0.3em 0.2em 0.3em 0;
+    padding: 0.3em 0.5em 0.3em 0;
     text-align: left;
     border-bottom: 1px solid var(--secondary);
     border-radius: 0;
 }
 
-th {
-    border-bottom: 2px solid var(--secondary);
+td>input {
+    width: 100%;
+    margin: 5px 0px;
+    font-size: 0.9em;
+    overflow-x: scroll;
 }
 
-td.flcase::first-letter {
-    text-transform: uppercase;
+th {
+    border-bottom: 2px solid var(--secondary);
 }
 
 tr.htmx-swapping td {
@@ -262,7 +287,6 @@ tr.htmx-swapping td {
 
     .card {
         width: 100%;
-        padding: 10px 30px 0;
         justify-content: start;
     }
 
@@ -270,16 +294,16 @@ tr.htmx-swapping td {
         display: inline-flex;
         flex-wrap: nowrap;
         text-align: start;
-        font-size: 0.95em;
         justify-content: start;
     }
 
     .card a>p {
-        margin-block-start: 0.5rem;
+        margin-block-start: 1.3rem;
+        font-size: 3cqw;
     }
 
-    .material-symbols-outlined.x5 {
-        font-size: 3rem;
+    .material-symbols-outlined.big-icon {
+        font-size: 10cqw;
     }
 
     dialog.modal {
@@ -289,5 +313,37 @@ tr.htmx-swapping td {
     table {
         font-size: 0.9em;
         overflow-x: auto;
+    }
+
+    th {
+        display: none;
+    }
+
+    td {
+        display: block;
+
+    }
+
+    td:before {
+        content: attr(data-th) ": ";
+    }
+
+    td:first-child:before,
+    td:last-child:before,
+    td:has(input):before {
+        content: "";
+    }
+
+    td:first-child {
+        font-weight: 600;
+    }
+
+    td:last-child {
+        margin-bottom: 30px;
+    }
+
+    td.icon div {
+        justify-content: flex-start;
+        padding-left: 0px;
     }
 }
