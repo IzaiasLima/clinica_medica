@@ -6,22 +6,22 @@ def paciente_html(dados):
             <td><input name="telefone" value="{dados['telefone']}"></td>
             <td><input name="status" value="{dados['status']}"></td>
             <td class="icon">
-            <div>
-                <a hx-get="/api/pacientes"
-                    title="Cancelar a alteração"
-                    hx-swap="outerHTML" 
-                    hx-target="closest table">
-                    <i class="material-symbols-outlined small-icon">undo</i>
-                </a>
-                <a hx-trigger="click" 
-                    hx-include="closest tr"
-                    hx-put="/api/pacientes/{dados['id']}" 
-                    title="Salvar"
-                    hx-swap="outerHTML" 
-                    hx-target="closest table">
-                    <i class="material-symbols-outlined small-icon">save</i>
-                </a>
-            </div>
+                <div>
+                    <a hx-get="/api/pacientes"
+                        title="Cancelar a alteração"
+                        hx-swap="outerHTML" 
+                        hx-target="closest table">
+                        <i class="material-symbols-outlined small-icon">undo</i>
+                    </a>
+                    <a hx-trigger="click" 
+                        hx-include="closest tr"
+                        hx-put="/api/pacientes/{dados['id']}" 
+                        title="Salvar"
+                        hx-swap="outerHTML" 
+                        hx-target="closest table">
+                        <i class="material-symbols-outlined small-icon">save</i>
+                    </a>
+                </div>
             </td>
         </tr>
         """

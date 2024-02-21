@@ -102,18 +102,43 @@ button.swal2-cancel {
     text-transform: lowercase;
 }
 
-*.fl-case::first-letter {
+*.fl-case:first-letter {
     text-transform: uppercase;
 }
 
 .cards,
 .content,
-.dados {
+.dados,
+.titles {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     width: 95%;
     gap: 20px;
+}
+
+.dados {
+    width: 100%;
+}
+
+.titles {
+    flex-direction: column;
+    padding: 40px 0;
+}
+
+.titles h1,
+.titles h2 {
+    text-align: center;
+    line-height: 1em;
+    margin: 0.2em;
+}
+
+.titles h1 {
+    font-size: 2.5cqw;
+}
+
+.titles h2 {
+    font-size: 2cqw;
 }
 
 .cards {
@@ -127,7 +152,7 @@ button.swal2-cancel {
     justify-content: center;
     height: 13vw;
     width: 13vw;
-    padding: 5px 20px 0;
+    padding: 15px 20px 0;
     background-color: var(--primary);
 }
 
@@ -137,11 +162,10 @@ button.swal2-cancel {
     font-weight: 600;
     text-decoration: none;
     color: var(--font-primary);
-    gap: 15px;
+    /* gap: 15px; */
 }
 
-.card a>p {
-    margin-block-start: 0;
+.card a p {
     line-height: 1.2em;
 }
 
@@ -202,7 +226,7 @@ div.icon {
     display: flex;
     justify-content: center;
     margin-bottom: 15px;
-    font-size: 5cqw;
+    font-size: 10cqw;
     color: var(--secondary);
 }
 
@@ -276,8 +300,23 @@ tr.htmx-swapping td {
 }
 
 @media (max-width: 992px) {
-    .cards {
-        width: 100%;
+    * {
+        font-size: 18px;
+    }
+
+    .container {
+        min-height: 70vh;
+        width: 95vw;
+        padding: 5px;
+        overflow-x: auto;
+    }
+
+    .titles h1 {
+        font-size: 5cqw;
+    }
+
+    .titles h2 {
+        font-size: 4cqw;
     }
 
     .content,
@@ -285,9 +324,14 @@ tr.htmx-swapping td {
         justify-content: start;
     }
 
+    .cards {
+        width: 100%;
+    }
+
     .card {
         width: 100%;
         justify-content: start;
+        padding-top: 0;
     }
 
     .card a {
@@ -295,14 +339,16 @@ tr.htmx-swapping td {
         flex-wrap: nowrap;
         text-align: start;
         justify-content: start;
+        gap: 15px;
     }
 
-    .card a>p {
-        margin-block-start: 1.3rem;
-        font-size: 3cqw;
+    .card a p {
+        padding-top: 5px;
+        font-size: 4cqw;
     }
 
-    .material-symbols-outlined.big-icon {
+    .big-icon {
+        padding: 10px;
         font-size: 10cqw;
     }
 
@@ -311,7 +357,7 @@ tr.htmx-swapping td {
     }
 
     table {
-        font-size: 0.9em;
+        font-size: 1.3em;
         overflow-x: auto;
     }
 
@@ -326,6 +372,7 @@ tr.htmx-swapping td {
 
     td:before {
         content: attr(data-th) ": ";
+        font-weight: 600;
     }
 
     td:first-child:before,
@@ -344,6 +391,6 @@ tr.htmx-swapping td {
 
     td.icon div {
         justify-content: flex-start;
-        padding-left: 0px;
+        padding-left: 0;
     }
 }
