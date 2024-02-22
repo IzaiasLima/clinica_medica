@@ -93,6 +93,7 @@ def tables_init():
     pacientes = [
         (None, "Natanael Monteiro", "natan@gmail.com", "61 98181-3390", "internado"),
         (None, "Izaias lima", "izaias@gmail.com", "61 98180-3090", "atendido"),
+        (None, "Luciete lima", "luciete@gmail.com", "61 98180-3090", "atendido"),
     ]
 
     cur.execute("DELETE FROM medicos")
