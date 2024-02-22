@@ -20,57 +20,57 @@
             <h2>Cadastro de Pacientes</h2>
         </div>
 
-        <div class="content">
-            <div class="dados" hx-ext="client-side-templates">
-                <div class="w-100" hx-get="/api/pacientes" hx-trigger="load" hx-swap="innerHTML"
-                    mustache-array-template="template">
-                    <!-- Os dados vão ser exibidos aqui. -->
-                </div>
-
-                <template id="template">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>E-mail</th>
-                                <th>Telefone</th>
-                                <th>Situação</th>
-                                <th colspan="2">&nbsp;</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <!-- {{#data}} -->
-                            <tr>
-                                <td title="{{id}}" class="u-case">{{nome}}</td>
-                                <td data-th="E-mail"><span class="l-case">{{email}}</span></td>
-                                <td data-th="Telefone">{{telefone}}</td>
-                                <td data-th="Situação" class="fl-case">{{status}}</td>
-                                <td class="icon">
-                                    <div>
-                                        <a hx-target="closest tr" hx-get="/api/pacientes/{{id}}/edit" hx-trigger="edit"
-                                            hx-swap="outerHTML" onClick="onClick(this)">
-                                            <i class="material-symbols-outlined small-icon">edit</i>
-                                        </a>
-                                        <a hx-target="closest tr" hx-swap="outerHTML swap:0.5s" hx-confirm="{{nome}}?"
-                                            hx-delete="/api/pacientes/{{id}}">
-                                            <i class="material-symbols-outlined small-icon">delete</i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <!-- {{/data}} -->
-
-                            <!-- {{^data}} -->
-                            <tr>
-                                <td class="warning" colspan="5">Não há pacientes cadastrados.</td>
-                            </tr>
-                            <!-- {{/data}} -->
-                        </tbody>
-                    </table>
-                </template>
+        <!-- <div class="content"> -->
+        <div class="content" hx-ext="client-side-templates">
+            <div class="w-100" hx-get="/api/pacientes" hx-trigger="load" hx-swap="innerHTML"
+                mustache-array-template="template">
+                <!-- Os dados vão ser exibidos aqui. -->
             </div>
+
+            <template id="template">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>Telefone</th>
+                            <th>Situação</th>
+                            <th colspan="2">&nbsp;</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <!-- {{#data}} -->
+                        <tr>
+                            <td title="{{id}}" class="u-case">{{nome}}</td>
+                            <td data-th="E-mail"><span class="l-case">{{email}}</span></td>
+                            <td data-th="Telefone">{{telefone}}</td>
+                            <td data-th="Situação" class="fl-case">{{status}}</td>
+                            <td class="icon">
+                                <div>
+                                    <a hx-target="closest tr" hx-get="/api/pacientes/{{id}}/edit" hx-trigger="edit"
+                                        hx-swap="outerHTML" onclick="onClick(this)">
+                                        <i class="material-symbols-outlined">edit</i>
+                                    </a>
+                                    <a hx-target="closest tr" hx-swap="outerHTML swap:0.5s" hx-confirm="{{nome}}?"
+                                        hx-delete="/api/pacientes/{{id}}">
+                                        <i class="material-symbols-outlined">delete</i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- {{/data}} -->
+
+                        <!-- {{^data}} -->
+                        <tr>
+                            <td class="warning" colspan="5">Não há pacientes cadastrados.</td>
+                        </tr>
+                        <!-- {{/data}} -->
+                    </tbody>
+                </table>
+            </template>
+            <!-- </div> -->
         </div>
     </div>
     <script src="https://unpkg.com/htmx.org@1.9.10"

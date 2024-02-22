@@ -19,23 +19,24 @@
         hx-on="htmx:configRequest: event.detail.headers=''; event.detail.headers['Content-Type']='application/x-www-form-urlencoded; charset=UTF-8'" />
 
     <div class="container">
+        <h1>Teste de acesso a uma API externa</h1>
 
-        <div class="titles">
-            <h1>Teste de acesso a uma API externa</h1>
-        </div>
-
-        <div class="content">
-            <div hx-ext="client-side-templates" hx-get="https://bible-api.com/Salmos+150?translation=almeida"
+        <div style="display: flex; justify-content: center;">
+            <div hx-ext="client-side-templates" hx-get="https://bible-api.com/Salmos+14?translation=almeida"
                 hx-trigger="load" hx-swap="innerHTML" mustache-array-template="template">
 
-                <img width="120px" src="./icons/spinner.svg">&nbsp;
+                <div style="display: flex; justify-content: center;">
+                    <img width="120px" src="./icons/spinner.svg">&nbsp;
+                </div>
+
                 <p> Obtendo dados... </p>
             </div>
 
             <template id="template">
 
                 {{#data}}
-                <h2>{{reference}}</h2>
+
+                <h2> {{reference}} </h2>
 
                 {{#verses}}
                 <p style="font-size: 1.3rem">{{verse}}. {{text}}</p>

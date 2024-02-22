@@ -21,59 +21,60 @@
             <h2>Cadastro de Médicos</h2>
         </div>
 
-        <div class="content">
-            <div class="dados" hx-ext="client-side-templates">
-                <div class="w-100" hx-get="/api/medicos" hx-trigger="load" hx-swap="innerHTML"
-                    mustache-array-template="medicos">
-                    <!-- Os dados vão ser exibidos aqui. -->
-                </div>
+        <!-- <div class="content"> -->
+        <div class="content" hx-ext="client-side-templates">
+            <div class="w-100" hx-get="/api/medicos" hx-trigger="load" hx-swap="innerHTML"
+                mustache-array-template="medicos">
+                <!-- Os dados vão ser exibidos aqui. -->
+            </div>
 
-                <template id="medicos">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>CRM</th>
-                                <th>E-mail</th>
-                                <th>Especialidade</th>
-                                <th>Turno</th>
-                                <th>Situação</th>
-                                <th colspan="2">&nbsp;</th>
-                            </tr>
-                        </thead>
-                        <tbody hx-target="closest tr" hx-swap="outerHTML swap:0.5s">
-                            <!-- {{#data}} -->
-                            <tr>
-                                <td class="u-case">{{nome}}</td>
-                                <td>{{crm}}</td>
-                                <td class="l-case">{{email}}</td>
-                                <td class="fl-case l-case">{{especialidade}}</td>
-                                <td class="fl-case l-case">{{turno}}</td>
-                                <td class="fl-case l-case">{{status}}</td>
-                                <td class="icon">
-                                    <!-- <i class="fa fa-pencil"></i> -->
-                                    <i class="material-symbols-outlined">edit</i>
-                                </td>
-                                <td class="icon">
+            <template id="medicos">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>CRM</th>
+                            <th class="m-hidden">E-mail</th>
+                            <th>Especialidade</th>
+                            <th>Turno</th>
+                            <th>Situação</th>
+                            <th colspan="2">&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody hx-target="closest tr" hx-swap="outerHTML swap:0.5s">
+                        <!-- {{#data}} -->
+                        <tr>
+                            <td title="{{id}}" class="u-case">{{nome}}</td>
+                            <td data-th="CRM">{{crm}}</td>
+                            <td data-th="E-mail" class="m-hidden"><span class="l-case"> {{email}} </span></td>
+                            <td data-th="Área" class="fl-case l-case">{{especialidade}}</td>
+                            <td data-th="Turno" class="fl-case l-case">{{turno}}</td>
+                            <td data-th="Situação" class="fl-case l-case">{{status}}</td>
+                            <td class="icon">
+                                <div>
+                                    <a href="#">
+                                        <i class="material-symbols-outlined">edit</i>
+                                    </a>
+
                                     <a hx-confirm="{{nome}}" hx-delete="/api/medicos/{{id}}">
-                                        <!-- <i class="fa fa-trash-o"></i> -->
                                         <i class="material-symbols-outlined">delete</i>
                                     </a>
-                                </td>
-                            </tr>
-                            <!-- {{/data}} -->
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- {{/data}} -->
 
-                            <!-- {{^data}} -->
-                            <tr>
-                                <td class="warning" colspan="8">Não há médicos cadastrados.</td>
-                            </tr>
-                            <!-- {{/data}} -->
+                        <!-- {{^data}} -->
+                        <tr>
+                            <td class="warning" colspan="8">Não há médicos cadastrados.</td>
+                        </tr>
+                        <!-- {{/data}} -->
 
-                        </tbody>
-                    </table>
-                </template>
-            </div>
+                    </tbody>
+                </table>
+            </template>
         </div>
+        <!-- </div> -->
     </div>
 
     <script src="https://unpkg.com/htmx.org@1.9.10"
@@ -82,7 +83,7 @@
     <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
     <script src="https://unpkg.com/mustache@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="./js/modal.js"></script>
+    <script src="./js/functions.js"></script>
 </body>
 
 </html>

@@ -20,6 +20,7 @@
 
 body {
     background-color: var(--bg-color);
+    overflow-y: auto;
 }
 
 .container {
@@ -32,7 +33,7 @@ body {
     width: 85vw;
     padding: 30px;
     margin: auto;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 .login {
@@ -40,7 +41,7 @@ body {
     flex-direction: column;
     justify-content: center;
     height: 100%;
-    width: 100%;
+    width: calc(250px + 10vw);
 }
 
 .home {
@@ -83,7 +84,7 @@ button.swal2-cancel {
 
 
 .small-icon {
-    font-size: 1.5em;
+    font-size: 1.7em;
 }
 
 .big-icon {
@@ -106,20 +107,6 @@ button.swal2-cancel {
     text-transform: uppercase;
 }
 
-.cards,
-.content,
-.dados,
-.titles {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 95%;
-    gap: 20px;
-}
-
-.dados {
-    width: 100%;
-}
 
 .titles {
     flex-direction: column;
@@ -141,6 +128,17 @@ button.swal2-cancel {
     font-size: 2cqw;
 }
 
+.cards,
+.content,
+.dados,
+.titles {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    gap: 20px;
+}
+
 .cards {
     width: 60%;
 }
@@ -152,7 +150,7 @@ button.swal2-cancel {
     justify-content: center;
     height: 13vw;
     width: 13vw;
-    padding: 15px 20px 0;
+    padding: 15px 7px 0;
     background-color: var(--primary);
 }
 
@@ -162,7 +160,6 @@ button.swal2-cancel {
     font-weight: 600;
     text-decoration: none;
     color: var(--font-primary);
-    /* gap: 15px; */
 }
 
 .card a p {
@@ -244,6 +241,8 @@ td.icon div {
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-evenly;
+    align-items: center;
+    padding-top: 5px;
     gap: 7px;
 }
 
@@ -275,31 +274,27 @@ tr.htmx-swapping td {
     transition: opacity 0.2s ease-out;
 }
 
-@media (min-width: 600px) {
-    .login {
-        width: 60%;
+@media (max-width: 992px) and (orientation: landscape) {
+    .container {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .card a p {
+        font-size: 1em;
+    }
+
+    table {
+        font-size: 1em;
+    }
+
+    th.m-hidden,
+    td.m-hidden {
+        display: none;
     }
 }
 
-@media (min-width: 762px) {
-    .login {
-        width: 50%;
-    }
-}
-
-@media (min-width: 992px) {
-    .login {
-        width: 40%;
-    }
-}
-
-@media (min-width: 1200px) {
-    .login {
-        width: 30%;
-    }
-}
-
-@media (max-width: 992px) {
+@media (max-width: 992px) and (orientation: portrait) {
     * {
         font-size: 18px;
     }
@@ -308,7 +303,10 @@ tr.htmx-swapping td {
         min-height: 70vh;
         width: 95vw;
         padding: 5px;
-        overflow-x: auto;
+    }
+
+    .login {
+        width: 85%;
     }
 
     .titles h1 {
@@ -352,13 +350,12 @@ tr.htmx-swapping td {
         font-size: 10cqw;
     }
 
-    dialog.modal {
-        width: 90%;
+    div.icon {
+        font-size: 20cqw;
     }
 
     table {
         font-size: 1.3em;
-        overflow-x: auto;
     }
 
     th {

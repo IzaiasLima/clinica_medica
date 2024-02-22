@@ -1,6 +1,6 @@
 def paciente_html(dados):
     html = f"""
-        <tr trigger="cancel" class="editing">
+        <tr trigger="cancel" class="xediting">
             <td><input name="nome" value="{dados['nome']}"></td>
             <td><input name="email" value="{dados['email']}"></td>
             <td><input name="telefone" value="{dados['telefone']}"></td>
