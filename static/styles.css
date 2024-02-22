@@ -166,6 +166,11 @@ button.swal2-cancel {
     line-height: 1.2em;
 }
 
+.spinner {
+    display: flex;
+    justify-content: center;
+}
+
 input {
     height: 2.5em;
     margin-bottom: 15px;
@@ -260,7 +265,7 @@ td {
 
 td>input {
     width: 100%;
-    margin: 5px 0px;
+    margin: 5px 0;
     font-size: 0.9em;
     overflow-x: scroll;
 }

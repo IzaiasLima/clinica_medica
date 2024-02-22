@@ -26,6 +26,10 @@
             <div class="w-100" hx-get="/api/medicos" hx-trigger="load" hx-swap="innerHTML"
                 mustache-array-template="medicos">
                 <!-- Os dados vão ser exibidos aqui. -->
+                <div class="spinner">
+                    <img width="120px" src="./icons/spinner.svg">
+                </div>
+
             </div>
 
             <template id="medicos">

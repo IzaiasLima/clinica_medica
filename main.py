@@ -70,6 +70,9 @@ async def del_paciente(id: str):
 
 @app.get("/api/medicos", response_class=JSONResponse)
 async def medicos():
+    import time
+
+    time.sleep(5)
     return db.get_medicos()
 
 
