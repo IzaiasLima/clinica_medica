@@ -22,28 +22,46 @@
         <h1>Teste de acesso a uma API externa</h1>
 
         <div style="display: flex; justify-content: center;">
-            <div hx-ext="client-side-templates" hx-get="https://bible-api.com/Salmos+14?translation=almeida"
-                hx-trigger="load" hx-swap="innerHTML" mustache-array-template="template">
-
-                <div style="display: flex; justify-content: center;">
-                    <img width="120px" src="./icons/spinner.svg">&nbsp;
-                </div>
-
-                <p> Obtendo dados... </p>
+            <div hx-ext="client-side-templates" hx-get="/api/capitulo" hx-trigger="load" hx-swap="innerHTML"
+                mustache-array-template="api-externa">
             </div>
 
-            <template id="template">
+            <template id="api-externa">
+                {{#data}}
+                <div hx-ext="client-side-templates"
+                    hx-get="https://bible-api.com/Salmos+{{capitulo}}?translation=almeida" hx-trigger="load"
+                    hx-swap="innerHTML" mustache-array-template="salmos">
 
+                    <div class="spinner">
+                        <img width="120px" src="./icons/spinner.svg">&nbsp;
+                    </div>
+
+                </div>
+                {{/data}}
+            </template>
+
+            <template id="salmos">
                 {{#data}}
 
                 <h2> {{reference}} </h2>
-
                 {{#verses}}
                 <p style="font-size: 1.3rem">{{verse}}. {{text}}</p>
                 {{/verses}}
 
+                <footer style="margin-top: 60px; font-size: 1em;">
+                    <hr style="width: 100%; border-bottom: solid 1px silver">
+                    <div>
+                        <b> <i> Dados obtidos da API: </i> </b>
+                        <a href="https://bible-api.com/{{reference}}?translation=almeida">
+                            <i>https://bible-api.com/{{reference}}?translation=almeida</i>
+                        </a>
+                    </div>
+                </footer>
+
                 {{/data}}
+
             </template>
+
         </div>
     </div>
 </body>

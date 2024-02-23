@@ -3,6 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse, RedirectResponse, HTMLResponse
 
 import json
+import time
 import urllib.parse as html
 
 import db
@@ -43,8 +44,17 @@ async def root():
     return "/app/login.html"
 
 
+@app.get("/api/capitulo", response_class=JSONResponse)
+async def root():
+    import random as r
+
+    capitulo = [1, 2, 14, 15, 23, 24, 91, 100, 133, 150][r.randint(0, 9)]
+    return {"capitulo": capitulo}
+
+
 @app.get("/api/pacientes")
 async def pacientes():
+    time.sleep(1)
     dados = db.get_pacientes()
     return JSONResponse(dados)
 
@@ -70,9 +80,7 @@ async def del_paciente(id: str):
 
 @app.get("/api/medicos", response_class=JSONResponse)
 async def medicos():
-    import time
-
-    time.sleep(5)
+    time.sleep(1)
     return db.get_medicos()
 
 
