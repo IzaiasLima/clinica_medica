@@ -403,6 +403,12 @@ tr.htmx-swapping td {
         font-size: 10cqw;
     }
 
+    .w-10,
+    .w-15,
+    .w-100 {
+        width: 100%;
+    }
+
     div.icon {
         font-size: 20cqw;
     }
@@ -427,7 +433,8 @@ tr.htmx-swapping td {
 
     td:first-child:before,
     td:last-child:before,
-    td:has(input):before {
+    td:has(input):before,
+    td:has(select):before {
         content: "";
     }
 
