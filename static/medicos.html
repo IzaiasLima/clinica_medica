@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="htmx-config" content='{"responseTargetSetsError":"true"}'>
     <title>Clínica Médica - Médicos</title>
     <link rel="icon" type="image/png" sizes="32x32" href="/app/favicon.png">
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
@@ -23,6 +24,7 @@
 
         <!-- <div class="content"> -->
         <div class="content" hx-ext="client-side-templates">
+            <!-- <div hx-ext="response-targets"> -->
             <div class="w-100" hx-get="/api/medicos" hx-trigger="load" hx-swap="innerHTML"
                 mustache-array-template="medicos">
                 <!-- Os dados vão ser exibidos aqui. -->
@@ -39,8 +41,8 @@
                             <th>CRM</th>
                             <th class="m-hidden">E-mail</th>
                             <th>Especialidade</th>
-                            <th>Turno</th>
-                            <th>Situação</th>
+                            <th class="w-15">Turno</th>
+                            <th class="w-15">Situação</th>
                             <th colspan="2">&nbsp;</th>
                         </tr>
                     </thead>
@@ -49,18 +51,20 @@
                         <tr>
                             <td title="{{id}}" class="u-case">{{nome}}</td>
                             <td data-th="CRM">{{crm}}</td>
-                            <td data-th="E-mail" class="m-hidden"><span class="l-case"> {{email}} </span></td>
+                            <td data-th="E-mail" class="m-hidden"><span class="w-10 l-case"> {{email}} </span></td>
                             <td data-th="Área" class="fl-case l-case">{{especialidade}}</td>
                             <td data-th="Turno" class="fl-case l-case">{{turno}}</td>
                             <td data-th="Situação" class="fl-case l-case">{{status}}</td>
                             <td class="icon">
                                 <div>
-                                    <a href="#">
+                                    <a hx-target="closest tr" hx-get="/api/medicos/{{id}}/edit" hx-trigger="edit"
+                                        hx-swap="outerHTML" onclick="onClick(this)">
                                         <i class="material-symbols-outlined">edit</i>
                                     </a>
 
-                                    <a hx-confirm="{{nome}}" hx-delete="/api/medicos/{{id}}">
-                                        <i class="material-symbols-outlined">delete</i>
+                                    <a hx-target="closest tr" hx-swap="outerHTML swap:0.5s" hx-confirm="{{nome}}?"
+                                        hx-delete="/api/medicos/{{id}}">
+                                        <i class=" material-symbols-outlined">delete</i>
                                     </a>
                                 </div>
                             </td>
@@ -73,17 +77,32 @@
                         </tr>
                         <!-- {{/data}} -->
 
+
+                        <tr>
+                            <td class="no-border">
+                                <button class="alone" hx-trigger="click" hx-get="/api/medicos/add"
+                                    hx-target="closest tr" hx-swap="outerHTML">
+                                    Incluir Médico
+                                </button>
+                            </td>
+                            <td class="no-border" colspan="4">&nbsp;</td>
+                        </tr>
+
                     </tbody>
                 </table>
             </template>
+
+            <!-- <div style="background-color: red;" id="error" hx-swap-oob="true"> {{#status_code}} </div> -->
+
+            <!-- </div> -->
         </div>
-        <!-- </div> -->
     </div>
 
     <script src="https://unpkg.com/htmx.org@1.9.10"
         integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
         crossorigin="anonymous"></script>
     <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/response-targets.js"></script>
     <script src="https://unpkg.com/mustache@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./js/functions.js"></script>

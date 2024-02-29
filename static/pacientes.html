@@ -22,6 +22,7 @@
 
         <!-- <div class="content"> -->
         <div class="content" hx-ext="client-side-templates">
+            <!-- <div hx-ext="response-targets"> -->
             <div class="w-100" hx-get="/api/pacientes" hx-trigger="load" hx-swap="innerHTML"
                 mustache-array-template="template">
                 <!-- Os dados vão ser exibidos aqui. -->
@@ -36,8 +37,8 @@
                         <tr>
                             <th>Nome</th>
                             <th>E-mail</th>
-                            <th>Telefone</th>
-                            <th>Situação</th>
+                            <th class="w-15">Telefone</th>
+                            <th class="w-15">Situação</th>
                             <th colspan="2">&nbsp;</th>
                         </tr>
                     </thead>
@@ -70,16 +71,28 @@
                             <td class="warning" colspan="5">Não há pacientes cadastrados.</td>
                         </tr>
                         <!-- {{/data}} -->
+
+                        <tr>
+                            <td class="no-border">
+                                <button class="alone" hx-trigger="click" hx-get="/api/pacientes/0/add"
+                                    hx-target="closest tr" hx-swap="outerHTML">
+                                    Incluir Paciente
+                                </button>
+                            </td>
+                            <td class="no-border" colspan="4">&nbsp;</td>
+                        </tr>
                     </tbody>
                 </table>
             </template>
             <!-- </div> -->
         </div>
     </div>
+
     <script src="https://unpkg.com/htmx.org@1.9.10"
         integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
         crossorigin="anonymous"></script>
     <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/response-targets.js"></script>
     <script src="https://unpkg.com/mustache@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./js/functions.js"></script>
