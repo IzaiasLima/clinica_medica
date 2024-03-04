@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, Response, Depends, HTTPException
+from fastapi import FastAPI, Request, Depends, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse, RedirectResponse, HTMLResponse
 
@@ -12,6 +12,7 @@ import db_init
 import static.fragments.html_add as add
 import static.fragments.html_edit as edit
 
+ERR_MSG = "Todos os campos precisam ser preenchidos!"
 
 app = FastAPI(
     title="Clinica Médica",
@@ -48,10 +49,7 @@ async def root():
 
 @app.get("/api/capitulo", response_class=JSONResponse)
 async def root():
-    import random as r
-
-    capitulo = [1, 2, 14, 15, 23, 24, 91, 100, 133, 150][r.randint(0, 9)]
-    return {"capitulo": capitulo}
+    return {"capitulo": sort_chapter()}
 
 
 @app.get("/api/pacientes")
@@ -71,18 +69,20 @@ async def paciente(id: int):
 async def add_paciente(body=Depends(get_body)):
     if is_valid(body, 4):
         db.add_paciente(body)
-
-    dados = db.get_pacientes()
-    return dados
+        dados = db.get_pacientes()
+        return dados
+    else:
+        raise HTTPException(status_code=422, detail=ERR_MSG)
 
 
 @app.put("/api/pacientes/{id}", response_class=JSONResponse)
 async def update_paciente(id: int, body=Depends(get_body)):
     if is_valid(body, 4):
         db.update_paciente(id, body)
-
-    dados = db.get_pacientes()
-    return dados
+        dados = db.get_pacientes()
+        return dados
+    else:
+        raise HTTPException(status_code=422, detail=ERR_MSG)
 
 
 @app.delete("/api/pacientes/{id}", response_class=HTMLResponse)
@@ -105,33 +105,22 @@ async def medico(id: int):
 
 @app.post("/api/medicos", response_class=JSONResponse)
 async def add_medico(body=Depends(get_body)):
-
     if is_valid(body, 6):
         db.add_medico(body)
-
-    dados = db.get_medicos()
-    return dados
+        dados = db.get_medicos()
+        return dados
+    else:
+        raise HTTPException(status_code=422, detail=ERR_MSG)
 
 
 @app.put("/api/medicos/{id}")
 async def update_medico(id: int, body=Depends(get_body)):
-
     if is_valid(body, 6):
         db.update_medico(id, body)
-
-    dados = db.get_medicos()
-    return JSONResponse(dados)
-    # else:
-    #     medicos = db.get_medico(id)
-    #     dados = medicos[0]
-    #     return edit.medico_html(dados)
-
-    # else:
-    #     raise HTTPException(
-    #         status_code=417,
-    #         detail="Dados inválidos.",
-    #         headers={"HX-Retarget": "#error", "HX-Reswap": "outerHTML"},
-    #     )
+        dados = db.get_medicos()
+        return JSONResponse(dados)
+    else:
+        raise HTTPException(status_code=422, detail=ERR_MSG)
 
 
 @app.delete("/api/medicos/{id}", response_class=HTMLResponse)
@@ -158,8 +147,7 @@ async def edit_paciente(id: int):
         dados = paciente[0]
         return edit.paciente_html(dados)
     else:
-        # return
-        raise HTTPException(status_code=404, detail="Item not found")
+        raise HTTPException(status_code=404)
 
 
 # retornar template para incluir medico
@@ -177,8 +165,7 @@ async def edit_medico(id: int):
         dados = medicos[0]
         return edit.medico_html(dados)
     else:
-        # raise HTTPException(status_code=404, detail="Item not found")
-        return
+        raise HTTPException(status_code=404)
 
 
 # --------------------------------------- #
@@ -193,3 +180,10 @@ def db_reset():
 
 def is_valid(body: dict, qtd: int):
     return sum([1 if v else 0 for _, v in body.items()]) == qtd
+
+
+def sort_chapter():
+    import random as r
+
+    chapter = [1, 2, 14, 15, 23, 24, 91, 100, 133, 150][r.randint(0, 9)]
+    return chapter

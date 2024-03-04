@@ -1,0 +1,86 @@
+/* FORMATAR POPUP DE DETALHAMENTO */
+
+#detalhe {
+    display: flex;
+    position: fixed;
+    visibility: hidden;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+}
+
+#detalhe.show {
+    visibility: visible;
+}
+
+#detalhe>#info {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 70%;
+    margin: auto;
+    padding: 25px;
+    font-size: 1.3rem;
+    color: var(--font-secondary);
+    background-color: #e0e0e0;
+    border-radius: var(--border-radius);
+    z-index: 1000;
+}
+
+#detalhe>#info>#close {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+#detalhe>#info h3 {
+    margin: -20px 0 0;
+}
+
+#detalhe>#info ul {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+#detalhe>#info ul>li {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding: 5px 10px;
+}
+
+#detalhe>#info ul>li:nth-child(even) {
+    background-color: var(--bg-secondary);
+}
+
+#detalhe>#info ul>li:nth-child(odd) {
+    background-color: var(--bg-primary);
+}
+
+#detalhe>#info ul>li>label {
+    white-space: nowrap;
+    font-weight: 600;
+}
+
+#detalhe>#info ul>li>label::after {
+    content: ":\A0";
+}
+
+@media (max-width: 992px) and (orientation: portrait) {
+    #detalhe>#info {
+        width: 100%;
+    }
+
+    #detalhe>#info ul>li {
+        flex-direction: column;
+    }
+
+    #detalhe>#info ul>li>div::before {
+        display: block;
+    }
+}

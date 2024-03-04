@@ -41,7 +41,7 @@ def medico_html(dados):
     html = f"""
         <tr trigger="cancel" class="editing">
             <td><input name="nome" value="{dados['nome']}"></td>
-            <td class="w-10"><input name="crm" value="{dados['crm']}"></td>
+            <td><input name="crm" value="{dados['crm']}"></td>
             <td><input name="email" value="{dados['email']}"></td>
             <td><input name="especialidade" value="{dados['especialidade']}"></td>
             <td>

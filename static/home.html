@@ -8,7 +8,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/app/favicon.png">
     <link rel="stylesheet" <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="./css/styles.css">
 </head>
 
 <body>
@@ -35,14 +36,14 @@
                 </div>
 
                 <div class="card">
-                    <a href="#">
+                    <a href="#" onclick="showToast('Agendamento de consultas indisponível no momento.')">
                         <i class="material-symbols-outlined big-icon"> clinical_notes </i>
                         <p>Agendamento de Consultas</p>
                     </a>
                 </div>
 
                 <div class="card">
-                    <a href="#">
+                    <a href="#" onclick="showToast('Cancelamento de consultas indisponível no momento..')">
                         <i class="material-symbols-outlined big-icon"> person_cancel </i>
                         <p>Cancelamento de Consultas</p>
                     </a>
@@ -51,19 +52,26 @@
                 <div class="card">
                     <a href="/app/salmos.html">
                         <i class="material-symbols-outlined big-icon"> campaign </i>
-                        <p>Testar uma API Externa</p>
+                        <p>Acessando uma API Externa</p>
                         <!-- Reclamações & Elogios -->
                     </a>
                 </div>
 
                 <div class="card">
-                    <a href="#">
+                    <a href="#" onclick="showToast('Relatórios indisponíveis no momento.')">
                         <i class="material-symbols-outlined big-icon"> monitoring </i>
                         <p>Emissão de Relatórios</p>
                     </a>
                 </div>
             </div>
         </div>
+
+        <div id="toast" class="animate__animated animate__faster">
+            <!-- Exibir mensagem de erro -->
+        </div>
+
+        <script src="./js/functions.js"></script>
+
     </div>
 </body>
 
