@@ -20,19 +20,19 @@ def paciente_html():
 
                 <td class="icon">
                     <div>
-                        <a hx-get="/api/pacientes"
+                        <a class="button secondary" hx-get="/api/pacientes"
                             title="Cancelar a alteração"
                             hx-swap="outerHTML" 
                             hx-target="closest table">
-                            <i class="material-symbols-outlined small-icon">undo</i>
+                            Cancelar
                         </a>
-                        <a hx-trigger="click" 
+                        <a class="button" hx-trigger="click" 
                             hx-include="closest tr"
                             hx-post="/api/pacientes" 
                             title="Salvar"
                             hx-swap="outerHTML" 
                             hx-target="closest table">
-                            <i class="material-symbols-outlined small-icon">save</i>
+                            Salvar
                         </a>
                     </div>
                 </td>

@@ -61,19 +61,22 @@
                             <td data-th="Situação" class="fl-case l-case">{{status}}</td>
                             <td class="icon">
                                 <div>
-                                    <a href="#">
-                                        <i class="material-symbols-outlined">clinical_notes</i>
-                                    </a>
-                                    <a hx-target="closest tr" hx-get="/api/medicos/{{id}}/edit" hx-trigger="edit"
-                                        hx-swap="outerHTML" onclick="allowsEditing(this)">
-                                        <i class="material-symbols-outlined">edit</i>
-                                    </a>
+                                    <div hx-ext="client-side-templates" mustache-array-template="detalhe-template">
+                                        <a title="Detalhar informações do médico" hx-get="/api/medicos/{{id}}"
+                                            hx-target="#detalhe section" hx-swap="innerHTML" onclick="showDetail()">
+                                            <i class="material-symbols-outlined">clinical_notes</i>
+                                        </a>
 
-                                    <a hx-target="closest tr" hx-swap="outerHTML swap:0.5s" hx-confirm="{{nome}}?"
-                                        hx-delete="/api/medicos/{{id}}">
-                                        <i class=" material-symbols-outlined">delete</i>
-                                    </a>
-                                </div>
+                                        <a hx-target="closest tr" hx-get="/api/medicos/{{id}}/edit" hx-trigger="edit"
+                                            hx-swap="outerHTML" onclick="allowsEditing(this)">
+                                            <i class="material-symbols-outlined">edit</i>
+                                        </a>
+
+                                        <a hx-target="closest tr" hx-swap="outerHTML swap:0.5s" hx-confirm="{{nome}}?"
+                                            hx-delete="/api/medicos/{{id}}">
+                                            <i class=" material-symbols-outlined">delete</i>
+                                        </a>
+                                    </div>
                             </td>
                         </tr>
                         <!-- {{/data}} -->
@@ -101,6 +104,53 @@
 
             <div id="toast" class="animate__animated animate__faster">
                 <!-- Exibir mensagem de erro -->
+            </div>
+
+            <div id="detalhe">
+                <div id="info" class="animate__animated animate__faster">
+                    <div id="close">
+                        <a onclick="hideDetail()">
+                            <i class="material-symbols-outlined">close</i>
+                        </a>
+                    </div>
+
+
+                    <section></section>
+
+                    <template id="detalhe-template">
+
+                        {{#data}}
+                        <h3 class="u-case">{{nome}}</h3>
+
+                        <ul>
+                            <li> <label>E-mail</label>
+                                <div class="l-case">{{email}}</div>
+                            </li>
+
+                            <li> <label>Área</label>
+                                <div class="fl-case l-case">{{especialidade}}</div>
+                            </li>
+
+                            <li> <label>Turno</label>
+                                <div class="fl-case l-case">{{turno}}</div>
+                            </li>
+
+                            <li> <label>Situação</label>
+                                <div class="fl-case l-case">{{status}}</div>
+                            </li>
+
+                            <li> <label>Obsevações</label>
+                                <div>
+                                    Lorem ipsum dolor sit amet consectetur dipisicing elit.
+                                    Repellendus doloribus ex doloremque, perspiciatis ducimus
+                                    quibusdam hic nesciunt.
+                                </div>
+                            </li>
+                        </ul>
+                        {{/data}}
+
+                    </template>
+                </div>
             </div>
 
         </div>
