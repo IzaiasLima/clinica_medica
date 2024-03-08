@@ -3,11 +3,11 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse, RedirectResponse, HTMLResponse
 
 import json
-import time
+
+# import time
 import urllib.parse as html
 
 import db
-import db_init
 
 import static.fragments.html_add as add
 import static.fragments.html_edit as edit
@@ -174,6 +174,8 @@ async def edit_medico(id: int):
 # resetar o banco de dados
 @app.get("/reset", response_class=RedirectResponse)
 def db_reset():
+    import db_init
+
     db_init.tables_init()
     return "/app/home.html"
 
