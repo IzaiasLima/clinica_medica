@@ -14,7 +14,7 @@ def get():
             database="postgres",
             user="postgres",
             password="postgres",
-            host="192.168.1.4",
+            host="192.168.1.12",
             port="5432",
         )
         cur = con.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
@@ -28,8 +28,3 @@ def get():
         con.row_factory = sqlite3.Row
         cur = con.cursor()
         return con, cur
-
-
-# PGPASSWORD=C8wp31muRvgrYqWh52KCmYsNQ60cztr7 psql -h dpg-cnkul1021fec73d67vk0-a.oregon-postgres.render.com -U izaiaslima clinica_medica_db
-# postgres://izaiaslima:C8wp31muRvgrYqWh52KCmYsNQ60cztr7@dpg-cnkul1021fec73d67vk0-a/clinica_medica_db
-# postgres://izaiaslima:C8wp31muRvgrYqWh52KCmYsNQ60cztr7@dpg-cnkul1021fec73d67vk0-a.oregon-postgres.render.com/clinica_medica_db

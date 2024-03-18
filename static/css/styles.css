@@ -3,6 +3,7 @@
 
 :root {
     --bg-primary: #d9d9d9;
+    --bg-menu: rgba(217, 217, 217, 0.1);
     --bg-secondary: #cfcfcf;
     --btn-primary: #c3ffb4;
     --secondary: #959595;
@@ -34,11 +35,12 @@ body {
     position: fixed;
     width: 100vw;
     padding: 20px 20px 0;
-    background-color: var(--bg-primary);
+    background-color: var(--bg-menu);
+    backdrop-filter: blur(5px);
 }
 
 .header .material-symbols-outlined {
-    font-size: 2.5rem;
+    font-size: 2rem;
 }
 
 .container {
@@ -93,6 +95,7 @@ body {
     visibility: hidden;
     top: calc(50vh - 50px);
     width: calc(50vw + 50px);
+    margin: auto;
     padding: 0.5em;
     align-self: center;
     text-align: center;
@@ -227,6 +230,7 @@ input {
     height: 2.5em;
     margin-bottom: 15px;
     padding-left: 10px;
+    appearance: none;
     border-radius: var(--border-radius);
 }
 
@@ -338,7 +342,8 @@ td.icon {
     cursor: pointer;
 }
 
-td.icon div {
+td.icon div,
+td.button div {
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-evenly;
@@ -417,12 +422,16 @@ tr.htmx-swapping td {
         width: 85%;
     }
 
+    .titles {
+        margin-top: 30px;
+    }
+
     .titles h1 {
-        font-size: 5cqw;
+        font-size: 1.5rem;
     }
 
     .titles h2 {
-        font-size: 4cqw;
+        font-size: 1.1rem;
     }
 
     .content,
@@ -466,7 +475,6 @@ tr.htmx-swapping td {
 
     #toast {
         width: 90%;
-        margin: auto;
     }
 
     div.icon {
@@ -475,6 +483,10 @@ tr.htmx-swapping td {
 
     table {
         font-size: 1.3em;
+    }
+
+    table.form {
+        width: 90vw;
     }
 
     th {
@@ -516,6 +528,14 @@ tr.htmx-swapping td {
     td.icon div {
         justify-content: flex-start;
         padding-left: 0;
+    }
+
+    td.button div {
+        flex-direction: column-reverse;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        padding: 10px 0 0;
+        gap: 0;
     }
 
 }

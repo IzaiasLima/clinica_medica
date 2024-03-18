@@ -3,6 +3,21 @@ import connection
 print(f"Script {__name__} executado.")
 
 
+def drop_tables():
+    """Excluir as tabelas"""
+
+    con, cur = connection.get()
+
+    try:
+        cur.execute("DROP TABLE medicos")
+        cur.execute("DROP TABLE pacientes")
+    except:
+        pass
+
+    con.commit()
+    con.close()
+
+
 def tbl_create():
     """Criar as tabelas MEDICOS e PACIENTES."""
 
@@ -99,5 +114,6 @@ def tables_init():
 
 
 if __name__ == "__main__":
+    drop_tables()
     tbl_create()
     tables_init()

@@ -22,15 +22,15 @@ document.addEventListener(
 );
 
 document.addEventListener('htmx:responseError', evt => {
-    error = JSON.parse(evt.detail.xhr.responseText);
+    const error = JSON.parse(evt.detail.xhr.responseText);
     showToast(error.detail);
-});
+})
 
 function showToast(msg) {
-    const elm = document.getElementById('toast');
-    elm.innerHTML = msg;
-    elm.classList.add('show', 'animate__fadeInUp');
-    setTimeout(function () { elm.classList.remove('show', 'animate__fadeInUp') }, 3000);
+    const toast = document.getElementById('toast');
+    toast.innerHTML = msg;
+    toast.classList.add('show', 'animate__fadeInUp');
+    setTimeout(function () { toast.classList.remove('show', 'animate__fadeInUp') }, 3000);
 }
 
 function showDetail() {
@@ -55,4 +55,36 @@ function allowsEditing(obj) {
     } else {
         htmx.trigger(obj, 'edit')
     }
+}
+
+
+String.prototype.reverse = function () {
+    return this.split('').reverse().join('');
+};
+
+function phoneMask(value) {
+    mask = "(##) #####-####";
+    format(value, mask);
+}
+
+function format(value, mask) {
+    var vlr = value.value
+    var resultado = "";
+
+    if (vlr.length >= mask.length - 1) vlr = vlr.substring(0, mask.length)
+    vlr = vlr.replace(/[^\d]+/gi, '').reverse();
+
+    var mask = mask.reverse();
+
+    for (var x = 0, y = 0; x <= mask.length && y <= vlr.length;) {
+        if (mask.charAt(x) != '#')
+            resultado += mask.charAt(x);
+        else {
+            resultado += vlr.charAt(y);
+            y++;
+        }
+        x++;
+    }
+
+    value.value = resultado.reverse();
 }

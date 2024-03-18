@@ -6,7 +6,7 @@ def paciente_html():
             <tr trigger="cancel" class="editing">
                 <td><input placeholder="Nome do paciente" name="nome" value=""></td>
                 <td><input placeholder="E-mail do paciente" name="email" value=""></td>
-                <td><input placeholder="Telefone do paciente" name="telefone" value=""></td>
+                <td><input placeholder="Telefone do paciente" name="telefone" onkeyup="phoneMask(this)" value=""></td>
                 <td>
                     <select name="status">
                         <option value="" selected disabled hidden>Selecione</option>
@@ -18,7 +18,7 @@ def paciente_html():
                     </select>
                 </td>
 
-                <td class="icon">
+                <td class="button">
                     <div>
                         <a class="button secondary" hx-get="/api/pacientes"
                             title="Cancelar a alteração"
@@ -46,7 +46,7 @@ def medico_html():
     html = f"""
         <table class="form">
             <tr><td colspan="4"><h4>Cadastrar Médico</h4></td></tr>
-            <tr trigger="cancel" class="form editing">
+            <tr trigger="cancel" class="editing">
                 <td><input placeholder="Nome do médico" name="nome" value=""></td>
                 <td><input placeholder="CRM do médico" name="crm" value=""></td>
                 <td><input placeholder="E-mail do médico" name="email" value=""></td>
@@ -69,7 +69,7 @@ def medico_html():
                     </select>
                     <!-- <input placeholder="Situação" name="status" value=""> -->
                 </td>
-                <td class="icon">
+                <td class="button">
                     <div>
                         <a class="button secondary" hx-get="/api/medicos"
                             title="Cancelar a alteração"
@@ -87,10 +87,6 @@ def medico_html():
                             Salvar
                         </a>
                     </div>
-
-                    <!--i class="material-symbols-outlined small-icon">undo</!--i>
-                    <!-- i class="material-symbols-outlined small-icon">save</!-->
-
                 </td>
             </tr>
         </table>

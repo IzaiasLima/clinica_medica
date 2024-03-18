@@ -3,7 +3,7 @@ def paciente_html(dados):
         <tr trigger="cancel" class="editing">
             <td><input name="nome" value="{dados['nome']}"></td>
             <td><input name="email" value="{dados['email']}"></td>
-            <td><input name="telefone" value="{dados['telefone']}"></td>
+            <td><input name="telefone" onkeyup="phoneMask(this)" value="{dados['telefone']}"></td>
             <td>
                 <select name="status">
                     <option value="" selected disabled hidden>Selecione</option>
