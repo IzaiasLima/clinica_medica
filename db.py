@@ -55,13 +55,27 @@ def get_dados(tbl, id=None):
     return dados
 
 
+def search_medicos(nome):
+    return search("medicos", nome)
+
+
+def search(tbl, nome):
+    sql = f"SELECT * FROM {tbl}"
+    sql += f" WHERE UPPER(nome) LIKE '%{nome.upper()}%'"
+    sql += " ORDER BY 2"
+    cur.execute(sql)
+    rows = cur.fetchall()
+    dados = [dict(row) for row in rows]
+    return dados
+
+
 def add(table, dados: dict):
     if dados:
         values = [f"'{v}'" for _, v in dados.items()]
         all_values = ",".join(values)
 
         ## FIX: Resolver com Strategy, futuramente
-        if connection.DB_TYPE == "psql":
+        if connection.DB_TYPE == connection.TYPE_PSQL:
             sql = f"INSERT INTO {table} values (DEFAULT, {all_values})"
         else:
             sql = f"INSERT INTO {table} values (NULL, {all_values})"
