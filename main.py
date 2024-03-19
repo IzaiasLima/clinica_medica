@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse, RedirectResponse, HTMLResponse
 
 import json
 
-# import time
+import time
 import urllib.parse as html
 
 import db
@@ -54,7 +54,7 @@ async def root():
 
 @app.get("/api/pacientes")
 async def pacientes():
-    # time.sleep(0.5)
+    time.sleep(0.5)
     dados = db.get_pacientes()
     return JSONResponse(dados)
 
@@ -93,13 +93,12 @@ async def del_paciente(id: int):
 
 @app.get("/api/medicos", response_class=JSONResponse)
 async def medicos():
-    # time.sleep(1)
+    time.sleep(1)
     return db.get_medicos()
 
 
 @app.get("/api/medicos/{id}", response_class=JSONResponse)
 async def medico(id: int):
-    # time.sleep(1)
     return db.get_medico(id)
 
 
@@ -111,6 +110,19 @@ async def add_medico(body=Depends(get_body)):
         return dados
     else:
         raise HTTPException(status_code=422, detail=ERR_MSG)
+
+
+@app.post("/api/medicos/search", response_class=JSONResponse)
+async def get_medicos(body=Depends(get_body)):
+    time.sleep(3)
+
+    busca = body["search"]
+
+    if len(busca) > 2:
+        dados = db.search_medicos(busca)
+        return dados
+    else:
+        raise HTTPException(status_code=204)
 
 
 @app.put("/api/medicos/{id}")

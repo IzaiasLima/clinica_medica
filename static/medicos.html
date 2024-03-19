@@ -42,12 +42,12 @@
                     <thead>
                         <tr>
                             <th>Nome</th>
-                            <th>CRM</th>
-                            <th class="m-hidden">E-mail</th>
-                            <th>Especialidade</th>
-                            <th class="w-15">Turno</th>
-                            <th class="w-15">Situação</th>
-                            <th colspan="2">&nbsp;</th>
+                            <th class="w-1">CRM</th>
+                            <th class="w-2">Telefone</th>
+                            <th class="m-hidden">Especialidade</th>
+                            <th class="w-1">Turno</th>
+                            <th class="w-2">Situação</th>
+                            <th class="w-1">&nbsp;</th>
                         </tr>
                     </thead>
                     <tbody hx-target="closest tr" hx-swap="outerHTML swap:0.5s">
@@ -55,8 +55,8 @@
                         <tr>
                             <td title="{{id}}" class="u-case">{{nome}}</td>
                             <td data-th="CRM">{{crm}}</td>
-                            <td data-th="E-mail" class="m-hidden"><span class="w-10 l-case"> {{email}} </span></td>
-                            <td data-th="Área" class="fl-case l-case">{{especialidade}}</td>
+                            <td data-th="Telefone">{{telefone}}</td>
+                            <td data-th="Especialidade" class="m-hidden fl-case l-case">{{especialidade}}</td>
                             <td data-th="Turno" class="fl-case l-case">{{turno}}</td>
                             <td data-th="Situação" class="fl-case l-case">{{status}}</td>
                             <td class="icon">
@@ -124,12 +124,36 @@
                         <h3 class="u-case">{{nome}}</h3>
 
                         <ul>
-                            <li> <label>E-mail</label>
-                                <div class="l-case">{{email}}</div>
+                            <li> <label>Especialidade</label>
+                                <div class="fl-case l-case">{{especialidade}}</div>
                             </li>
 
-                            <li> <label>Área</label>
-                                <div class="fl-case l-case">{{especialidade}}</div>
+                            <li> <label>Telefone</label>
+                                <div>{{telefone}}</div>
+                            </li>
+
+                            <li> <label>CRM</label>
+                                <div class="u-case">{{crm}}</div>
+                            </li>
+
+                            <li> <label>RG</label>
+                                <div class="u-case">{{rg}}</div>
+                            </li>
+
+                            <li> <label>CPF</label>
+                                <div>{{cpf}}</div>
+                            </li>
+
+                            <li> <label>Data de nascimento</label>
+                                <div>{{dt_nasc}}</div>
+                            </li>
+
+                            <li> <label>Sexo</label>
+                                <div class="fl-case">{{sexo}}</div>
+                            </li>
+
+                            <li> <label>E-mail</label>
+                                <div class="l-case">{{email}}</div>
                             </li>
 
                             <li> <label>Turno</label>
@@ -140,10 +164,11 @@
                                 <div class="fl-case l-case">{{status}}</div>
                             </li>
 
-                            <li> <label>Obsevações</label>
-                                <div>
-                                    Lorem ipsum dolor sit amet consectetur dipisicing elit.
-                                </div>
+                            <li class="endereco">
+                                <label>Endereco</label>
+                                <div class="u-case">{{logradouro}}</div>
+                                <div class="u-case">{{cidade}} - {{uf}}</div>
+                                <div>{{cep}}</div>
                             </li>
                         </ul>
                         {{/data}}

@@ -116,24 +116,54 @@
                         <h3 class="u-case">{{nome}}</h3>
 
                         <ul>
-                            <li> <label>E-mail</label>
-                                <div class="l-case">{{email}}</div>
+                            <li> <label>CPF</label>
+                                <div>{{cpf}}</div>
+                            </li>
+
+                            <li> <label>RG</label>
+                                <div class="u-case">{{rg}}</div>
                             </li>
 
                             <li> <label>Telefone</label>
                                 <div>{{telefone}}</div>
                             </li>
 
-                            <li> <label>Situação</label>
-                                <div class="fl-case">{{status}}</div>
+                            <li> <label>Data de nascimento</label>
+                                <div>{{dt_nasc}}</div>
                             </li>
 
-                            <li> <label>Obsevações</label>
-                                <div>
-                                    Lorem ipsum dolor sit amet consectetur dipisicing elit.
-                                    Repellendus doloribus ex doloremque, perspiciatis ducimus
-                                    quibusdam hic nesciunt.
-                                </div>
+                            <li>
+                                <label>Sexo</label>
+                                <div class="fl-case">{{sexo}}</div>
+                            </li>
+                            <li>
+                                <label>Peso</label>
+                                <div>{{peso}} kg</div>
+                            </li>
+
+                            <li> <label>Altura</label>
+                                <div>{{altura}} cm</div>
+                            </li>
+
+                            <li> <label>Tipo saguíneo</label>
+                                <div class="u-case">{{tp_sanguineo}}</div>
+                            </li>
+
+                            <li>
+                                <label>E-mail</label>
+                                <div class="l-case">{{email}}</div>
+                            </li>
+
+                            <li>
+                                <label>Situação</label>
+                                <div class="fl-case l-case">{{status}}</div>
+                            </li>
+
+                            <li class="endereco">
+                                <label>Endereco</label>
+                                <div class="u-case">{{logradouro}}</div>
+                                <div class="u-case">{{cidade}} - {{uf}}</div>
+                                <div>{{cep}}</div>
                             </li>
                         </ul>
                         {{/data}}

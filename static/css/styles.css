@@ -90,6 +90,32 @@ body {
     outline: none;
 }
 
+.htmx-indicator {
+    opacity: 0;
+    transition: opacity 500ms ease-in;
+}
+
+img.search {
+    opacity: 1;
+}
+
+.htmx-request .htmx-indicator {
+    opacity: 1
+}
+
+.htmx-request.htmx-indicator {
+    opacity: 1
+}
+
+.htmx-request img.search {
+    opacity: 0
+}
+
+img .htmx-request.search {
+    opacity: 0
+}
+
+
 #toast {
     position: fixed;
     visibility: hidden;
@@ -131,16 +157,27 @@ button.swal2-cancel {
     font-size: 6cqw;
 }
 
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.nowrap {}
+
 .w-100 {
     width: 100%;
 }
 
-.w-10 {
-    width: 10%;
+.w-1 {
+    width: 8.5%;
 }
 
-.w-15 {
-    width: 15%;
+.w-2 {
+    width: 17%;
+}
+
+.w-5 {
+    width: 50%;
 }
 
 .u-case {
@@ -213,11 +250,6 @@ button.swal2-cancel {
 
 .card a p {
     line-height: 1.2em;
-}
-
-.spinner {
-    display: flex;
-    justify-content: center;
 }
 
 ::placeholder {
@@ -348,9 +380,12 @@ td.button div {
     flex-wrap: nowrap;
     justify-content: space-evenly;
     align-items: center;
-    padding: 10px 30px;
-    gap: 30px;
+    padding: 10px;
+    gap: 15px;
+}
 
+td.button div {
+    gap: 30px;
 }
 
 tbody tr td:first-child {
