@@ -30,7 +30,7 @@
             <div class="w-100" hx-get="/api/pacientes" hx-trigger="load" hx-swap="innerHTML"
                 mustache-array-template="pacientes-template">
                 <!-- Os dados vão ser exibidos aqui. -->
-                <div class="spinner">
+                <div class="center">
                     <img width="120px" src="./icons/spinner.svg">
                 </div>
             </div>
@@ -60,7 +60,7 @@
                                         hx-target="#detalhe section" hx-swap="innerHTML" onclick="showDetail()">
                                         <i class="material-symbols-outlined">clinical_notes</i>
                                     </a>
-                                    <a title="Editar dados do paciente" hx-target="closest tr"
+                                    <a title="Editar dados do paciente" hx-target="closest table"
                                         hx-get="/api/pacientes/{{id}}/edit" hx-trigger="edit" hx-swap="outerHTML"
                                         onclick="allowsEditing(this)">
                                         <i class="material-symbols-outlined">edit</i>

@@ -32,7 +32,7 @@
             <div class="w-100" hx-get="/api/medicos" hx-trigger="load" hx-swap="innerHTML"
                 mustache-array-template="medicos">
                 <!-- Os dados vão ser exibidos aqui. -->
-                <div class="spinner">
+                <div class="center">
                     <img width="120px" src="./icons/spinner.svg">
                 </div>
             </div>
@@ -60,23 +60,24 @@
                             <td data-th="Turno" class="fl-case l-case">{{turno}}</td>
                             <td data-th="Situação" class="fl-case l-case">{{status}}</td>
                             <td class="icon">
-                                <div>
-                                    <div hx-ext="client-side-templates" mustache-array-template="detalhe-template">
-                                        <a title="Detalhar informações do médico" hx-get="/api/medicos/{{id}}"
-                                            hx-target="#detalhe section" hx-swap="innerHTML" onclick="showDetail()">
-                                            <i class="material-symbols-outlined">clinical_notes</i>
-                                        </a>
+                                <div hx-ext="client-side-templates" mustache-array-template="detalhe-template">
+                                    <a title="Detalhar informações do médico" hx-get="/api/medicos/{{id}}"
+                                        hx-target="#detalhe section" hx-swap="innerHTML" onclick="showDetail()">
+                                        <i class="material-symbols-outlined">clinical_notes</i>
+                                    </a>
 
-                                        <a hx-target="closest tr" hx-get="/api/medicos/{{id}}/edit" hx-trigger="edit"
-                                            hx-swap="outerHTML" onclick="allowsEditing(this)">
-                                            <i class="material-symbols-outlined">edit</i>
-                                        </a>
+                                    <a title="Editar o registro do médico" hx-target="closest table"
+                                        hx-get="/api/medicos/{{id}}/edit" hx-trigger="edit" hx-swap="outerHTML"
+                                        onclick="allowsEditing(this)">
+                                        <i class="material-symbols-outlined">edit</i>
+                                    </a>
 
-                                        <a hx-target="closest tr" hx-swap="outerHTML swap:0.5s" hx-confirm="{{nome}}?"
-                                            hx-delete="/api/medicos/{{id}}">
-                                            <i class=" material-symbols-outlined">delete</i>
-                                        </a>
-                                    </div>
+                                    <a title="Excluir o registro do médico" hx-target="closest tr"
+                                        hx-swap="outerHTML swap:0.5s" hx-confirm="{{nome}}?"
+                                        hx-delete="/api/medicos/{{id}}">
+                                        <i class=" material-symbols-outlined">delete</i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                         <!-- {{/data}} -->
