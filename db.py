@@ -12,6 +12,19 @@ def get_paciente(id):
 
 
 def add_paciente(new_paciente):
+    dados = {
+        "rg": "123",
+        "dt_nasc": "2024-06-02",
+        "logradouro": "Rua Doze, 6",
+        "cep": "71900-999",
+        "cidade": "Brasília",
+        "uf": "df",
+        "sexo": "masculino",
+        "tp_sanguineo": "A+",
+        "altura": 165,
+        "peso": 61,
+    }
+    new_paciente.update(dados)
     add("pacientes", new_paciente)
 
 
@@ -32,7 +45,18 @@ def get_medico(id):
     return get_dados("medicos", id)
 
 
-def add_medico(new_medico):
+def add_medico(new_medico: dict):
+    dados = {
+        "rg": "123",
+        "dt_nasc": "2024-06-02",
+        "logradouro": "Rua Doze, 6",
+        "cep": "71900-999",
+        "cidade": "Brasília",
+        "uf": "df",
+        "sexo": "masculino",
+    }
+    new_medico.update(dados)
+
     add("medicos", new_medico)
 
 
@@ -59,9 +83,15 @@ def search_medicos(nome):
     return search("medicos", nome)
 
 
+def search_pacientes(nome):
+    return search("pacientes", nome)
+
+
 def search(tbl, nome):
+
     sql = f"SELECT * FROM {tbl}"
     sql += f" WHERE UPPER(nome) LIKE '%{nome.upper()}%'"
+    sql += f" OR cpf LIKE '{nome}%'"
     sql += " ORDER BY 2"
     cur.execute(sql)
     rows = cur.fetchall()
@@ -74,11 +104,15 @@ def add(table, dados: dict):
         values = [f"'{v}'" for _, v in dados.items()]
         all_values = ",".join(values)
 
-        ## FIX: Resolver com Strategy, futuramente
+        fields = [f"{k}" for k, _ in dados.items()]
+        all_fields = ",".join(fields)
+
         if connection.DB_TYPE == connection.TYPE_PSQL:
-            sql = f"INSERT INTO {table} values (DEFAULT, {all_values})"
+            sql = (
+                f"INSERT INTO {table} (id, {all_fields}) values (DEFAULT, {all_values})"
+            )
         else:
-            sql = f"INSERT INTO {table} values (NULL, {all_values})"
+            sql = f"INSERT INTO {table} (id, {all_fields}) values (NULL, {all_values})"
 
         cur.execute(sql)
         con.commit()

@@ -1,4 +1,3 @@
-
 document.addEventListener(
     "htmx:confirm",
     function (evt) {
@@ -26,6 +25,11 @@ document.addEventListener('htmx:responseError', evt => {
     showToast(error.detail);
 })
 
+function defaultOption(id, defaultValue) {
+    let select = document.getElementById(id);
+    select.value = defaultValue;
+}
+
 function showToast(msg) {
     const toast = document.getElementById('toast');
     toast.innerHTML = msg;
@@ -33,18 +37,18 @@ function showToast(msg) {
     setTimeout(function () { toast.classList.remove('show', 'animate__fadeInUp') }, 3000);
 }
 
-function showDetail() {
-    const detalhe = document.getElementById('detalhe');
-    const info = document.getElementById('info');
-    detalhe.classList.add('show');
-    info.classList.add('show', 'animate__fadeInUp');
+function showDialog(id) {
+    const dialog = document.getElementById(id);
+    const info = document.querySelector('.info');
+    dialog.classList.add('show');
+    info.classList.add('animate__fadeInUp');
 }
 
-function hideDetail() {
-    const detalhe = document.getElementById('detalhe');
-    const info = document.getElementById('info');
-    detalhe.classList.remove('show');
-    info.classList.remove('show', 'animate__fadeInUp');
+function closeDialog(id) {
+    const dialog = document.getElementById(id);
+    const info = document.querySelector('.info');
+    dialog.classList.remove('show');
+    info.classList.remove('animate__fadeInUp');
 }
 
 function allowsEditing(obj) {
@@ -54,37 +58,42 @@ function allowsEditing(obj) {
         htmx.trigger(editing, 'cancel')
     } else {
         htmx.trigger(obj, 'edit')
+
     }
 }
-
 
 String.prototype.reverse = function () {
     return this.split('').reverse().join('');
 };
 
-function phoneMask(value) {
+function phoneMask(obj) {
     mask = "(##) #####-####";
-    format(value, mask);
+    var fmt = format(obj.value, mask);
+    obj.value = fmt
+}
+
+function cpfMask(obj) {
+    mask = "###.###.###-##";
+    var fmt = format(obj.value, mask);
+    obj.value = fmt
 }
 
 function format(value, mask) {
-    var vlr = value.value
     var resultado = "";
 
-    if (vlr.length >= mask.length - 1) vlr = vlr.substring(0, mask.length)
-    vlr = vlr.replace(/[^\d]+/gi, '').reverse();
+    if (value.length >= mask.length - 1) value = value.substring(0, mask.length)
+    value = value.replace(/[^\d]+/gi, '').reverse();
 
     var mask = mask.reverse();
 
-    for (var x = 0, y = 0; x <= mask.length && y <= vlr.length;) {
+    for (var x = 0, y = 0; x <= mask.length && y <= value.length;) {
         if (mask.charAt(x) != '#')
             resultado += mask.charAt(x);
         else {
-            resultado += vlr.charAt(y);
+            resultado += value.charAt(y);
             y++;
         }
         x++;
     }
-
-    value.value = resultado.reverse();
+    return resultado.reverse();
 }

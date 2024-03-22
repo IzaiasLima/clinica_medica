@@ -62,13 +62,14 @@
                             <td class="icon">
                                 <div hx-ext="client-side-templates" mustache-array-template="detalhe-template">
                                     <a title="Detalhar informações do médico" hx-get="/api/medicos/{{id}}"
-                                        hx-target="#detalhe section" hx-swap="innerHTML" onclick="showDetail()">
+                                        hx-target="#detalhe section" hx-swap="innerHTML"
+                                        onclick="showDialog('detalhe')">
                                         <i class="material-symbols-outlined">clinical_notes</i>
                                     </a>
 
                                     <a title="Editar o registro do médico" hx-target="closest table"
                                         hx-get="/api/medicos/{{id}}/edit" hx-trigger="edit" hx-swap="outerHTML"
-                                        onclick="allowsEditing(this)">
+                                        onclick="allowsEditing(this);">
                                         <i class="material-symbols-outlined">edit</i>
                                     </a>
 
@@ -87,18 +88,16 @@
                             <td class="warning" colspan="8">Não há médicos cadastrados.</td>
                         </tr>
                         <!-- {{/data}} -->
-
-
                         <tr>
-                            <td class="no-border">
-                                <button class="alone" hx-trigger="click" hx-get="/api/medicos/0/add"
-                                    hx-target="closest table" hx-swap="outerHTML">
-                                    Cadastrar Médico
-                                </button>
+                            <td>
+                                <div class="buttons">
+                                    <button class="alone" hx-trigger="click" hx-get="/api/medicos/new/add"
+                                        hx-target="closest table" hx-swap="outerHTML">
+                                        Cadastrar Médico
+                                    </button>
+                                </div>
                             </td>
-                            <td class="no-border" colspan="4">&nbsp;</td>
                         </tr>
-
                     </tbody>
                 </table>
             </template>
@@ -107,14 +106,13 @@
                 <!-- Exibir mensagem de erro -->
             </div>
 
-            <div id="detalhe">
-                <div id="info" class="animate__animated animate__faster">
-                    <div id="close">
-                        <a onclick="hideDetail()">
+            <div id="detalhe" class="background">
+                <div class="info animate__animated animate__faster">
+                    <div class="close">
+                        <a onclick="closeDialog('detalhe')">
                             <i class="material-symbols-outlined">close</i>
                         </a>
                     </div>
-
 
                     <section></section>
 

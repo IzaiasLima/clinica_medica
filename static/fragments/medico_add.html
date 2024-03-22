@@ -1,0 +1,50 @@
+<div id="cadastrar" class="show background">
+    <div class="info animate__animated animate__faster animate__fadeInUp">
+        <div class="close">
+            <h3>Cadastrar Médico</h3>
+            <a onclick="closeDialog('cadastrar')" hx-get="/api/medicos" hx-swap="outerHTML" hx-target="#cadastrar">
+                <i class="material-symbols-outlined">close</i>
+            </a>
+        </div>
+
+        <section>
+            <table class="form">
+                <tr trigger="cancel" class="editing">
+                    <td><input placeholder="Nome do médico" name="nome" value=""></td>
+                    <td><input placeholder="CPF" onkeyup="cpfMask(this)" name="cpf" value=""></td>
+                    <td><input placeholder="CRM do médico" name="crm" value=""></td>
+                    <td><input placeholder="E-mail do médico" name="email" value=""></td>
+                    <td><input placeholder="Telefone" onkeyup="phoneMask(this)" name="telefone" value=""></td>
+                    <td><input placeholder="Especialidade" name="especialidade" value=""></td>
+                    <td>
+                        <select name="turno" required>
+                            <option value="" selected hidden>Selecione o turno</option>
+                            <option value="diurno">Diurno</option>
+                            <option value="noturno">Noturno</option>
+                            <option value="vespertino">Vespertino</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="status" required>
+                            <option value="" selected hidden>Selecione a situação</option>
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </section>
+
+        <div class="buttons">
+            <a class="button secondary" hx-get="/api/medicos" title="Cancelar a alteração" hx-swap="outerHTML"
+                hx-target="#cadastrar">
+                Cancelar
+            </a>
+
+            <a class="button" hx-trigger="click" hx-include="#cadastrar" hx-post="/api/medicos" title="Salvar"
+                hx-target="#cadastrar" hx-swap="outerHTML">
+                Salvar
+            </a>
+        </div>
+    </div>
+</div>

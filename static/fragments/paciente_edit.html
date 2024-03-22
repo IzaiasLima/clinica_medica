@@ -1,0 +1,42 @@
+<div id="editar" class="show background">
+    <div class="info animate__animated animate__faster animate__fadeInUp">
+        <div class="close">
+            <h3> Editar Cadastro do Paciente </h3>
+            <a onclick="closeDialog('editar')" hx-get="/api/pacientes" hx-swap="outerHTML" hx-target="#editar">
+                <i class="material-symbols-outlined">close</i>
+            </a>
+        </div>
+
+        <section>
+            <table class="form">
+                <tr trigger="cancel" class="editing">
+                    <td data-th="Nome"><input name="nome" value="{nome}"></td>
+                    <td data-th="E-mail"><input name="email" value="{email}"></td>
+                    <td data-th="Telefone"><input name="telefone" value="{telefone}"></td>
+                    <td data-th="CPF"><input name="cpf" value="{cpf}"></td>
+                    <td data-th="Data nascimento"><input name="dt_nasc" value="{dt_nasc}"></td>
+                    <td data-th="Situação">
+                        <select id="status" name="status">
+                            <option value="agendada">Agendada</option>
+                            <option value="cancelada">Cancelada</option>
+                            <option value="concluída">Concluída</option>
+                        </select>
+                    </td>
+
+                    <script>defaultOption('status', '{status}')</script>
+
+                </tr>
+            </table>
+        </section>
+        <div class="buttons">
+            <a class="button secondary" hx-get="/api/pacientes" title="Cancelar a alteração" hx-swap="outerHTML"
+                hx-target="#editar">
+                Cancelar
+            </a>
+            <a class="button" hx-trigger="click" hx-include="#editar" hx-put="/api/pacientes/{id}" title="Salvar"
+                hx-target="#editar" hx-swap="outerHTML">
+                Salvar
+            </a>
+        </div>
+    </div>
+</div>

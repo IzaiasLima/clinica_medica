@@ -47,7 +47,7 @@
                         </tr>
                     </thead>
 
-                    <tbody>
+                    <tbody hx-target="closest tr" hx-swap="outerHTML swap:0.5s">
                         <!-- {{#data}} -->
                         <tr>
                             <td title="{{id}}" class="u-case">{{nome}}</td>
@@ -57,7 +57,8 @@
                             <td class="icon">
                                 <div hx-ext="client-side-templates" mustache-array-template="detalhe-template">
                                     <a title="Detalhar informações do paciente" hx-get="/api/pacientes/{{id}}"
-                                        hx-target="#detalhe section" hx-swap="innerHTML" onclick="showDetail()">
+                                        hx-target="#detalhe section" hx-swap="innerHTML"
+                                        onclick="showDialog('detalhe')">
                                         <i class="material-symbols-outlined">clinical_notes</i>
                                     </a>
                                     <a title="Editar dados do paciente" hx-target="closest table"
@@ -83,13 +84,14 @@
                         <!-- {{/data}} -->
 
                         <tr>
-                            <td class="no-border">
-                                <button class="alone" hx-trigger="click" hx-get="/api/pacientes/0/add"
-                                    hx-target="closest table" hx-swap="outerHTML">
-                                    Cadastrar Paciente
-                                </button>
+                            <td>
+                                <div class="buttons">
+                                    <button class="alone" hx-trigger="click" hx-get="/api/pacientes/new/add"
+                                        hx-target="closest table" hx-swap="outerHTML">
+                                        Cadastrar Paciente
+                                    </button>
+                                </div>
                             </td>
-                            <td class="no-border" colspan="4">&nbsp;</td>
                         </tr>
                     </tbody>
                 </table>
@@ -99,19 +101,17 @@
                 <!-- Exibir mensagem de erro -->
             </div>
 
-            <div id="detalhe">
-                <div id="info" class="animate__animated animate__faster">
-                    <div id="close">
-                        <a onclick="hideDetail()">
+            <div id="detalhe" class="background">
+                <div class="info animate__animated animate__faster">
+                    <div class="close">
+                        <a onclick="closeDialog('detalhe')">
                             <i class="material-symbols-outlined">close</i>
                         </a>
                     </div>
 
-
                     <section></section>
 
                     <template id="detalhe-template">
-
                         {{#data}}
                         <h3 class="u-case">{{nome}}</h3>
 
@@ -129,7 +129,7 @@
                             </li>
 
                             <li> <label>Data de nascimento</label>
-                                <div>{{dt_nasc}}</div>
+                                <div>{{dt_nasc | toISOString}}</div>
                             </li>
 
                             <li>
@@ -160,7 +160,7 @@
                             </li>
 
                             <li class="endereco">
-                                <label>Endereco</label>
+                                <label>Endereço</label>
                                 <div class="u-case">{{logradouro}}</div>
                                 <div class="u-case">{{cidade}} - {{uf}}</div>
                                 <div>{{cep}}</div>

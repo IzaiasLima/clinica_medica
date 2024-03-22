@@ -1,9 +1,20 @@
-/* FORMATAR POPUP DE DETALHAMENTO */
+/* FORMATA OS DIÁLOGOS DE DETALHES, INCLUSÃO E EDIÇÃO */
 
-#detalhe {
+#detalhe,
+#cadastrar,
+#editar {
+    visibility: hidden;
+}
+
+#detalhe.show,
+#cadastrar.show,
+#editar.show {
+    visibility: visible;
+}
+
+.background {
     display: flex;
     position: fixed;
-    visibility: hidden;
     top: 0;
     left: 0;
     height: 100vh;
@@ -12,76 +23,86 @@
     padding: 0;
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
     z-index: 999;
 }
 
-#detalhe.show {
-    visibility: visible;
-}
-
-#detalhe>#info {
+.info {
     display: flex;
     flex-direction: column;
     align-self: center;
     height: 95%;
     width: 70%;
-
     margin: auto;
     padding: 25px;
     font-size: 1.3rem;
     color: var(--font-secondary);
     background-color: #e0e0e0;
     border-radius: var(--border-radius);
-    overflow-y: scroll;
     z-index: 1000;
 }
 
-#detalhe>#info>#close {
+.info .close {
     display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+#detalhe .info .close {
     flex-direction: row-reverse;
+    margin-bottom: 0;
 }
 
-#detalhe>#info h3 {
-    margin: -20px 0 0;
+.info section {
+    margin: -10px 0 0;
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
 
-#detalhe>#info ul {
+.info h3 {
+    margin: 0;
+}
+
+.info ul {
     display: flex;
     flex-direction: column;
     padding: 0;
 }
 
-#detalhe>#info ul>li {
+.info li {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     padding: 5px 10px;
 }
 
-#detalhe>#info ul>li.endereco {
-    flex-direction: column;
-    flex-wrap: wrap;
-}
-
-#detalhe>#info ul>li.endereco div {
-    padding-left: 40px;
-}
-
-#detalhe>#info ul>li:nth-child(even) {
+.info li:nth-child(even) {
     background-color: var(--bg-secondary);
 }
 
-#detalhe>#info ul>li:nth-child(odd) {
+.info li:nth-child(odd) {
     background-color: var(--bg-primary);
 }
 
-#detalhe>#info ul>li>label {
+.info li>label {
     white-space: nowrap;
     font-weight: 600;
 }
 
-#detalhe>#info ul>li>label::after {
+.info li>label::after {
     content: ":\A0";
+}
+
+li.endereco {
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+li.endereco div {
+    padding-left: 40px;
 }
 
 @media (max-width: 992px) and (orientation: portrait) {

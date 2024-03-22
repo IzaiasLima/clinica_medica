@@ -1,0 +1,41 @@
+<div id="cadastrar" class="show background">
+    <div class="info animate__animated animate__faster animate__fadeInUp">
+        <div class="close">
+            <h3>Cadastrar Paciente</h3>
+            <a onclick="closeDialog('cadastrar')" hx-get="/api/pacientes" hx-swap="outerHTML" hx-target="#cadastrar">
+                <i class="material-symbols-outlined">close</i>
+            </a>
+        </div>
+
+        <section>
+            <table class="form">
+                <tr trigger="cancel" class="editing">
+                    <td><input placeholder="Nome do paciente" name="nome" value=""></td>
+                    <td><input placeholder="E-mail do paciente" name="email" value=""></td>
+                    <td><input placeholder="Telefone do paciente" onkeyup="phoneMask(this)" name="telefone" value="">
+                    <td><input placeholder="CPF" onkeyup="cpfMask(this)" name="cpf" value=""></td>
+                    <td>
+                        <select name="status" required>
+                            <option value="" selected hidden>Selecione</option>
+                            <option value="agendada">Agendada</option>
+                            <option value="cancelada">Cancelada</option>
+                            <option value="concluída">Concluída</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </section>
+
+        <div class="buttons">
+            <a class="button secondary" hx-get="/api/pacientes" title="Cancelar a alteração" hx-swap="outerHTML"
+                hx-target="#cadastrar">
+                Cancelar
+            </a>
+
+            <a class="button" hx-trigger="click" hx-include="#cadastrar" hx-post="/api/pacientes" title="Salvar"
+                hx-target="#cadastrar" hx-swap="outerHTML">
+                Salvar
+            </a>
+        </div>
+    </div>
+</div>

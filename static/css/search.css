@@ -1,0 +1,38 @@
+/* FORMATA O INPUT DE PESQUISA */
+
+label {
+    position: relative;
+}
+
+label.search:before {
+    content: "";
+    position: absolute;
+    left: 90px;
+    top: -1.1em;
+    bottom: 0;
+    width: 25px;
+    background: url('../icons/search.svg') center / contain no-repeat;
+}
+
+input[type=search] {
+    margin-left: 80px;
+    padding-left: 43px;
+    font-size: 1.2em;
+}
+
+@media (max-width: 992px) and (orientation: portrait) {
+    div.search {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    label.search:before {
+        left: 10px;
+    }
+
+    input[type=search] {
+        width: 100%;
+        margin-left: 0px;
+        padding-left: 43px;
+    }
+}

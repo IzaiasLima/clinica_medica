@@ -1,0 +1,17 @@
+/* FORMATA BOTÕES DO DIÁLOGO DE EXCLUSÃO, QUE USA A LIB SWEETALERT2 */
+
+.swal2-actions {
+    flex-wrap: nowrap !important;
+    margin: 0 !important;
+    padding: 2em !important;
+    gap: 20px;
+}
+
+.swal2-actions button:focus {
+    outline: none;
+}
+
+button.swal2-cancel {
+    color: var(--font-secondary);
+    background-color: var(--secondary);
+}

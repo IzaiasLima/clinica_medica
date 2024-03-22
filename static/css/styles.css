@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Roboto:wght@300&display=swap');
-@import url('./detalhe.css');
+
+@import url('./htmx.css');
+@import url('./button.css');
+@import url('./dialog.css');
+@import url('./sweet-alert.css');
+@import url('./toast.css');
 
 :root {
     --bg-primary: #d9d9d9;
@@ -13,12 +18,12 @@
     --warning: #b4293e;
     --animate-duration: 1.5s;
     --border-radius: 7px;
+    --hover-color: rgba(128, 128, 128, 0.4);
 }
 
 * {
     font-family: Poppins, "Noto Sans", sans-serif;
     color: var(--font-primary);
-
     border: solid 0px transparent;
     box-sizing: border-box;
 }
@@ -47,7 +52,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    align-content: center;
+    /* align-content: center; */
     justify-content: center;
     min-height: 90vh;
     width: 90vw;
@@ -56,21 +61,21 @@ body {
     overflow: hidden;
 }
 
-.login {
+/* .login {
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: 100%;
     width: calc(250px + 10vw);
-}
+} */
 
-.home {
+/* .home {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     justify-content: center;
     align-content: center;
-}
+} */
 
 .secondary {
     color: var(--font-secondary) !important;
@@ -79,7 +84,7 @@ body {
 
 /* Swal2 CSS */
 
-.swal2-actions {
+/* .swal2-actions {
     flex-wrap: nowrap !important;
     margin: 0 !important;
     padding: 2em !important;
@@ -90,13 +95,18 @@ body {
     outline: none;
 }
 
-.htmx-indicator {
-    opacity: 0;
-    transition: opacity 500ms ease-in;
-}
+button.swal2-cancel {
+    color: var(--font-secondary);
+    background-color: var(--secondary);
+} */
 
-img.search {
+/* Swal2 FIM */
+
+/* .htmx-indicator {
+    position: relative;
+    margin-top: -1em;
     opacity: 1;
+    transition: opacity 500ms ease-in;
 }
 
 .htmx-request .htmx-indicator {
@@ -105,17 +115,8 @@ img.search {
 
 .htmx-request.htmx-indicator {
     opacity: 1
-}
-
-.htmx-request img.search {
-    opacity: 0
-}
-
-img .htmx-request.search {
-    opacity: 0
-}
-
-
+} */
+/* 
 #toast {
     position: fixed;
     visibility: hidden;
@@ -134,14 +135,8 @@ img .htmx-request.search {
 
 #toast.show {
     visibility: visible;
-}
+} */
 
-button.swal2-cancel {
-    color: var(--font-secondary);
-    background-color: var(--secondary);
-}
-
-/* Swal2 FIM */
 
 .warning {
     color: var(--warning);
@@ -161,8 +156,6 @@ button.swal2-cancel {
     display: flex;
     justify-content: center;
 }
-
-.nowrap {}
 
 .w-100 {
     width: 100%;
@@ -192,7 +185,6 @@ button.swal2-cancel {
     text-transform: uppercase;
 }
 
-
 .titles {
     flex-direction: column;
     padding: 40px 0;
@@ -213,7 +205,7 @@ button.swal2-cancel {
     font-size: 2cqw;
 }
 
-.cards,
+/* .cards, */
 .content,
 .dados,
 .titles {
@@ -221,9 +213,11 @@ button.swal2-cancel {
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
+    margin: auto;
     gap: 20px;
 }
 
+/* 
 .cards {
     width: 60%;
 }
@@ -250,13 +244,20 @@ button.swal2-cancel {
 
 .card a p {
     line-height: 1.2em;
-}
+} */
 
 ::placeholder {
     color: var(--font-primary);
     font-weight: 100;
     opacity: 0.5;
 }
+
+select:invalid {
+    /* placeholder do select, precisa que o select seja required */
+    color: rgba(0, 0, 0, 0.3);
+    font-weight: 100;
+}
+
 
 input {
     height: 2.5em;
@@ -271,6 +272,10 @@ select:focus-visible {
     outline: var(--soft-color) solid 2px;
 }
 
+/* label {
+    position: relative;
+} */
+
 select {
     width: 100%;
     height: 2.5em;
@@ -283,6 +288,7 @@ a:hover {
     cursor: pointer;
 }
 
+/* 
 button,
 a.button {
     height: 3rem;
@@ -302,22 +308,23 @@ a.button {
     flex-direction: column;
     justify-content: center;
     text-decoration: none;
-}
+} */
 
+/* button, */
 select,
-input,
-button {
+input {
     outline: none;
 }
 
-select:hover,
-input:hover,
+/* .card:hover,
 button:hover,
-a.button:hover,
-.card:hover {
-    box-shadow: 4px 4px 10px rgba(128, 128, 128, 0.4);
+a.button:hover, */
+select:hover,
+input:hover {
+    box-shadow: 4px 4px 10px var(--hover-color);
 }
 
+/* 
 button.mini {
     height: 1.9em;
     width: 13em;
@@ -326,14 +333,20 @@ button.mini {
 }
 
 button.alone {
-    margin-top: 20px;
+    min-width: 12em;
 }
 
 div.buttons {
+    margin: 30px 30px 0;
     display: flex;
     justify-content: space-evenly;
     gap: 1em;
 }
+
+div.buttons:has(.alone) {
+    margin: 30px 0;
+}
+ */
 
 div.icon {
     display: flex;
@@ -344,16 +357,16 @@ div.icon {
 }
 
 table {
-    font-size: 1.2em;
+    font-size: 1.2rem;
     width: 100%;
     border-collapse: collapse;
 }
 
 
-table.form {
+/* table.form {
     width: 60vw;
     margin: auto;
-}
+} */
 
 table.form th {
     display: none;
@@ -361,8 +374,13 @@ table.form th {
 
 table.form td {
     display: block;
+    margin-bottom: 10px;
     border-bottom: none;
+}
 
+table.form td[data-th]:before {
+    content: attr(data-th) ": ";
+    font-weight: 600;
 }
 
 tr {
@@ -374,8 +392,21 @@ td.icon {
     cursor: pointer;
 }
 
-td.icon div,
-td.button div {
+/* td.buttons:before {
+    content: "" !important;
+} */
+
+/* td.icon div,
+td.buttons div {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px;
+    gap: 15px;
+} */
+td.icon div {
+    /* td.buttons div { */
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-evenly;
@@ -384,13 +415,18 @@ td.button div {
     gap: 15px;
 }
 
-td.button div {
-    gap: 30px;
-}
+/* td:has(button) {
+    border: none;
+} */
 
-tbody tr td:first-child {
+/* td.buttons div {
+    padding-top: 30px;
+    gap: 30px;
+} */
+
+/* tr td:first-child {
     white-space: nowrap;
-}
+} */
 
 th,
 td {
@@ -400,9 +436,9 @@ td {
     vertical-align: middle;
 }
 
-td.no-border {
+/* td.no-border {
     border: none;
-}
+} */
 
 td>input,
 td>select {
@@ -417,20 +453,15 @@ th {
     border-bottom: 2px solid var(--secondary);
 }
 
-tr.htmx-swapping td {
-    opacity: 0;
-    transition: opacity 0.2s ease-out;
-}
-
 @media (max-width: 992px) and (orientation: landscape) {
     .container {
         width: 100%;
         overflow-x: auto;
     }
 
-    .card a p {
+    /* .card a p {
         font-size: 1em;
-    }
+    } */
 
     table {
         font-size: 1em;
@@ -453,9 +484,9 @@ tr.htmx-swapping td {
         padding: 5px;
     }
 
-    .login {
+    /* .login {
         width: 85%;
-    }
+    } */
 
     .titles {
         margin-top: 30px;
@@ -474,7 +505,7 @@ tr.htmx-swapping td {
         justify-content: start;
     }
 
-    .cards {
+    /* .cards {
         width: 100%;
     }
 
@@ -495,26 +526,42 @@ tr.htmx-swapping td {
     .card a p {
         padding-top: 5px;
         font-size: 4cqw;
-    }
+    } */
 
     .big-icon {
         padding: 10px;
         font-size: 10cqw;
     }
 
-    .w-10,
-    .w-15,
+    .w-1,
+    .w-2,
+    .w-5,
     .w-100 {
         width: 100%;
     }
 
-    #toast {
+    /* #toast {
         width: 90%;
-    }
+    } */
 
     div.icon {
         font-size: 20cqw;
     }
+
+    /* div.search {
+        display: flex;
+        flex-wrap: wrap;
+    } */
+
+    /* label.search:before {
+        left: 10px;
+    }
+
+    input[type=search] {
+        width: 100%;
+        margin-left: 0px;
+        padding-left: 43px;
+    } */
 
     table {
         font-size: 1.3em;
@@ -530,7 +577,6 @@ tr.htmx-swapping td {
 
     td {
         display: block;
-
     }
 
     td:before {
@@ -565,12 +611,12 @@ tr.htmx-swapping td {
         padding-left: 0;
     }
 
-    td.button div {
+    /* td.buttons div {
         flex-direction: column-reverse;
         flex-wrap: wrap;
         justify-content: flex-start;
         padding: 10px 0 0;
         gap: 0;
-    }
+    } */
 
 }

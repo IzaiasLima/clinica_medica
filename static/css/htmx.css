@@ -1,0 +1,21 @@
+/* ADICIONA EFEITO DE TRANSIÇÃO EM ALGUNS EVENTOS DO HTMX */
+
+.htmx-swapping td {
+    opacity: 0;
+    transition: opacity 0.2s ease-out;
+}
+
+.htmx-indicator {
+    position: relative;
+    margin-top: -1em;
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+}
+
+/* .htmx-request .htmx-indicator {
+    opacity: 1
+} */
+
+/* .htmx-request.htmx-indicator {
+    opacity: 1
+} */

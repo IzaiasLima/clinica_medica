@@ -7,7 +7,7 @@ TYPE_PSQL = "psql"
 TYPE_SQLITE = "sqlite"
 TYPE_MYSQL = "mysql"
 
-DB_TYPE = TYPE_SQLITE
+DB_TYPE = TYPE_PSQL
 
 
 def get():
@@ -17,7 +17,7 @@ def get():
             database="postgres",
             user="postgres",
             password="postgres",
-            host="192.168.1.4",
+            host="192.168.1.12",
             port="5432",
         )
         cur = con.cursor(cursor_factory=psycopg2.extras.RealDictCursor)

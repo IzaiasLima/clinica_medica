@@ -1,0 +1,75 @@
+button,
+a.button {
+    height: 3rem;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 0 1rem;
+    color: var(--font-primary);
+    font-size: 1.05em;
+    font-weight: 600;
+    text-align: center;
+    background-color: var(--btn-primary);
+    border-radius: var(--border-radius);
+    outline: none;
+}
+
+/* button {
+    outline: none;
+} */
+
+a.button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-decoration: none;
+}
+
+td:has(button) {
+    border: none;
+}
+
+button:hover,
+a.button:hover {
+    box-shadow: 4px 4px 10px rgba(128, 128, 128, 0.4);
+}
+
+button.mini {
+    height: 1.9em;
+    width: 13em;
+    font-size: 0.75em;
+    font-weight: 500;
+}
+
+/* button.alone {
+    min-width: 12em;
+} */
+
+div.buttons {
+    margin: 30px 30px 0;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 1em;
+}
+
+div.buttons:has(.alone) {
+    margin: 30px 0;
+}
+
+div.buttons:has(.mini) {
+    margin: 10px 0;
+}
+
+button:hover,
+a.button:hover {
+    box-shadow: 4px 4px 10px var(--hover-color);
+}
+
+@media (max-width: 992px) and (orientation: portrait) {
+    td.buttons div {
+        flex-direction: column-reverse;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        padding: 10px 0 0;
+        gap: 0;
+    }
+}

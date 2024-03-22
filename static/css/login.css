@@ -1,0 +1,14 @@
+.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: calc(250px + 10vw);
+    margin: auto;
+}
+
+@media (max-width: 992px) and (orientation: portrait) {
+    .login {
+        width: 85%;
+    }
+}
