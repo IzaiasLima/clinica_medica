@@ -1,0 +1,61 @@
+<div id="dialog" class="show background">
+    <div class="info animate__animated animate__faster animate__fadeInUp">
+        <div class="close">
+            <h3 class="u-case">{nome}</h3>
+            <a onclick="closeDialog('dialog')" hx-get="/api/medicos" hx-swap="outerHTML" hx-target="#dialog">
+                <i class="material-symbols-outlined">close</i>
+            </a>
+        </div>
+
+        <section>
+            <ul>
+                <li> <label>Especialidade</label>
+                    <div class="fl-case l-case">{especialidade}</div>
+                </li>
+
+                <li> <label>Telefone</label>
+                    <div>{telefone}</div>
+                </li>
+
+                <li> <label>CRM</label>
+                    <div class="u-case">{crm}</div>
+                </li>
+
+                <li> <label>RG</label>
+                    <div class="u-case">{rg}</div>
+                </li>
+
+                <li> <label>CPF</label>
+                    <div>{cpf}</div>
+                </li>
+
+                <li> <label>Data de nascimento</label>
+                    <div>{dt_nasc}</div>
+                </li>
+
+                <li> <label>Sexo</label>
+                    <div class="fl-case">{sexo}</div>
+                </li>
+
+                <li> <label>E-mail</label>
+                    <div class="l-case">{email}</div>
+                </li>
+
+                <li> <label>Turno</label>
+                    <div class="fl-case l-case">{turno}</div>
+                </li>
+
+                <li> <label>Situação</label>
+                    <div class="fl-case l-case">{status}</div>
+                </li>
+
+                <li class="endereco">
+                    <label>Endereco</label>
+                    <div class="u-case">{logradouro}</div>
+                    <div class="u-case">{cidade} - {uf}</div>
+                    <div>{cep}</div>
+                </li>
+            </ul>
+        </section>
+    </div>
+</div>

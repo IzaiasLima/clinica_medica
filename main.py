@@ -1,6 +1,11 @@
 from fastapi import FastAPI, Request, Depends, HTTPException
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import JSONResponse, RedirectResponse, HTMLResponse
+from fastapi.responses import (
+    JSONResponse,
+    RedirectResponse,
+    HTMLResponse,
+    PlainTextResponse,
+)
 
 import json
 
@@ -9,15 +14,11 @@ import urllib.parse as html
 
 import db
 
-# import static.fragments.html_add as add
-# import static.fragments.html_edit as edit
-
-# import static.fragments.fragment as fragment
 
 ERR_MSG = "Todos os campos precisam ser preenchidos!"
 
 app = FastAPI(
-    title="Clinica Médica",
+    title="Clínica Mentalis",
     version="0.1.1",
     summary="Protótipo de uma API para gestão de uma clínica médica. ",
 )
@@ -44,13 +45,18 @@ async def root():
     return "/app/login.html"
 
 
+@app.get("/info/title", response_class=PlainTextResponse)
+def get_info():
+    return app.title
+
+
 @app.get("/api", response_class=RedirectResponse)
-async def root():
+async def api_root():
     return "/app/login.html"
 
 
 @app.get("/api/capitulo", response_class=JSONResponse)
-async def root():
+async def capitulo():
     return {"capitulo": sort_chapter()}
 
 
@@ -136,50 +142,78 @@ async def del_medico(id: int):
 
 
 # -------------------------------------- #
+##### RETORNA FRAGMENTOS DE HTML #########
+# -------------------------------------- #
 
 
 # retornar template para incluir paciente
-@app.get("/api/pacientes/new/add", response_class=HTMLResponse)
+@app.get("/html/pacientes/new/add", response_class=HTMLResponse)
 async def add_paciente():
     html = fragment("paciente_add")
     return "".join(html)
 
 
 # retornar template para editar paciente
-@app.get("/api/pacientes/{id}/edit", response_class=HTMLResponse)
+@app.get("/html/pacientes/{id}/edit", response_class=HTMLResponse)
 async def edit_paciente(id: int):
     dados = db.get_paciente(id)
+    return fragment_format(dados, "paciente_edit")
 
-    if dados:
-        paciente = dados[0]
-        html = "".join(fragment("paciente_edit"))
-        html = html.format(**paciente)
-        return html
-    else:
-        raise HTTPException(status_code=404)
+    # if dados:
+    #     paciente = dados[0]
+    #     html = fragment("paciente_edit")
+    #     html = html.format(**paciente)
+    #     return html
+    # else:
+    #     raise HTTPException(status_code=404)
+
+
+# retornar template para exibir detalhes do paciente
+@app.get("/html/pacientes/{id}/detalhe", response_class=HTMLResponse)
+async def paciente_detail(id: int):
+    dados = db.get_paciente(id)
+    return fragment_format(dados, "paciente")
+
+    # if dados:
+    #     paciente = dados[0]
+    #     html = fragment("paciente")
+    #     html = html.format(**paciente)
+    #     return html
+    # else:
+    #     raise HTTPException(status_code=404)
 
 
 # retornar template para incluir medico
-@app.get("/api/medicos/new/add", response_class=HTMLResponse)
+@app.get("/html/medicos/new/add", response_class=HTMLResponse)
 async def add_medico():
     html = fragment("medico_add")
-    return "".join(html)
+    return html
 
 
 # retornar template para editar medico
-@app.get("/api/medicos/{id}/edit", response_class=HTMLResponse)
+@app.get("/html/medicos/{id}/edit", response_class=HTMLResponse)
 async def edit_medico(id: int):
     dados = db.get_medico(id)
+    return fragment_format(dados, "medico_edit")
 
-    if dados:
-        medico = dados[0]
-        html = "".join(fragment("medico_edit"))
-        html = html.format(**medico)
-        return html
-    else:
-        raise HTTPException(status_code=404)
+    # if dados:
+    #     medico = dados[0]
+    #     html = fragment("medico_edit")
+    #     html = html.format(**medico)
+    #     return html
+    # else:
+    #     raise HTTPException(status_code=404)
 
 
+# retorna um fragmento com o menu do sistema #
+@app.get("/html/menu", response_class=HTMLResponse)
+def get_menu():
+    html = fragment("menu")
+    return html
+
+
+# --------------------------------------- #
+# FUNÇÕES AUXILIARES E ENDPOINTS DE TESTE #
 # --------------------------------------- #
 
 
@@ -200,6 +234,15 @@ def is_valid(body: dict, qtd: int):
 def fragment(frag):
     html = open(f"./static/fragments/{frag}.html", "r").readlines()
     return "".join(html)
+
+
+def fragment_format(dados, frag):
+    if dados:
+        html = fragment(frag)
+        html = html.format(**dados[0])
+        return html
+    else:
+        raise HTTPException(status_code=404)
 
 
 def sort_chapter():

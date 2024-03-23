@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clínica Médica - Pacientes</title>
+    <title>Clínica Psicologia - Pacientes</title>
     <link rel="icon" type="image/png" sizes="32x32" href="/app/favicon.png">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
@@ -22,7 +22,7 @@
     <div class="container">
 
         <div class="titles">
-            <h1>Clínica Médica</h1>
+            <h1 hx-trigger="load" hx-get="/info/title"></h1>
             <h2>Cadastro de Pacientes</h2>
         </div>
 
@@ -56,13 +56,18 @@
                             <td data-th="Situação" class="fl-case">{{status}}</td>
                             <td class="icon">
                                 <div hx-ext="client-side-templates" mustache-array-template="detalhe-template">
-                                    <a title="Detalhar informações do paciente" hx-get="/api/pacientes/{{id}}"
+                                    <!-- <a title="Detalhar informações do paciente" hx-get="/api/pacientes/{{id}}"
                                         hx-target="#detalhe section" hx-swap="innerHTML"
                                         onclick="showDialog('detalhe')">
                                         <i class="material-symbols-outlined">clinical_notes</i>
+                                    </a> -->
+                                    <a title="Detalhar informações do paciente" hx-trigger="click"
+                                        hx-target="closest table" hx-get="/html/pacientes/{{id}}/detalhe"
+                                        hx-swap="outerHTML">
+                                        <i class="material-symbols-outlined">clinical_notes</i>
                                     </a>
                                     <a title="Editar dados do paciente" hx-target="closest table"
-                                        hx-get="/api/pacientes/{{id}}/edit" hx-trigger="edit" hx-swap="outerHTML"
+                                        hx-get="/html/pacientes/{{id}}/edit" hx-trigger="edit" hx-swap="outerHTML"
                                         onclick="allowsEditing(this)">
                                         <i class="material-symbols-outlined">edit</i>
                                     </a>
@@ -86,7 +91,7 @@
                         <tr>
                             <td>
                                 <div class="buttons">
-                                    <button class="alone" hx-trigger="click" hx-get="/api/pacientes/new/add"
+                                    <button class="alone" hx-trigger="click" hx-get="/html/pacientes/new/add"
                                         hx-target="closest table" hx-swap="outerHTML">
                                         Cadastrar Paciente
                                     </button>
@@ -97,81 +102,7 @@
                 </table>
             </template>
 
-            <div id="toast" class="animate__animated animate__faster">
-                <!-- Exibir mensagem de erro -->
-            </div>
-
-            <div id="detalhe" class="background">
-                <div class="info animate__animated animate__faster">
-                    <div class="close">
-                        <a onclick="closeDialog('detalhe')">
-                            <i class="material-symbols-outlined">close</i>
-                        </a>
-                    </div>
-
-                    <section></section>
-
-                    <template id="detalhe-template">
-                        {{#data}}
-                        <h3 class="u-case">{{nome}}</h3>
-
-                        <ul>
-                            <li> <label>CPF</label>
-                                <div>{{cpf}}</div>
-                            </li>
-
-                            <li> <label>RG</label>
-                                <div class="u-case">{{rg}}</div>
-                            </li>
-
-                            <li> <label>Telefone</label>
-                                <div>{{telefone}}</div>
-                            </li>
-
-                            <li> <label>Data de nascimento</label>
-                                <div>{{dt_nasc | toISOString}}</div>
-                            </li>
-
-                            <li>
-                                <label>Sexo</label>
-                                <div class="fl-case">{{sexo}}</div>
-                            </li>
-                            <li>
-                                <label>Peso</label>
-                                <div>{{peso}} kg</div>
-                            </li>
-
-                            <li> <label>Altura</label>
-                                <div>{{altura}} cm</div>
-                            </li>
-
-                            <li> <label>Tipo saguíneo</label>
-                                <div class="u-case">{{tp_sanguineo}}</div>
-                            </li>
-
-                            <li>
-                                <label>E-mail</label>
-                                <div class="l-case">{{email}}</div>
-                            </li>
-
-                            <li>
-                                <label>Situação</label>
-                                <div class="fl-case l-case">{{status}}</div>
-                            </li>
-
-                            <li class="endereco">
-                                <label>Endereço</label>
-                                <div class="u-case">{{logradouro}}</div>
-                                <div class="u-case">{{cidade}} - {{uf}}</div>
-                                <div>{{cep}}</div>
-                            </li>
-                        </ul>
-                        {{/data}}
-
-                    </template>
-                </div>
-            </div>
-
+            <div id="toast" class="animate__animated animate__faster"> </div>
         </div>
     </div>
 

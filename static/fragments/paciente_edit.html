@@ -1,8 +1,8 @@
-<div id="editar" class="show background">
+<div id="dialog" class="show background">
     <div class="info animate__animated animate__faster animate__fadeInUp">
         <div class="close">
             <h3> Editar Cadastro do Paciente </h3>
-            <a onclick="closeDialog('editar')" hx-get="/api/pacientes" hx-swap="outerHTML" hx-target="#editar">
+            <a onclick="closeDialog('dialog')" hx-get="/api/pacientes" hx-swap="outerHTML" hx-target="#dialog">
                 <i class="material-symbols-outlined">close</i>
             </a>
         </div>
@@ -30,11 +30,11 @@
         </section>
         <div class="buttons">
             <a class="button secondary" hx-get="/api/pacientes" title="Cancelar a alteração" hx-swap="outerHTML"
-                hx-target="#editar">
+                hx-target="#dialog">
                 Cancelar
             </a>
-            <a class="button" hx-trigger="click" hx-include="#editar" hx-put="/api/pacientes/{id}" title="Salvar"
-                hx-target="#editar" hx-swap="outerHTML">
+            <a class="button" hx-trigger="click" hx-include="#dialog" hx-put="/api/pacientes/{id}" title="Salvar"
+                hx-target="#dialog" hx-swap="outerHTML">
                 Salvar
             </a>
         </div>

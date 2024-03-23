@@ -52,7 +52,6 @@ body {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    /* align-content: center; */
     justify-content: center;
     min-height: 90vh;
     width: 90vw;
@@ -61,88 +60,15 @@ body {
     overflow: hidden;
 }
 
-/* .login {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
-    width: calc(250px + 10vw);
-} */
-
-/* .home {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-} */
-
 .secondary {
     color: var(--font-secondary) !important;
     background-color: var(--secondary) !important;
 }
 
-/* Swal2 CSS */
-
-/* .swal2-actions {
-    flex-wrap: nowrap !important;
-    margin: 0 !important;
-    padding: 2em !important;
-    gap: 20px;
-}
-
-.swal2-actions button:focus {
-    outline: none;
-}
-
-button.swal2-cancel {
-    color: var(--font-secondary);
-    background-color: var(--secondary);
-} */
-
-/* Swal2 FIM */
-
-/* .htmx-indicator {
-    position: relative;
-    margin-top: -1em;
-    opacity: 1;
-    transition: opacity 500ms ease-in;
-}
-
-.htmx-request .htmx-indicator {
-    opacity: 1
-}
-
-.htmx-request.htmx-indicator {
-    opacity: 1
-} */
-/* 
-#toast {
-    position: fixed;
-    visibility: hidden;
-    top: calc(50vh - 50px);
-    width: calc(50vw + 50px);
-    margin: auto;
-    padding: 0.5em;
-    align-self: center;
-    text-align: center;
-    font-size: 1.3rem;
-    color: var(--font-secondary);
-    background-color: var(--warning);
-    border-radius: var(--border-radius);
-    z-index: 1000;
-}
-
-#toast.show {
-    visibility: visible;
-} */
-
-
 .warning {
     color: var(--warning);
     font-weight: 500;
 }
-
 
 .small-icon {
     font-size: 1.7em;
@@ -157,20 +83,26 @@ button.swal2-cancel {
     justify-content: center;
 }
 
+.g-1 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
 .w-100 {
-    width: 100%;
+    width: 100% !important;
 }
 
 .w-1 {
-    width: 8.5%;
+    width: 8.5% !important;
 }
 
 .w-2 {
-    width: 17%;
+    width: 17% !important;
 }
 
 .w-5 {
-    width: 50%;
+    width: 50% !important;
 }
 
 .u-case {
@@ -205,7 +137,6 @@ button.swal2-cancel {
     font-size: 2cqw;
 }
 
-/* .cards, */
 .content,
 .dados,
 .titles {
@@ -217,47 +148,18 @@ button.swal2-cancel {
     gap: 20px;
 }
 
-/* 
-.cards {
-    width: 60%;
-}
-
-.card {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: center;
-    justify-content: center;
-    height: 13vw;
-    width: 13vw;
-    padding: 15px 7px 0;
-    background-color: var(--btn-primary);
-    border-radius: var(--border-radius);
-}
-
-.card a {
-    text-align: center;
-    font-size: 1.4cqw;
-    font-weight: 600;
-    text-decoration: none;
-    color: var(--font-primary);
-}
-
-.card a p {
-    line-height: 1.2em;
-} */
-
 ::placeholder {
     color: var(--font-primary);
     font-weight: 100;
     opacity: 0.5;
 }
 
-select:invalid {
-    /* placeholder do select, precisa que o select seja required */
+select:invalid,
+input[type="date"]:invalid {
+    /* simula o placeholder, precisa que o valor seja required */
     color: rgba(0, 0, 0, 0.3);
     font-weight: 100;
 }
-
 
 input {
     height: 2.5em;
@@ -272,13 +174,9 @@ select:focus-visible {
     outline: var(--soft-color) solid 2px;
 }
 
-/* label {
-    position: relative;
-} */
-
 select {
     width: 100%;
-    height: 2.5em;
+    min-height: 2.5em;
     line-height: 2.5em;
     background: #fff;
     border-radius: var(--border-radius);
@@ -288,65 +186,24 @@ a:hover {
     cursor: pointer;
 }
 
-/* 
-button,
-a.button {
-    height: 3rem;
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 0 1rem;
-    color: var(--font-primary);
-    font-size: 1.05em;
-    font-weight: 600;
-    text-align: center;
-    background-color: var(--btn-primary);
-    border-radius: var(--border-radius);
-}
-
-a.button {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-decoration: none;
-} */
-
-/* button, */
 select,
 input {
     outline: none;
 }
 
-/* .card:hover,
-button:hover,
-a.button:hover, */
+input[type="date"] {
+    font-size: 1.2rem;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    font-size: 1.5em;
+    background-image: url('../icons/calendar.svg');
+}
+
 select:hover,
 input:hover {
     box-shadow: 4px 4px 10px var(--hover-color);
 }
-
-/* 
-button.mini {
-    height: 1.9em;
-    width: 13em;
-    font-size: 0.75em;
-    font-weight: 500;
-}
-
-button.alone {
-    min-width: 12em;
-}
-
-div.buttons {
-    margin: 30px 30px 0;
-    display: flex;
-    justify-content: space-evenly;
-    gap: 1em;
-}
-
-div.buttons:has(.alone) {
-    margin: 30px 0;
-}
- */
 
 div.icon {
     display: flex;
@@ -361,12 +218,6 @@ table {
     width: 100%;
     border-collapse: collapse;
 }
-
-
-/* table.form {
-    width: 60vw;
-    margin: auto;
-} */
 
 table.form th {
     display: none;
@@ -392,19 +243,6 @@ td.icon {
     cursor: pointer;
 }
 
-/* td.buttons:before {
-    content: "" !important;
-} */
-
-/* td.icon div,
-td.buttons div {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
-    align-items: center;
-    padding: 10px;
-    gap: 15px;
-} */
 td.icon div {
     /* td.buttons div { */
     display: flex;
@@ -415,19 +253,6 @@ td.icon div {
     gap: 15px;
 }
 
-/* td:has(button) {
-    border: none;
-} */
-
-/* td.buttons div {
-    padding-top: 30px;
-    gap: 30px;
-} */
-
-/* tr td:first-child {
-    white-space: nowrap;
-} */
-
 th,
 td {
     padding-right: 0.5em;
@@ -435,10 +260,6 @@ td {
     border-bottom: 1px solid var(--secondary);
     vertical-align: middle;
 }
-
-/* td.no-border {
-    border: none;
-} */
 
 td>input,
 td>select {
@@ -458,10 +279,6 @@ th {
         width: 100%;
         overflow-x: auto;
     }
-
-    /* .card a p {
-        font-size: 1em;
-    } */
 
     table {
         font-size: 1em;
@@ -484,10 +301,6 @@ th {
         padding: 5px;
     }
 
-    /* .login {
-        width: 85%;
-    } */
-
     .titles {
         margin-top: 30px;
     }
@@ -505,29 +318,6 @@ th {
         justify-content: start;
     }
 
-    /* .cards {
-        width: 100%;
-    }
-
-    .card {
-        width: 100%;
-        justify-content: start;
-        padding-top: 0;
-    }
-
-    .card a {
-        display: inline-flex;
-        flex-wrap: nowrap;
-        text-align: start;
-        justify-content: start;
-        gap: 15px;
-    }
-
-    .card a p {
-        padding-top: 5px;
-        font-size: 4cqw;
-    } */
-
     .big-icon {
         padding: 10px;
         font-size: 10cqw;
@@ -537,31 +327,12 @@ th {
     .w-2,
     .w-5,
     .w-100 {
-        width: 100%;
+        width: 100% !important;
     }
-
-    /* #toast {
-        width: 90%;
-    } */
 
     div.icon {
         font-size: 20cqw;
     }
-
-    /* div.search {
-        display: flex;
-        flex-wrap: wrap;
-    } */
-
-    /* label.search:before {
-        left: 10px;
-    }
-
-    input[type=search] {
-        width: 100%;
-        margin-left: 0px;
-        padding-left: 43px;
-    } */
 
     table {
         font-size: 1.3em;
@@ -590,7 +361,6 @@ th {
         border-bottom: none;
     }
 
-
     td:first-child:before,
     td:last-child:before,
     td:has(input):before,
@@ -610,13 +380,5 @@ th {
         justify-content: flex-start;
         padding-left: 0;
     }
-
-    /* td.buttons div {
-        flex-direction: column-reverse;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        padding: 10px 0 0;
-        gap: 0;
-    } */
 
 }

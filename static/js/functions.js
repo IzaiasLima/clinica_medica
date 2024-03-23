@@ -79,7 +79,7 @@ function cpfMask(obj) {
 }
 
 function format(value, mask) {
-    var resultado = "";
+    var result = "";
 
     if (value.length >= mask.length - 1) value = value.substring(0, mask.length)
     value = value.replace(/[^\d]+/gi, '').reverse();
@@ -88,12 +88,41 @@ function format(value, mask) {
 
     for (var x = 0, y = 0; x <= mask.length && y <= value.length;) {
         if (mask.charAt(x) != '#')
-            resultado += mask.charAt(x);
+            result += mask.charAt(x);
         else {
-            resultado += value.charAt(y);
+            result += value.charAt(y);
             y++;
         }
         x++;
     }
-    return resultado.reverse();
+    return result.reverse();
+}
+
+function menuToggle() {
+    document.querySelector('#menu').classList.toggle('show');
+    document.querySelector('.open-icon').classList.toggle('toggle');
+    document.querySelector('.close-icon').classList.toggle('toggle');
+}
+
+function getCidades(uf) {
+    if (uf == "") return;
+
+    var url = 'https://brasilapi.com.br/api/ibge/municipios/v1/'
+    url += uf.toLowerCase()
+
+    sel = document.getElementById('cidade');
+    sel.innerHTML = "";
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            for (const [k, v] of data.entries()) {
+                var opt = document.createElement('option');
+                opt.value = v.nome;
+                opt.innerHTML = v['nome'];
+                sel.appendChild(opt);
+            }
+        }).catch((error) => {
+            console.error('Não foi possível obter as cidades: ', error)
+        });
 }

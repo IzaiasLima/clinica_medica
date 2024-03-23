@@ -1,14 +1,14 @@
 /* FORMATA OS DIÁLOGOS DE DETALHES, INCLUSÃO E EDIÇÃO */
 
-#detalhe,
-#cadastrar,
-#editar {
+/* #cadastrar,
+#editar, */
+#dialog {
     visibility: hidden;
 }
 
-#detalhe.show,
-#cadastrar.show,
-#editar.show {
+/* #editar.show,
+#cadastrar.show, */
+#dialog.show {
     visibility: visible;
 }
 
@@ -51,10 +51,10 @@
     background-color: rgba(255, 255, 255, 0);
 }
 
-#detalhe .info .close {
+/* #dialog .info .close {
     flex-direction: row-reverse;
     margin-bottom: 0;
-}
+} */
 
 .info section {
     margin: -10px 0 0;
@@ -106,21 +106,21 @@ li.endereco div {
 }
 
 @media (max-width: 992px) and (orientation: portrait) {
-    #detalhe>#info {
+    #dialog>#info {
         height: 100%;
         width: 100%;
         margin: 0;
     }
 
-    #detalhe>#info ul>li {
+    #dialog>#info ul>li {
         flex-direction: column;
     }
 
-    #detalhe>#info ul>li>div::before {
+    #dialog>#info ul>li>div::before {
         display: block;
     }
 
-    #detalhe>#info ul>li.endereco div {
+    #dialog>#info ul>li.endereco div {
         padding-left: 0;
     }
 }

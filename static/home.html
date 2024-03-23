@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clínica Médica</title>
+    <title>Clínica Psicologia</title>
     <link rel="icon" type="image/png" sizes="32x32" href="/app/favicon.png">
     <link rel="stylesheet" <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
@@ -17,7 +17,7 @@
     <div class="container">
 
         <div class="titles">
-            <h1>Clínica Médica</h1>
+            <h1 hx-trigger="load" hx-get="/info/title"></h1>
         </div>
 
         <div class="home">
@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="card">
-                    <a href="#" onclick="showToast('Cancelamento de consultas indisponível no momento..')">
+                    <a href="/app/cidades.html">
                         <i class="material-symbols-outlined big-icon"> person_cancel </i>
                         <p>Cancelamento de Consultas</p>
                     </a>
@@ -72,6 +72,9 @@
         </div>
     </div>
 
+    <script src="https://unpkg.com/htmx.org@1.9.10"
+        integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+        crossorigin="anonymous"></script>
     <script src="./js/functions.js"></script>
 
 </body>

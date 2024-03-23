@@ -20,6 +20,15 @@ input[type=search] {
     font-size: 1.2em;
 }
 
+[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    background-color: #7d7d7d;
+    -webkit-mask-image: url('../icons/clear.svg');
+    background-size: 20px 20px;
+    height: 32px;
+    width: 32px;
+}
+
 @media (max-width: 992px) and (orientation: portrait) {
     div.search {
         display: flex;

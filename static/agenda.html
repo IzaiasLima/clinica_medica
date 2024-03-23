@@ -5,36 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="htmx-config" content='{"responseTargetSetsError":"true"}'>
-    <title>Clínica Médica - Médicos</title>
+    <title>Clínica Psicologia - Consultas</title>
     <link rel="icon" type="image/png" sizes="32x32" href="/app/favicon.png">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="./css/search.css">
+    <link rel="stylesheet" href="./css/menu.css">
 </head>
 
 <body>
 
-    <div class="header">
-        <a href="/app/home.html">
-            <i class="material-symbols-outlined">arrow_back</i>
-        </a>
-    </div>
+    <div hx-get="/html/menu" hx-trigger="load" hx-swap="outerHTML"> </div>
 
     <div class="container">
-
         <div class="titles">
-            <h1>Clínica Médica</h1>
+            <h1 hx-trigger="load" hx-get="/info/title"></h1>
             <h2>Agendamento de Consultas</h2>
         </div>
 
         <div class="content" hx-indicator="#spinner" hx-ext="client-side-templates">
-            <div class="search w-100 center">
+            <div class="search center">
                 <label class="search">
                     <input type="search" name="search" placeholder="Informe parte do nome ou do CPF"
                         hx-post="/api/medicos/search" hx-trigger="input changed delay:500ms, search"
                         hx-target="next div" mustache-array-template="medicos">
+                    <input required type="date">
                 </label>
                 <img id="spinner" class="htmx-indicator" width="80px" src="./icons/spinner.svg" />
             </div>
