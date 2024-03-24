@@ -56,11 +56,6 @@
                             <td data-th="Situação" class="fl-case">{{status}}</td>
                             <td class="icon">
                                 <div hx-ext="client-side-templates" mustache-array-template="detalhe-template">
-                                    <!-- <a title="Detalhar informações do paciente" hx-get="/api/pacientes/{{id}}"
-                                        hx-target="#detalhe section" hx-swap="innerHTML"
-                                        onclick="showDialog('detalhe')">
-                                        <i class="material-symbols-outlined">clinical_notes</i>
-                                    </a> -->
                                     <a title="Detalhar informações do paciente" hx-trigger="click"
                                         hx-target="closest table" hx-get="/html/pacientes/{{id}}/detalhe"
                                         hx-swap="outerHTML">

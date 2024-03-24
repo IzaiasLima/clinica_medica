@@ -159,28 +159,12 @@ async def edit_paciente(id: int):
     dados = db.get_paciente(id)
     return fragment_format(dados, "paciente_edit")
 
-    # if dados:
-    #     paciente = dados[0]
-    #     html = fragment("paciente_edit")
-    #     html = html.format(**paciente)
-    #     return html
-    # else:
-    #     raise HTTPException(status_code=404)
-
 
 # retornar template para exibir detalhes do paciente
 @app.get("/html/pacientes/{id}/detalhe", response_class=HTMLResponse)
-async def paciente_detail(id: int):
+async def paciente(id: int):
     dados = db.get_paciente(id)
     return fragment_format(dados, "paciente")
-
-    # if dados:
-    #     paciente = dados[0]
-    #     html = fragment("paciente")
-    #     html = html.format(**paciente)
-    #     return html
-    # else:
-    #     raise HTTPException(status_code=404)
 
 
 # retornar template para incluir medico
@@ -196,13 +180,12 @@ async def edit_medico(id: int):
     dados = db.get_medico(id)
     return fragment_format(dados, "medico_edit")
 
-    # if dados:
-    #     medico = dados[0]
-    #     html = fragment("medico_edit")
-    #     html = html.format(**medico)
-    #     return html
-    # else:
-    #     raise HTTPException(status_code=404)
+
+# retornar template para exibir detalhes do paciente
+@app.get("/html/medicos/{id}/detalhe", response_class=HTMLResponse)
+async def medico(id: int):
+    dados = db.get_medico(id)
+    return fragment_format(dados, "medico")
 
 
 # retorna um fragmento com o menu do sistema #

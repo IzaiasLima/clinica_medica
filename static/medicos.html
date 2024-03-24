@@ -61,12 +61,6 @@
                             <td data-th="Situação" class="fl-case l-case">{{status}}</td>
                             <td class="icon">
                                 <div hx-ext="client-side-templates" mustache-array-template="detalhe-template">
-                                    <!-- <a title="Detalhar informações do médico" hx-get="/api/medicos/{{id}}"
-                                        hx-target="#detalhe section" hx-swap="innerHTML"
-                                        onclick="showDialog('detalhe')">
-                                        <i class="material-symbols-outlined">clinical_notes</i>
-                                    </a> -->
-
                                     <a title="Detalhar informações do médico" hx-trigger="click"
                                         hx-target="closest table" hx-get="/html/medicos/{{id}}/detalhe"
                                         hx-swap="outerHTML">
@@ -111,21 +105,6 @@
             <div id="toast" class="animate__animated animate__faster">
                 <!-- Exibir mensagem de erro -->
             </div>
-
-            <div id="detalhe" class="background">
-                <div class="info animate__animated animate__faster">
-                    <div class="close">
-                        <a onclick="closeDialog('detalhe')">
-                            <i class="material-symbols-outlined">close</i>
-                        </a>
-                    </div>
-
-                    <section></section>
-
-
-                </div>
-            </div>
-
         </div>
     </div>
 
