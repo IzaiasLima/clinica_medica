@@ -82,6 +82,13 @@ async def add_paciente(body=Depends(get_body)):
         raise HTTPException(status_code=422, detail=ERR_MSG)
 
 
+@app.post("/api/pacientes/search", response_class=JSONResponse)
+async def search_pacientes(body=Depends(get_body)):
+    search = body["search"]
+    dados = db.get_pacientes() if len(search) < 2 else db.search_pacientes(search)
+    return dados
+
+
 @app.put("/api/pacientes/{id}", response_class=JSONResponse)
 async def update_paciente(id: int, body=Depends(get_body)):
     if is_valid(body, 6):
@@ -119,10 +126,9 @@ async def add_medico(body=Depends(get_body)):
 
 
 @app.post("/api/medicos/search", response_class=JSONResponse)
-async def get_medicos(body=Depends(get_body)):
-    time.sleep(0.5)
-    busca = body["search"]
-    dados = db.get_medicos() if len(busca) < 2 else db.search_medicos(busca)
+async def search_medicos(body=Depends(get_body)):
+    search = body["search"]
+    dados = db.get_medicos() if len(search) < 2 else db.search_medicos(search)
     return dados
 
 
@@ -142,7 +148,7 @@ async def del_medico(id: int):
 
 
 # -------------------------------------- #
-##### RETORNA FRAGMENTOS DE HTML #########
+#       RETORNA FRAGMENTOS DE HTML       #
 # -------------------------------------- #
 
 
@@ -162,7 +168,7 @@ async def edit_paciente(id: int):
 
 # retornar template para exibir detalhes do paciente
 @app.get("/html/pacientes/{id}/detalhe", response_class=HTMLResponse)
-async def paciente(id: int):
+async def detalhe_paciente(id: int):
     dados = db.get_paciente(id)
     return fragment_format(dados, "paciente")
 
@@ -183,7 +189,7 @@ async def edit_medico(id: int):
 
 # retornar template para exibir detalhes do paciente
 @app.get("/html/medicos/{id}/detalhe", response_class=HTMLResponse)
-async def medico(id: int):
+async def detalhe_medico(id: int):
     dados = db.get_medico(id)
     return fragment_format(dados, "medico")
 

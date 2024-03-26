@@ -79,19 +79,18 @@ def get_dados(tbl, id=None):
     return dados
 
 
-def search_medicos(nome):
-    return search("medicos", nome)
+def search_medicos(param):
+    return search("medicos", param)
 
 
-def search_pacientes(nome):
-    return search("pacientes", nome)
+def search_pacientes(param):
+    return search("pacientes", param)
 
 
-def search(tbl, nome):
-
+def search(tbl, param):
     sql = f"SELECT * FROM {tbl}"
-    sql += f" WHERE UPPER(nome) LIKE '%{nome.upper()}%'"
-    sql += f" OR cpf LIKE '{nome}%'"
+    sql += f" WHERE UPPER(nome) LIKE '%{param.upper()}%'"
+    sql += f" OR cpf LIKE '{param}%'"
     sql += " ORDER BY 2"
     cur.execute(sql)
     rows = cur.fetchall()
