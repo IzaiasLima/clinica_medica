@@ -10,12 +10,25 @@
         <section>
             <table class="form">
                 <tr trigger="cancel" class="editing">
+                    <!-- "logradouro": "Rua Doze, 6"
+                    "cep": "71900-999"
+                    "cidade": "Brasília"
+                    "uf": "df" -->
                     <td><input placeholder="Nome do médico" name="nome" value=""></td>
+                    <td><input placeholder="Especialidade" name="especialidade" value=""></td>
                     <td><input placeholder="CPF" onkeyup="cpfMask(this)" name="cpf" value=""></td>
+                    <td><input placeholder="RG" name="rg" value=""></td>
+                    <td><input placeholder="Data nascimento" onkeyup="dateMask(this)" name="dt_nasc" value=""></td>
                     <td><input placeholder="CRM do médico" name="crm" value=""></td>
                     <td><input placeholder="E-mail do médico" name="email" value=""></td>
                     <td><input placeholder="Telefone" onkeyup="phoneMask(this)" name="telefone" value=""></td>
-                    <td><input placeholder="Especialidade" name="especialidade" value=""></td>
+                    <td>
+                        <select name="sexo" required>
+                            <option value="" selected hidden>Selecione o sexo</option>
+                            <option value="masculino">Masculino</option>
+                            <option value="feminino">Feminino</option>
+                        </select>
+                    </td>
                     <td>
                         <select name="turno" required>
                             <option value="" selected hidden>Selecione o turno</option>

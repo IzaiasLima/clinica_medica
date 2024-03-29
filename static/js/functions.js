@@ -78,6 +78,12 @@ function cpfMask(obj) {
     obj.value = fmt
 }
 
+function dateMask(obj) {
+    mask = "####-##-##";
+    var fmt = format(obj.value, mask);
+    obj.value = fmt
+}
+
 function format(value, mask) {
     var result = "";
 

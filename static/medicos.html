@@ -30,22 +30,24 @@
         </div>
 
         <div class="content" hx-ext="client-side-templates">
-            <div class="search center">
+            <div class="center">
                 <label class="search">
                     <input type="search" name="search" placeholder="Informe parte do nome ou do CPF"
-                        hx-post="/api/medicos/search" hx-trigger="input changed delay:500ms, search"
+                        hx-post="/api/medicos/search" hx-trigger="input changed,click delay:500ms, search"
                         hx-target="#lista_medicos" mustache-array-template="medicos-template">
                 </label>
                 <img id="spinner" class="htmx-indicator" width="80px" src="./icons/spinner.svg" />
             </div>
 
-            <div id="lista_medicos" class="w-100" hx-get="/api/medicos" hx-trigger="load" hx-swap="innerHTML"
-                mustache-array-template="medicos-template">
+            <div id="lista_medicos" class="w-100" hx-get="/api/medicos" hx-vars="{'page':0}" hx-trigger="load"
+                hx-swap="innerHTML" mustache-array-template="medicos-template">
                 <!-- Os dados vão ser exibidos aqui. -->
                 <!-- <div class="center">
                     <img width="120px" src="./icons/spinner.svg">
                 </div> -->
             </div>
+
+            <section id="detalhe"></section>
 
             <template id="medicos-template">
                 <table>
@@ -60,8 +62,8 @@
                             <th class="w-1">&nbsp;</th>
                         </tr>
                     </thead>
-                    <tbody hx-target="closest tr" hx-swap="outerHTML swap:0.5s">
-                        <!-- {{#data}} -->
+                    <tbody>
+                        <!-- {{#data.info}} -->
                         <tr>
                             <td title="{{id}}" class="u-case">{{nome}}</td>
                             <td data-th="CRM" class="u-case">{{crm}}</td>
@@ -70,44 +72,80 @@
                             <td data-th="Turno" class="fl-case l-case">{{turno}}</td>
                             <td data-th="Situação" class="fl-case l-case">{{status}}</td>
                             <td class="icon">
-                                <div hx-ext="client-side-templates" mustache-array-template="detalhe-template">
+                                <div>
                                     <a title="Detalhar informações do médico" hx-trigger="click"
-                                        hx-target="closest table" hx-get="/html/medicos/{{id}}/detalhe"
-                                        hx-swap="outerHTML">
+                                        hx-get="/html/medicos/{{id}}/detalhe" hx-target="#detalhe" hx-swap="innerHTML">
                                         <i class="material-symbols-outlined">clinical_notes</i>
                                     </a>
 
-                                    <a title="Editar o registro do médico" hx-target="closest table"
-                                        hx-get="/html/medicos/{{id}}/edit" hx-trigger="edit" hx-swap="outerHTML"
-                                        onclick="allowsEditing(this);">
+                                    <a title="Editar o registro do médico" hx-target="#detalhe"
+                                        hx-get="/html/medicos/{{id}}/edit" hx-vars="{'page': {{data.pagination.page}} }"
+                                        hx-trigger="click" hx-swap="innerHTML">
                                         <i class="material-symbols-outlined">edit</i>
                                     </a>
 
                                     <a title="Excluir o registro do médico" hx-target="closest tr"
                                         hx-swap="outerHTML swap:0.5s" hx-confirm="{{nome}}?"
                                         hx-delete="/api/medicos/{{id}}">
-                                        <i class=" material-symbols-outlined">delete</i>
+                                        <i class="material-symbols-outlined">delete</i>
                                     </a>
                                 </div>
                             </td>
                         </tr>
-                        <!-- {{/data}} -->
 
-                        <!-- {{^data}} -->
+                        <!-- {{/data.info}} -->
+
+                        <!-- {{^data.info}} -->
                         <tr>
                             <td class="warning" colspan="8">Não há médicos cadastrados.</td>
                         </tr>
-                        <!-- {{/data}} -->
+                        <!-- {{/data.info}} -->
+
                         <tr>
-                            <td>
-                                <div class="buttons">
-                                    <button class="alone" hx-trigger="click" hx-get="/html/medicos/new/add"
+                            <td colspan="7">
+                                <div class="pagination">
+                                    <div class="nav-buttons">
+                                        <!-- {{#data.pagination}} -->
+                                        <a hx-get="/api/medicos" hx-vars="{'page': 0}" hx-target="#lista_medicos"
+                                            hx-swap="innerHTML" mustache-array-template="medicos-template">
+                                            <i class="material-symbols-outlined small-icon">first_page</i>
+                                        </a>
+                                        <a class="{{data.pagination.alias_first_page}}" hx-get="/api/medicos"
+                                            hx-vars="{'page':{{data.pagination.previous_page}}}"
+                                            hx-target="#lista_medicos" hx-swap="innerHTML"
+                                            mustache-array-template="medicos-template">
+                                            <i
+                                                class="{{data.pagination.alias_first_page}} material-symbols-outlined small-icon">
+                                                chevron_left
+                                            </i>
+                                        </a>
+
+                                        <a class="{{data.pagination.alias_last_page}}" hx-get="/api/medicos"
+                                            hx-vars="{'page':{{data.pagination.next_page}}}" hx-target="#lista_medicos"
+                                            hx-swap="innerHTML" mustache-array-template="medicos-template">
+                                            <i
+                                                class="{{data.pagination.alias_last_page}} material-symbols-outlined small-icon">
+                                                chevron_right
+                                            </i>
+                                        </a>
+
+                                        <a hx-get="/api/medicos" hx-vars="{'page':{{data.pagination.total_pages}}}"
+                                            hx-target="#lista_medicos" hx-swap="innerHTML"
+                                            mustache-array-template="medicos-template">
+                                            <i class="material-symbols-outlined small-icon">last_page</i>
+                                        </a>
+                                        <!-- {{/data.pagination}} -->
+                                    </div>
+
+                                    <button class="w-3" hx-trigger="click" hx-get="/html/medicos/new/add"
                                         hx-target="closest table" hx-swap="outerHTML">
                                         Cadastrar Médico
                                     </button>
                                 </div>
                             </td>
                         </tr>
+
+
                     </tbody>
                 </table>
             </template>
@@ -122,6 +160,7 @@
         crossorigin="anonymous"></script>
     <!-- <script src="https://unpkg.com/htmx.org/dist/ext/response-targets.js"></script> -->
     <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
+    <!-- <script src="https://unpkg.com/htmx.org@1.9.11/dist/ext/path-params.js"></script> -->
     <script src="https://unpkg.com/mustache@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./js/functions.js"></script>

@@ -2,7 +2,7 @@
     <div class="info animate__animated animate__faster animate__fadeInUp">
         <div class="close">
             <h3> Editar Cadastro do Médico </h3>
-            <a onclick="closeDialog('dialog')" hx-get="/api/medicos" hx-swap="outerHTML" hx-target="#dialog">
+            <a onclick="closeDialog('dialog')">
                 <i class="material-symbols-outlined">close</i>
             </a>
         </div>
@@ -17,6 +17,13 @@
                     <td data-th="CPF"><input name="cpf" value="{cpf}"></td>
                     <td data-th="Especialidade"><input name="especialidade" value="{especialidade}"></td>
                     <td data-th="Data nascimento"><input name="dt_nasc" value="{dt_nasc}"></td>
+                    <td data-th="Sexo">
+                        <select id="sexo" name="sexo" required>
+                            <option value="" selected hidden>Selecione o sexo</option>
+                            <option value="masculino">Masculino</option>
+                            <option value="feminino">Feminino</option>
+                        </select>
+                    </td>
                     <td data-th="Turno">
                         <select id="turno" name="turno">
                             <option value="diurno">Diurno</option>
@@ -26,24 +33,22 @@
                     </td>
                     <td data-th="Situação">
                         <select id="status" name="status">
-                            <!-- <option value="" disabled hidden>Selecione</option> -->
                             <option value="ativo">Ativo</option>
                             <option value="inativo">Inativo</option>
                         </select>
                     </td>
 
+                    <script>defaultOption('sexo', '{sexo}')</script>
                     <script>defaultOption('turno', '{turno}')</script>
                     <script>defaultOption('status', '{status}')</script>
                 </tr>
             </table>
         </section>
         <div class="buttons">
-            <a class="button secondary" hx-get="/api/medicos" title="Cancelar a alteração" hx-swap="outerHTML"
-                hx-target="#dialog">
-                Cancelar
-            </a>
-            <a class="button" hx-trigger="click" hx-include="#dialog" hx-put="/api/medicos/{id}" title="Salvar"
-                hx-target="#dialog" hx-swap="outerHTML">
+            <a class="button secondary" onclick="closeDialog('dialog')">Cancelar</a>
+            <a class="button" onclick="closeDialog('dialog')" hx-trigger="click" hx-include="#dialog"
+                hx-put="/api/medicos/{id}" hx-vars="{page_number}" title="Salvar" hx-target="#lista_medicos"
+                hx-swap="innerHTML" mustache-array-template="medicos-template">
                 Salvar
             </a>
         </div>
