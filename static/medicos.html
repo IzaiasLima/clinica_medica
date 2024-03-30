@@ -33,21 +33,20 @@
             <div class="center">
                 <label class="search">
                     <input type="search" name="search" placeholder="Informe parte do nome ou do CPF"
-                        hx-post="/api/medicos/search" hx-trigger="input changed,click delay:500ms, search"
-                        hx-target="#lista_medicos" mustache-array-template="medicos-template">
+                        hx-post="/api/medicos/search" hx-trigger="input changed delay:500ms, search"
+                        hx-target="#slot_lista" mustache-array-template="medicos-template">
                 </label>
                 <img id="spinner" class="htmx-indicator" width="80px" src="./icons/spinner.svg" />
             </div>
 
-            <div id="lista_medicos" class="w-100" hx-get="/api/medicos" hx-vars="{'page':0}" hx-trigger="load"
+            <div id="slot_lista" class="w-100" hx-get="/api/medicos" hx-vars="{'page':0}" hx-trigger="load"
                 hx-swap="innerHTML" mustache-array-template="medicos-template">
-                <!-- Os dados vão ser exibidos aqui. -->
-                <!-- <div class="center">
-                    <img width="120px" src="./icons/spinner.svg">
-                </div> -->
+                <!-- A listagem vai ser exibida aqui. -->
             </div>
 
-            <section id="detalhe"></section>
+            <section id="slot_dialogo">
+                <!-- Os diálogos serão exibidos aqui -->
+            </section>
 
             <template id="medicos-template">
                 <table>
@@ -74,12 +73,13 @@
                             <td class="icon">
                                 <div>
                                     <a title="Detalhar informações do médico" hx-trigger="click"
-                                        hx-get="/html/medicos/{{id}}/detalhe" hx-target="#detalhe" hx-swap="innerHTML">
+                                        hx-get="/html/medicos/{{id}}/detalhe" hx-target="#slot_dialogo"
+                                        hx-swap="innerHTML">
                                         <i class="material-symbols-outlined">clinical_notes</i>
                                     </a>
 
-                                    <a title="Editar o registro do médico" hx-target="#detalhe"
-                                        hx-get="/html/medicos/{{id}}/edit" hx-vars="{'page': {{data.pagination.page}} }"
+                                    <a title="Editar o registro do médico" hx-target="#slot_dialogo"
+                                        hx-get="/html/medicos/{{id}}/edit" hx-vars="{'page': {{data.this_page}} }"
                                         hx-trigger="click" hx-swap="innerHTML">
                                         <i class="material-symbols-outlined">edit</i>
                                     </a>
@@ -105,15 +105,16 @@
                             <td colspan="7">
                                 <div class="pagination">
                                     <div class="nav-buttons">
+
                                         <!-- {{#data.pagination}} -->
-                                        <a hx-get="/api/medicos" hx-vars="{'page': 0}" hx-target="#lista_medicos"
+
+                                        <a hx-get="/api/medicos" hx-vars="{'page': 0}" hx-target="#slot_lista"
                                             hx-swap="innerHTML" mustache-array-template="medicos-template">
                                             <i class="material-symbols-outlined small-icon">first_page</i>
                                         </a>
                                         <a class="{{data.pagination.alias_first_page}}" hx-get="/api/medicos"
-                                            hx-vars="{'page':{{data.pagination.previous_page}}}"
-                                            hx-target="#lista_medicos" hx-swap="innerHTML"
-                                            mustache-array-template="medicos-template">
+                                            hx-vars="{'page':{{data.pagination.previous_page}}}" hx-target="#slot_lista"
+                                            hx-swap="innerHTML" mustache-array-template="medicos-template">
                                             <i
                                                 class="{{data.pagination.alias_first_page}} material-symbols-outlined small-icon">
                                                 chevron_left
@@ -121,7 +122,7 @@
                                         </a>
 
                                         <a class="{{data.pagination.alias_last_page}}" hx-get="/api/medicos"
-                                            hx-vars="{'page':{{data.pagination.next_page}}}" hx-target="#lista_medicos"
+                                            hx-vars="{'page':{{data.pagination.next_page}}}" hx-target="#slot_lista"
                                             hx-swap="innerHTML" mustache-array-template="medicos-template">
                                             <i
                                                 class="{{data.pagination.alias_last_page}} material-symbols-outlined small-icon">
@@ -130,22 +131,22 @@
                                         </a>
 
                                         <a hx-get="/api/medicos" hx-vars="{'page':{{data.pagination.total_pages}}}"
-                                            hx-target="#lista_medicos" hx-swap="innerHTML"
+                                            hx-target="#slot_lista" hx-swap="innerHTML"
                                             mustache-array-template="medicos-template">
                                             <i class="material-symbols-outlined small-icon">last_page</i>
                                         </a>
+
                                         <!-- {{/data.pagination}} -->
+
                                     </div>
 
                                     <button class="w-3" hx-trigger="click" hx-get="/html/medicos/new/add"
-                                        hx-target="closest table" hx-swap="outerHTML">
+                                        hx-target="#slot_dialogo" hx-swap="innerHTML">
                                         Cadastrar Médico
                                     </button>
                                 </div>
                             </td>
                         </tr>
-
-
                     </tbody>
                 </table>
             </template>

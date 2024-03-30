@@ -2,7 +2,8 @@
     <div class="info animate__animated animate__faster animate__fadeInUp">
         <div class="close">
             <h3>Cadastrar Médico</h3>
-            <a onclick="closeDialog('dialog')" hx-get="/api/medicos" hx-swap="outerHTML" hx-target="#dialog">
+            <a onclick="closeDialog('dialog')">
+                <!-- hx-get="/api/medicos" hx-swap="outerHTML" hx-target="#dialog"> -->
                 <i class="material-symbols-outlined">close</i>
             </a>
         </div>
@@ -49,13 +50,15 @@
         </section>
 
         <div class="buttons">
-            <a class="button secondary" hx-get="/api/medicos" title="Cancelar a alteração" hx-swap="outerHTML"
+            <a class="button secondary" onclick="closeDialog('dialog')">Cancelar</a>
+            <!-- <a class="button secondary" hx-get="/api/medicos" title="Cancelar a alteração" hx-swap="outerHTML"
                 hx-target="#dialog">
                 Cancelar
-            </a>
+            </a> -->
 
-            <a class="button" hx-trigger="click" hx-include="#dialog" hx-post="/api/medicos" title="Salvar"
-                hx-target="#dialog" hx-swap="outerHTML">
+            <a class="button" onclick="closeDialog('dialog')" hx-trigger="click" hx-include="#dialog"
+                hx-post="/api/medicos" title="Salvar" hx-target="#slot_lista" hx-swap="innerHTML"
+                mustache-array-template="medicos-template">
                 Salvar
             </a>
         </div>

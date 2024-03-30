@@ -47,8 +47,8 @@
         <div class="buttons">
             <a class="button secondary" onclick="closeDialog('dialog')">Cancelar</a>
             <a class="button" onclick="closeDialog('dialog')" hx-trigger="click" hx-include="#dialog"
-                hx-put="/api/medicos/{id}" hx-vars="{page_number}" title="Salvar" hx-target="#lista_medicos"
-                hx-swap="innerHTML" mustache-array-template="medicos-template">
+                hx-put="/api/medicos/{id}" title="Salvar" hx-target="#slot_lista" hx-swap="innerHTML"
+                mustache-array-template="medicos-template">
                 Salvar
             </a>
         </div>

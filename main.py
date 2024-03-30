@@ -16,11 +16,11 @@ import db
 
 
 ERR_MSG = "Todos os campos precisam ser preenchidos!"
-LEN_PAGE = 5
+LEN_PAGE = 6
 
 app = FastAPI(
     title="Clínica Mentalis",
-    version="0.1.1",
+    version="0.5.1",
     summary="Protótipo de uma API para gestão de uma clínica médica. ",
 )
 
@@ -39,6 +39,7 @@ async def get_body(req: Request):
         body = dict(l.split("=") for l in lista)
 
     body.pop("page", None)
+
     return body
 
 
@@ -97,7 +98,8 @@ async def add_paciente(body=Depends(get_body)):
 
 @app.post("/api/pacientes/search", response_class=JSONResponse)
 async def search_pacientes(body=Depends(get_body)):
-    search = body["search"]
+    key = "search"
+    search = body[key] if key in body else None
     dados = db.get_pacientes() if len(search) < 2 else db.search_pacientes(search)
     return dados
 
@@ -107,8 +109,6 @@ async def update_paciente(id: int, body=Depends(get_body)):
     if is_valid(body, 6):
         db.update_paciente(id, body)
         dados = db.get_paciente(id)
-        # dados = db.get_pacientes()
-        # dados = db.get_medicos_paged(LEN_PAGE)
         return dados
     else:
         raise HTTPException(status_code=422, detail=ERR_MSG)
@@ -123,10 +123,10 @@ async def del_paciente(id: int):
 @app.get("/api/medicos", response_class=JSONResponse)
 async def medicos(params=Depends(get_params)):
     if params:
-        page = int(params["page"])
+        key = "page"
+        page = int(params[key]) if key in params else 0
         page = 0 if page < 0 else page
         dados = db.get_medicos_paged(LEN_PAGE, page)
-        dados.update(pagination("medicos", page))
         return dados
     else:
         return db.get_medicos()
@@ -137,12 +137,23 @@ async def medico(id: int):
     return db.get_medico(id)
 
 
+@app.put("/api/medicos/{id}", response_class=JSONResponse)
+async def update_medico(id: int, body=Depends(get_body)):
+    if is_valid(body, 10):
+        db.update_medico(id, body)
+        nome = body["nome"]
+        dados = db.get_medicos_position(nome, LEN_PAGE)
+        return dados
+    else:
+        raise HTTPException(status_code=422, detail=ERR_MSG)
+
+
 @app.post("/api/medicos", response_class=JSONResponse)
 async def add_medico(body=Depends(get_body)):
     if is_valid(body, 11):
+        nome = body["nome"]
         db.add_medico(body)
-        dados = db.get_medicos_paged(LEN_PAGE)
-        dados.update(pagination("medicos"))
+        dados = db.get_medicos_position(nome, LEN_PAGE)
         return dados
     else:
         raise HTTPException(status_code=422, detail=ERR_MSG)
@@ -150,35 +161,15 @@ async def add_medico(body=Depends(get_body)):
 
 @app.post("/api/medicos/search", response_class=JSONResponse)
 async def search_medicos(body=Depends(get_body)):
-    search = body["search"]
-    dados = None
+    key = "search"
+    search = body[key] if key in body else ""
 
     if len(search) < 2:
         dados = db.get_medicos_paged(LEN_PAGE)
-        dados.update(pagination("medicos"))
     else:
         dados = db.search_medicos(search)
-        # dados.update(pagination())
 
     return dados
-
-
-@app.put("/api/medicos/{id}", response_class=JSONResponse)
-async def update_medico(id: int, body=Depends(get_body)):
-    try:
-        page_number = int(body["page_number"])
-        body.pop("page_number", None)
-    except:
-        page_number = 0
-
-    if is_valid(body, 10):
-        db.update_medico(id, body)
-        dados = db.get_medicos_paged(LEN_PAGE, page_number)
-        dados.update(pagination("medicos", page_number))
-        # dados = db.get_medico(id)
-        return dados
-    else:
-        raise HTTPException(status_code=422, detail=ERR_MSG)
 
 
 @app.delete("/api/medicos/{id}")
@@ -203,14 +194,14 @@ async def add_paciente():
 @app.get("/html/pacientes/{id}/edit", response_class=HTMLResponse)
 async def edit_paciente(id: int):
     dados = db.get_paciente(id)
-    return fragment_format(dados, "paciente_edit")
+    return fragment_format("paciente_edit", dados)
 
 
 # retornar template para exibir detalhes do paciente
 @app.get("/html/pacientes/{id}/detalhe", response_class=HTMLResponse)
 async def detalhe_paciente(id: int):
     dados = db.get_paciente(id)
-    return fragment_format(dados, "paciente_detalhes")
+    return fragment_format("paciente_detalhes", dados)
 
 
 # retornar template para incluir medico
@@ -223,9 +214,10 @@ async def add_medico():
 # retornar template para editar medico
 @app.get("/html/medicos/{id}/edit", response_class=HTMLResponse)
 async def edit_medico(id: int, params=Depends(get_params)):
-    page = params["page"] if params else 0
+    key = "page"
+    page = params[key] if (params and key in params) else 0
     dados = db.get_medico(id)
-    html = fragment_format(dados, page, "medico_edit")
+    html = fragment_format("medico_edit", dados, page)
     return html
 
 
@@ -233,7 +225,7 @@ async def edit_medico(id: int, params=Depends(get_params)):
 @app.get("/html/medicos/{id}/detalhe", response_class=HTMLResponse)
 async def detalhe_medico(id: int):
     dados = db.get_medico(id)
-    return fragment_format(dados, "medico_detalhes")
+    return fragment_format("medico_detalhes", dados)
 
 
 # retorna um fragmento com o menu do sistema #
@@ -267,38 +259,12 @@ def fragment(frag):
     return "".join(html)
 
 
-def fragment_format(dados, page, frag):
+def fragment_format(frag, dados, page=0):
     if dados:
-        page_number = f"'page_number': {page}"
         html = fragment(frag)
-        html = html.format(
-            page_number=page_number,
-            **dados[0],
-        )
-        return html
+        return html.format(**dados[0])
     else:
         raise HTTPException(status_code=404)
-
-
-def pagination(tbl, page=0):
-    total_pages = (db.count(tbl) - 1) // LEN_PAGE
-
-    pages = {}
-
-    if total_pages > 0:
-        pages = {
-            "pagination": {
-                "first_page": page == 0,
-                "alias_first_page": "first_page" if page == 0 else "",
-                "previous_page": page - 1 if page > 1 else 0,
-                "page": page,
-                "next_page": page + 1 if page < total_pages else page,
-                "alias_last_page": "last_page" if page >= total_pages else "",
-                "last_page": page >= total_pages,
-                "total_pages": total_pages,
-            }
-        }
-    return pages
 
 
 def sort_chapter():
