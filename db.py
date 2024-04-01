@@ -51,9 +51,8 @@ def get_medicos_paged(len_page, page=0):
 
 
 def get_medicos_position(nome, len_page):
-    page = get_position(TBL_MEDICOS, nome, len_page)
-    dados = get_dados_paged(TBL_MEDICOS, len_page, page)
-    dados.update(pagination(TBL_MEDICOS, len_page, page))
+    page = get_page(TBL_MEDICOS, nome, len_page)
+    dados = get_medicos_paged(len_page, page)
     return dados
 
 
@@ -62,14 +61,6 @@ def get_medico(id):
 
 
 def add_medico(new_medico: dict):
-    dados = {
-        "logradouro": "Rua Doze, 6",
-        "cep": "71900-999",
-        "cidade": "Brasília",
-        "uf": "df",
-    }
-    new_medico.update(dados)
-
     add(TBL_MEDICOS, new_medico)
 
     # names = get_names()
@@ -90,7 +81,7 @@ def del_medico(id):
 def get_dados(tbl, id=None):
     sql = f"SELECT * FROM {tbl}"
     sql += f" WHERE id={id}" if id else ""
-    sql += " ORDER BY 2"
+    sql += " ORDER BY nome"
     cur.execute(sql)
     rows = cur.fetchall()
     dados = [dict(row) for row in rows]
@@ -98,7 +89,7 @@ def get_dados(tbl, id=None):
 
 
 def get_dados_paged(tbl, len_page=0, page=-1):
-    sql = f"SELECT * FROM {tbl} ORDER BY 2"
+    sql = f"SELECT * FROM {tbl} ORDER BY nome"
     sql += f" LIMIT {len_page} OFFSET {page * len_page}" if page >= 0 else ""
     cur.execute(sql)
     rows = cur.fetchall()
@@ -120,7 +111,7 @@ def search(tbl, param):
     sql = f"SELECT * FROM {tbl}"
     sql += f" WHERE UPPER(nome) LIKE '%{param.upper()}%'"
     sql += f" OR cpf LIKE '{param}%'"
-    sql += " ORDER BY 2"
+    sql += " ORDER BY nome"
     cur.execute(sql)
     rows = cur.fetchall()
     dados = [dict(row) for row in rows]
@@ -172,7 +163,7 @@ def count(tbl):
     return cur.fetchone()["total"]
 
 
-def get_position(tbl, nome, len_page):
+def get_page(tbl, nome, len_page):
     sql = f"SELECT COUNT(*) as total FROM {tbl} WHERE UPPER(nome) < '{nome}'"
     cur.execute(sql)
     position = cur.fetchone()["total"]
@@ -190,7 +181,6 @@ def pagination(tbl, len_page=0, page=0):
                 "first_page": page == 0,
                 "alias_first_page": "first_page" if page == 0 else "",
                 "previous_page": page - 1 if page > 1 else 0,
-                "page": page,
                 "next_page": page + 1 if page < total_pages else page,
                 "alias_last_page": "last_page" if page >= total_pages else "",
                 "last_page": page >= total_pages,

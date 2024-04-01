@@ -40,7 +40,7 @@
             </div>
 
             <div id="slot_lista" class="w-100" hx-get="/api/medicos" hx-vars="{'page':0}" hx-trigger="load"
-                hx-swap="innerHTML" mustache-array-template="medicos-template">
+                mustache-array-template="medicos-template">
                 <!-- A listagem vai ser exibida aqui. -->
             </div>
 
@@ -74,19 +74,19 @@
                                 <div>
                                     <a title="Detalhar informações do médico" hx-trigger="click"
                                         hx-get="/html/medicos/{{id}}/detalhe" hx-target="#slot_dialogo"
-                                        hx-swap="innerHTML">
+                                        hx-target="innerHTML">
                                         <i class="material-symbols-outlined">clinical_notes</i>
                                     </a>
 
-                                    <a title="Editar o registro do médico" hx-target="#slot_dialogo"
-                                        hx-get="/html/medicos/{{id}}/edit" hx-vars="{'page': {{data.this_page}} }"
-                                        hx-trigger="click" hx-swap="innerHTML">
+                                    <a title="Editar o registro do médico" hx-trigger="click" hx-target="#slot_dialogo"
+                                        hx-get="/html/medicos/{{id}}/edit" hx-target="innerHTML"
+                                        hx-vars="{'page': {{data.this_page}} }">
                                         <i class="material-symbols-outlined">edit</i>
                                     </a>
 
-                                    <a title="Excluir o registro do médico" hx-target="closest tr"
-                                        hx-swap="outerHTML swap:0.5s" hx-confirm="{{nome}}?"
-                                        hx-delete="/api/medicos/{{id}}">
+                                    <a title="Excluir o registro do médico" hx-confirm="{{nome}}?"
+                                        hx-delete="/api/medicos/{{id}}" hx-target="closest tr"
+                                        hx-swap="outerHTML swap:0.5s">
                                         <i class="material-symbols-outlined">delete</i>
                                     </a>
                                 </div>
@@ -105,9 +105,7 @@
                             <td colspan="7">
                                 <div class="pagination">
                                     <div class="nav-buttons">
-
                                         <!-- {{#data.pagination}} -->
-
                                         <a hx-get="/api/medicos" hx-vars="{'page': 0}" hx-target="#slot_lista"
                                             hx-swap="innerHTML" mustache-array-template="medicos-template">
                                             <i class="material-symbols-outlined small-icon">first_page</i>
@@ -123,25 +121,23 @@
 
                                         <a class="{{data.pagination.alias_last_page}}" hx-get="/api/medicos"
                                             hx-vars="{'page':{{data.pagination.next_page}}}" hx-target="#slot_lista"
-                                            hx-swap="innerHTML" mustache-array-template="medicos-template">
+                                            mustache-array-template="medicos-template">
                                             <i
                                                 class="{{data.pagination.alias_last_page}} material-symbols-outlined small-icon">
                                                 chevron_right
                                             </i>
                                         </a>
 
-                                        <a hx-get="/api/medicos" hx-vars="{'page':{{data.pagination.total_pages}}}"
-                                            hx-target="#slot_lista" hx-swap="innerHTML"
+                                        <a hx-target="#slot_lista" hx-vars="{'page':{{data.pagination.total_pages}}}"
+                                            hx-get="/api/medicos" hx-swap="innerHTML"
                                             mustache-array-template="medicos-template">
                                             <i class="material-symbols-outlined small-icon">last_page</i>
                                         </a>
-
                                         <!-- {{/data.pagination}} -->
-
                                     </div>
 
-                                    <button class="w-3" hx-trigger="click" hx-get="/html/medicos/new/add"
-                                        hx-target="#slot_dialogo" hx-swap="innerHTML">
+                                    <button class="w-3" hx-get="/html/medicos/new/add" hx-trigger="click"
+                                        hx-target="#slot_dialogo" hx-target="innerHTML">
                                         Cadastrar Médico
                                     </button>
                                 </div>
@@ -159,9 +155,7 @@
     <script src="https://unpkg.com/htmx.org@1.9.10"
         integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
         crossorigin="anonymous"></script>
-    <!-- <script src="https://unpkg.com/htmx.org/dist/ext/response-targets.js"></script> -->
     <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
-    <!-- <script src="https://unpkg.com/htmx.org@1.9.11/dist/ext/path-params.js"></script> -->
     <script src="https://unpkg.com/mustache@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./js/functions.js"></script>

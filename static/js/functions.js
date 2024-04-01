@@ -20,6 +20,14 @@ document.addEventListener(
     }
 );
 
+document.addEventListener('htmx:beforeSwap', (event) => {
+    if (event.detail.xhr.status >= 300) {
+        event.detail.shouldSwap = false
+        return
+    }
+    closeDialog('dialog')
+})
+
 document.addEventListener('htmx:responseError', evt => {
     const error = JSON.parse(evt.detail.xhr.responseText);
     showToast(error.detail);

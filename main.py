@@ -16,7 +16,7 @@ import db
 
 
 ERR_MSG = "Todos os campos precisam ser preenchidos!"
-LEN_PAGE = 6
+LEN_PAGE = 5
 
 app = FastAPI(
     title="Clínica Mentalis",
@@ -139,7 +139,7 @@ async def medico(id: int):
 
 @app.put("/api/medicos/{id}", response_class=JSONResponse)
 async def update_medico(id: int, body=Depends(get_body)):
-    if is_valid(body, 10):
+    if is_valid(body, 15):
         db.update_medico(id, body)
         nome = body["nome"]
         dados = db.get_medicos_position(nome, LEN_PAGE)
@@ -150,7 +150,7 @@ async def update_medico(id: int, body=Depends(get_body)):
 
 @app.post("/api/medicos", response_class=JSONResponse)
 async def add_medico(body=Depends(get_body)):
-    if is_valid(body, 11):
+    if is_valid(body, 15):
         nome = body["nome"]
         db.add_medico(body)
         dados = db.get_medicos_position(nome, LEN_PAGE)
@@ -164,10 +164,10 @@ async def search_medicos(body=Depends(get_body)):
     key = "search"
     search = body[key] if key in body else ""
 
-    if len(search) < 2:
-        dados = db.get_medicos_paged(LEN_PAGE)
-    else:
+    if len(search) > 1:
         dados = db.search_medicos(search)
+    else:
+        dados = db.get_medicos_paged(LEN_PAGE)
 
     return dados
 
