@@ -32,7 +32,7 @@
         <div class="content" hx-ext="client-side-templates">
             <div class="center">
                 <label class="search">
-                    <input type="search" name="search" placeholder="Informe parte do nome ou do CPF"
+                    <input autofocus type="search" name="search" placeholder="Informe parte do nome ou do CPF"
                         hx-post="/api/medicos/search" hx-trigger="input changed delay:500ms, search"
                         hx-target="#slot_lista" mustache-array-template="medicos-template">
                 </label>

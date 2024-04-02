@@ -30,6 +30,11 @@ def add_paciente(new_paciente):
     new_paciente.update(dados)
     add(TBL_PACIENTES, new_paciente)
 
+    # names = get_names()
+    # for name in names:
+    #     new_paciente.update({"nome": name})
+    #     add(TBL_PACIENTES, new_paciente)
+
 
 def update_paciente(id, updated):
     paciente = get_paciente(id)

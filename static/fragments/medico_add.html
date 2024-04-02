@@ -10,7 +10,7 @@
         <section>
             <table class="form">
                 <tr trigger="cancel" class="editing">
-                    <td><input placeholder="Nome do médico" name="nome" value=""></td>
+                    <td><input autofocus placeholder="Nome do médico" name="nome" value=""></td>
                     <td><input placeholder="Especialidade" name="especialidade" value=""></td>
                     <td><input placeholder="CPF" onkeyup="cpfMask(this)" name="cpf" value=""></td>
                     <td><input placeholder="RG" name="rg" value=""></td>
@@ -26,10 +26,25 @@
                         </select>
                     </td>
 
-                    <td><input placeholder="UF" name="uf" value=""> </td>
-                    <td><input placeholder="Nome da cidade" name="cidade" value=""></td>
-                    <td><input placeholder="Avenida/Rua, número, apto" name="logradouro" value=""></td>
-                    <td><input placeholder="CEP" name="cep" value=""></td>
+                    <td>
+                        <input placeholder="CEP" name="cep" onkeyup="cepMask(this)" onblur="getAddress(value)" value="">
+                    </td>
+                    <td>
+                        <input id="logradouro" name="logradouro" placeholder="Rua, número, apto" value="">
+                    </td>
+
+                    <td>
+                        <select id="uf" name="uf" onfocus="getEstados()" onchange="selCidades(value)" required>
+                            <option value="">Selecione a UF</option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <select id="cidade" name="cidade" onmousedown="if(this.options.length>10){this.size=5}"
+                            onchange="this.size=0" onblur="this.size=0" required>
+                            <option value="">Selecione o estado primeiro</option>
+                        </select>
+                    </td>
 
                     <td>
                         <select name="turno" required>
@@ -55,8 +70,8 @@
                 Cancelar
             </a>
 
-            <a id="salvar" class="button" hx-trigger="click" hx-include="#dialog" hx-post="/api/medicos"
-                hx-target="#slot_lista" hx-swap="innerHTML" mustache-array-template="medicos-template">
+            <a class="button" hx-trigger="click" hx-include="#dialog" hx-post="/api/medicos" hx-target="#slot_lista"
+                hx-swap="innerHTML" mustache-array-template="medicos-template">
                 Salvar
             </a>
         </div>

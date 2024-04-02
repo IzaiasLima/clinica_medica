@@ -10,25 +10,40 @@
         <section>
             <table class="form">
                 <tr trigger="cancel" class="editing">
-                    <td data-th="Nome"><input name="nome" value="{nome}"></td>
+                    <td data-th="Nome"><input autofocus name="nome" value="{nome}"></td>
                     <td data-th="CRM"><input name="crm" value="{crm}"></td>
                     <td data-th="E-mail"><input name="email" value="{email}"></td>
                     <td data-th="Telefone"><input name="telefone" value="{telefone}"></td>
                     <td data-th="CPF"><input name="cpf" value="{cpf}"></td>
                     <td data-th="RG"><input name="rg" value="{rg}"></td>
                     <td data-th="Especialidade"><input name="especialidade" value="{especialidade}"></td>
-                    <td data-th="Data nascimento"><input name="dt_nasc" value="{dt_nasc}"></td>
+                    <td data-th="Data nascimento"><input onkeyup="dateMask(this)" name="dt_nasc" value="{dt_nasc}"></td>
                     <td data-th="Sexo">
-                        <select id="sexo" name="sexo" required>
+                        <select id="sexo" name="sexo" value="" required>
                             <option value="" selected hidden>Selecione o sexo</option>
                             <option value="masculino">Masculino</option>
                             <option value="feminino">Feminino</option>
                         </select>
                     </td>
-                    <td class="u-case" data-th="UF"><input name="uf" value="{uf}"></td>
-                    <td data-th="Cidade"><input name="cidade" value="{cidade}"></td>
-                    <td data-th="Endereço"><input name="logradouro" value="{logradouro}"></td>
-                    <td data-th="CEP"><input name="cep" value="{cep}"></td>
+
+                    <td data-th="CEP">
+                        <input name="cep" onkeyup="cepMask(this)" onblur="getAddress(value)" value="{cep}">
+                    </td>
+
+                    <td data-th="Endereço">
+                        <input id="logradouro" name="logradouro" value="{logradouro}">
+                    </td>
+
+                    <td data-th="UF">
+                        <select id="uf" name="uf" onchange="selCidades(value)">
+                        </select>
+                    </td>
+
+                    <td data-th="Cidade">
+                        <select id="cidade" name="cidade" onmousedown="this.size=5" onchange="this.size=0"
+                            onblur="this.size=0">
+                        </select>
+                    </td>
 
                     <td data-th="Turno">
                         <select id="turno" name="turno">
@@ -43,20 +58,25 @@
                             <option value="inativo">Inativo</option>
                         </select>
                     </td>
-
-                    <script>defaultOption('sexo', '{sexo}')</script>
-                    <script>defaultOption('turno', '{turno}')</script>
-                    <script>defaultOption('status', '{status}')</script>
                 </tr>
             </table>
+
+            <script>defaultOption('sexo', '{sexo}')</script>
+            <script>defaultOption('turno', '{turno}')</script>
+            <script>defaultOption('status', '{status}')</script>
+
+            <script>getEstados()</script>
+            <script>defaultOption('uf', '{uf}')</script>
+            <script>selCidades('{uf}', 'cidade', '{cidade}')</script>
+
         </section>
         <div class="buttons">
             <a class="button secondary" onclick="closeDialog('dialog')">
                 Cancelar
             </a>
 
-            <a id="salvar" class="button" hx-trigger="click" hx-include="#dialog" hx-put="/api/medicos/{id}"
-                hx-target="#slot_lista" hx-swap="innerHTML" mustache-array-template="medicos-template">
+            <a class="button" hx-trigger="click" hx-include="#dialog" hx-put="/api/medicos/{id}" hx-target="#slot_lista"
+                hx-swap="innerHTML" mustache-array-template="medicos-template">
                 Salvar
             </a>
         </div>

@@ -20,17 +20,17 @@ document.addEventListener(
     }
 );
 
-document.addEventListener('htmx:beforeSwap', (event) => {
-    if (event.detail.xhr.status >= 300) {
-        event.detail.shouldSwap = false
-        return
-    }
-    closeDialog('dialog')
-})
-
 document.addEventListener('htmx:responseError', evt => {
     const error = JSON.parse(evt.detail.xhr.responseText);
     showToast(error.detail);
+})
+
+document.addEventListener('htmx:beforeSwap', evt => {
+    if (evt.detail.xhr.status >= 300) {
+        evt.detail.shouldSwap = false
+        return
+    }
+    closeDialog('dialog')
 })
 
 function defaultOption(id, defaultValue) {
@@ -75,21 +75,23 @@ String.prototype.reverse = function () {
 };
 
 function phoneMask(obj) {
-    mask = "(##) #####-####";
-    var fmt = format(obj.value, mask);
-    obj.value = fmt
+    const mask = "(##) #####-####";
+    obj.value = format(obj.value, mask);
 }
 
 function cpfMask(obj) {
-    mask = "###.###.###-##";
-    var fmt = format(obj.value, mask);
-    obj.value = fmt
+    const mask = "###.###.###-##";
+    obj.value = format(obj.value, mask);
 }
 
 function dateMask(obj) {
-    mask = "####-##-##";
-    var fmt = format(obj.value, mask);
-    obj.value = fmt
+    const mask = "##-##-####";
+    obj.value = format(obj.value, mask);
+}
+
+function cepMask(obj) {
+    const mask = "#####-###";
+    obj.value = format(obj.value, mask);
 }
 
 function format(value, mask) {
@@ -118,13 +120,28 @@ function menuToggle() {
     document.querySelector('.close-icon').classList.toggle('toggle');
 }
 
-function getCidades(uf) {
+function getEstados() {
+    const elm = document.getElementById('uf');
+
+    estados = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF',
+        'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB',
+        'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR',
+        'SC', 'SP', 'SE', 'TO']
+
+    for (const i in estados) {
+        var opt = document.createElement('option');
+        opt.value = estados[i];
+        opt.innerHTML = estados[i];
+        elm.appendChild(opt);
+    }
+}
+
+function selCidades(uf, id_sel_cidade, default_value) {
     if (uf == "") return;
 
-    var url = 'https://brasilapi.com.br/api/ibge/municipios/v1/'
-    url += uf.toLowerCase()
+    const url = `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios`;
+    const sel = document.getElementById('cidade');
 
-    sel = document.getElementById('cidade');
     sel.innerHTML = "";
 
     fetch(url)
@@ -136,7 +153,35 @@ function getCidades(uf) {
                 opt.innerHTML = v['nome'];
                 sel.appendChild(opt);
             }
-        }).catch((error) => {
+
+            if (id_sel_cidade && default_value) {
+                defaultOption(id_sel_cidade, default_value);
+            }
+        })
+        .catch((error) => {
             console.error('Não foi possível obter as cidades: ', error)
+        });
+}
+
+function getAddress(cep) {
+    if (cep == "") return;
+
+    const url = `https://brasilapi.com.br/api/cep/v1/${cep}`
+    getEstados()
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            const cidade = data['city']
+            const uf = data['state']
+
+            selCidades(uf, 'cidade', cidade)
+            defaultOption('uf', uf);
+
+            const endereco = document.getElementById('logradouro');
+            endereco.value = `${data['street']}, ${data['neighborhood']}`;
+        })
+        .catch((error) => {
+            console.error('CEP não localizado: ', error);
         });
 }
