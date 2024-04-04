@@ -121,15 +121,15 @@
 
                                         <a class="{{data.pagination.alias_last_page}}" hx-get="/api/medicos"
                                             hx-vars="{'page':{{data.pagination.next_page}}}" hx-target="#slot_lista"
-                                            mustache-array-template="medicos-template">
+                                            hx-swap="innerHTML" mustache-array-template="medicos-template">
                                             <i
                                                 class="{{data.pagination.alias_last_page}} material-symbols-outlined small-icon">
                                                 chevron_right
                                             </i>
                                         </a>
 
-                                        <a hx-target="#slot_lista" hx-vars="{'page':{{data.pagination.total_pages}}}"
-                                            hx-get="/api/medicos" hx-swap="innerHTML"
+                                        <a hx-get="/api/medicos" hx-vars="{'page':{{data.pagination.total_pages}}}"
+                                            hx-target="#slot_lista" hx-swap="innerHTML"
                                             mustache-array-template="medicos-template">
                                             <i class="material-symbols-outlined small-icon">last_page</i>
                                         </a>

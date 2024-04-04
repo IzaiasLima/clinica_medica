@@ -14,10 +14,11 @@
                     <td data-th="CRM"><input name="crm" value="{crm}"></td>
                     <td data-th="E-mail"><input name="email" value="{email}"></td>
                     <td data-th="Telefone"><input name="telefone" value="{telefone}"></td>
-                    <td data-th="CPF"><input name="cpf" value="{cpf}"></td>
-                    <td data-th="RG"><input name="rg" value="{rg}"></td>
+                    <td data-th="CPF"><input name="cpf" onkeyup="cpfMask(this)" value="{cpf}"></td>
+                    <td data-th="RG"><input name="rg" onkeyup="rgMask(this)" value="{rg}"></td>
                     <td data-th="Especialidade"><input name="especialidade" value="{especialidade}"></td>
-                    <td data-th="Data nascimento"><input onkeyup="dateMask(this)" name="dt_nasc" value="{dt_nasc}"></td>
+                    <td data-th="Data nascimento"><input name="dt_nasc" onkeyup="dateMask(this)" value="{dt_nasc}"></td>
+
                     <td data-th="Sexo">
                         <select id="sexo" name="sexo" value="" required>
                             <option value="" selected hidden>Selecione o sexo</option>

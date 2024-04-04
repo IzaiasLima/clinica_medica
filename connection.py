@@ -7,11 +7,10 @@ TYPE_PSQL = "psql"
 TYPE_SQLITE = "sqlite"
 TYPE_MYSQL = "mysql"
 
-DB_TYPE = TYPE_PSQL
+DB_TYPE = TYPE_SQLITE
 
 
 def get():
-    ## FIX: Resolver com Strategy, futuramente
     if DB_TYPE == TYPE_PSQL:
         con = psycopg2.connect(
             database="postgres",

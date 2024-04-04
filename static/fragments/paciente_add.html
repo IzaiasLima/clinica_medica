@@ -2,7 +2,7 @@
     <div class="info animate__animated animate__faster animate__fadeInUp">
         <div class="close">
             <h3>Cadastrar Paciente</h3>
-            <a onclick="closeDialog('dialog')" hx-get="/api/pacientes" hx-swap="outerHTML" hx-target="#dialog">
+            <a onclick="closeDialog('dialog')">
                 <i class="material-symbols-outlined">close</i>
             </a>
         </div>
@@ -11,9 +11,52 @@
             <table class="form">
                 <tr trigger="cancel" class="editing">
                     <td><input placeholder="Nome do paciente" name="nome" value=""></td>
+                    <td><input placeholder="CPF" onkeyup="cpfMask(this)" name="cpf" value=""></td>
+                    <td><input placeholder="RG" onkeyup="rgMask(this)" name="rg" value=""></td>
+                    <td><input placeholder="Data nascimento" onkeyup="dateMask(this)" name="dt_nasc" value=""></td>
                     <td><input placeholder="E-mail do paciente" name="email" value=""></td>
                     <td><input placeholder="Telefone do paciente" onkeyup="phoneMask(this)" name="telefone" value="">
-                    <td><input placeholder="CPF" onkeyup="cpfMask(this)" name="cpf" value=""></td>
+
+                    <td>
+                        <select id="tp_sanguineo" name="tp_sanguineo" required>
+                            <option value="">Selecione o tipo saguíneo</option>
+                        </select>
+                    </td>
+
+                    <td><input placeholder="Informe a altura em centímetros" name="altura" onkeyup="numMask(this)"
+                            value=""></td>
+                    <td><input placeholder="Informe o peso" name="peso" onkeyup="numMask(this)" value=""></td>
+
+                    <td>
+                        <select name="sexo" required>
+                            <option value="" selected hidden>Selecione o sexo</option>
+                            <option value="masculino">Masculino</option>
+                            <option value="feminino">Feminino</option>
+                        </select>
+                    </td>
+
+                    function getTpSangue() {
+
+                    <td>
+                        <input placeholder="CEP" name="cep" onkeyup="cepMask(this)" onblur="getAddress(value)" value="">
+                    </td>
+                    <td>
+                        <input id="logradouro" name="logradouro" placeholder="Rua, número, apto" value="">
+                    </td>
+
+                    <td>
+                        <select id="uf" name="uf" onchange="selCidades(value)" required>
+                            <option value="">Selecione a UF</option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <select id="cidade" name="cidade" onmousedown="if(this.options.length>10){this.size=5}"
+                            onchange="this.size=0" onblur="this.size=0" required>
+                            <option value="">Selecione a UF primeiro</option>
+                        </select>
+                    </td>
+
                     <td>
                         <select name="status" required>
                             <option value="" selected hidden>Selecione</option>
@@ -26,14 +69,16 @@
             </table>
         </section>
 
+        <script>getEstados()</script>
+        <script>getTiposSangue()</script>
+
         <div class="buttons">
-            <a class="button secondary" hx-get="/api/pacientes" title="Cancelar a alteração" hx-swap="outerHTML"
-                hx-target="#dialog">
+            <a class="button secondary" onclick="closeDialog('dialog')">
                 Cancelar
             </a>
 
-            <a class="button" hx-trigger="click" hx-include="#dialog" hx-post="/api/pacientes" title="Salvar"
-                hx-target="#dialog" hx-swap="outerHTML">
+            <a class="button" hx-trigger="click" " hx-post=" /api/pacientes" hx-include="#dialog"
+                hx-target="#slot_lista" hx-swap="innerHTML" mustache-array-template="pacientes-template">
                 Salvar
             </a>
         </div>

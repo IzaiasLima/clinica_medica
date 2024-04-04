@@ -33,11 +33,6 @@ document.addEventListener('htmx:beforeSwap', evt => {
     closeDialog('dialog')
 })
 
-function defaultOption(id, defaultValue) {
-    let select = document.getElementById(id);
-    select.value = defaultValue;
-}
-
 function showToast(msg) {
     const toast = document.getElementById('toast');
     toast.innerHTML = msg;
@@ -75,36 +70,45 @@ String.prototype.reverse = function () {
 };
 
 function phoneMask(obj) {
-    const mask = "(##) #####-####";
-    obj.value = format(obj.value, mask);
+    obj.value = format(obj.value, "(##) #####-####");
 }
 
 function cpfMask(obj) {
-    const mask = "###.###.###-##";
-    obj.value = format(obj.value, mask);
+    obj.value = format(obj.value, "###.###.###-##");
 }
 
 function dateMask(obj) {
-    const mask = "##-##-####";
-    obj.value = format(obj.value, mask);
+    obj.value = format(obj.value, "##-##-####");
 }
 
 function cepMask(obj) {
-    const mask = "#####-###";
-    obj.value = format(obj.value, mask);
+    obj.value = format(obj.value, "#####-###");
+}
+
+function rgMask(obj) {
+    obj.value = format(obj.value, "@##############");
+}
+
+function numMask(obj) {
+    obj.value = format(obj.value, "###");
 }
 
 function format(value, mask) {
-    var result = "";
+    var result = '';
 
     if (value.length >= mask.length - 1) value = value.substring(0, mask.length)
-    value = value.replace(/[^\d]+/gi, '').reverse();
 
-    var mask = mask.reverse();
+    if (mask.substring(0, 1) === '#') {
+        value = value.replace(/[^\d]+/gi, '')
+    }
+
+    value = value.reverse();
+    mask = mask.reverse();
 
     for (var x = 0, y = 0; x <= mask.length && y <= value.length;) {
-        if (mask.charAt(x) != '#')
+        if (!(mask.charAt(x) === '#' || mask.charAt(x) === '@')) {
             result += mask.charAt(x);
+        }
         else {
             result += value.charAt(y);
             y++;
@@ -120,10 +124,23 @@ function menuToggle() {
     document.querySelector('.close-icon').classList.toggle('toggle');
 }
 
+function getTiposSangue() {
+    const elm = document.getElementById('tp_sanguineo');
+
+    const tipos = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
+
+    for (const i in tipos) {
+        var opt = document.createElement('option');
+        opt.value = tipos[i];
+        opt.innerHTML = tipos[i];
+        elm.appendChild(opt);
+    }
+}
+
 function getEstados() {
     const elm = document.getElementById('uf');
 
-    estados = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF',
+    const estados = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF',
         'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB',
         'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR',
         'SC', 'SP', 'SE', 'TO']
@@ -136,7 +153,7 @@ function getEstados() {
     }
 }
 
-function selCidades(uf, id_sel_cidade, default_value) {
+function selCidades(uf, default_value) {
     if (uf == "") return;
 
     const url = `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios`;
@@ -144,18 +161,18 @@ function selCidades(uf, id_sel_cidade, default_value) {
 
     sel.innerHTML = "";
 
-    fetch(url)
+    fetch(url,)
         .then(response => response.json())
         .then(data => {
-            for (const [k, v] of data.entries()) {
+            for (const [_, v] of data.entries()) {
                 var opt = document.createElement('option');
                 opt.value = v.nome;
-                opt.innerHTML = v['nome'];
+                opt.innerHTML = v.nome;
                 sel.appendChild(opt);
             }
 
-            if (id_sel_cidade && default_value) {
-                defaultOption(id_sel_cidade, default_value);
+            if (default_value) {
+                defaultOption('cidade', default_value);
             }
         })
         .catch((error) => {
@@ -166,22 +183,30 @@ function selCidades(uf, id_sel_cidade, default_value) {
 function getAddress(cep) {
     if (cep == "") return;
 
+    cep = cep.split('-').join('')
+
     const url = `https://brasilapi.com.br/api/cep/v1/${cep}`
+
     getEstados()
 
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            const cidade = data['city']
-            const uf = data['state']
+            const cidade = data.city
+            const uf = data.state
 
-            selCidades(uf, 'cidade', cidade)
             defaultOption('uf', uf);
+            selCidades(uf, cidade)
 
             const endereco = document.getElementById('logradouro');
-            endereco.value = `${data['street']}, ${data['neighborhood']}`;
+            endereco.value = `${data.street}, ${data.neighborhood}`;
         })
         .catch((error) => {
             console.error('CEP não localizado: ', error);
         });
+}
+
+function defaultOption(id, defaultValue) {
+    const select = document.getElementById(id);
+    select.value = defaultValue;
 }

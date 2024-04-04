@@ -75,8 +75,15 @@ async def capitulo():
 
 
 @app.get("/api/pacientes", response_class=JSONResponse)
-async def pacientes():
-    dados = db.get_pacientes()
+async def pacientes(params=Depends(get_params)):
+    page = 0
+
+    if params:
+        key = "page"
+        page = int(params[key]) if key in params else 0
+        page = 0 if page < 0 else page
+
+    dados = db.get_pacientes_paged(LEN_PAGE, page)
     return dados
 
 
@@ -86,11 +93,23 @@ async def paciente(id: int):
     return dados
 
 
+@app.put("/api/pacientes/{id}", response_class=JSONResponse)
+async def update_paciente(id: int, body=Depends(get_body)):
+    if is_valid(body, 15):
+        nome = body["nome"]
+        db.update_paciente(id, body)
+        dados = db.get_paciente_position(nome, LEN_PAGE)
+        return dados
+    else:
+        raise HTTPException(status_code=422, detail=ERR_MSG)
+
+
 @app.post("/api/pacientes", response_class=JSONResponse)
 async def add_paciente(body=Depends(get_body)):
-    if is_valid(body, 5):
+    if is_valid(body, 15):
+        nome = body["nome"]
         db.add_paciente(body)
-        dados = db.get_pacientes()
+        dados = db.get_paciente_position(nome, LEN_PAGE)
         return dados
     else:
         raise HTTPException(status_code=422, detail=ERR_MSG)
@@ -99,19 +118,14 @@ async def add_paciente(body=Depends(get_body)):
 @app.post("/api/pacientes/search", response_class=JSONResponse)
 async def search_pacientes(body=Depends(get_body)):
     key = "search"
-    search = body[key] if key in body else None
-    dados = db.get_pacientes() if len(search) < 2 else db.search_pacientes(search)
-    return dados
+    search = body[key] if key in body else ""
 
-
-@app.put("/api/pacientes/{id}", response_class=JSONResponse)
-async def update_paciente(id: int, body=Depends(get_body)):
-    if is_valid(body, 6):
-        db.update_paciente(id, body)
-        dados = db.get_paciente(id)
-        return dados
+    if len(search) > 1:
+        dados = db.search_pacientes(search)
     else:
-        raise HTTPException(status_code=422, detail=ERR_MSG)
+        dados = db.get_pacientes_paged(LEN_PAGE)
+
+    return dados
 
 
 @app.delete("/api/pacientes/{id}", response_class=HTMLResponse)
@@ -122,14 +136,15 @@ async def del_paciente(id: int):
 
 @app.get("/api/medicos", response_class=JSONResponse)
 async def medicos(params=Depends(get_params)):
+    page = 0
+
     if params:
         key = "page"
         page = int(params[key]) if key in params else 0
         page = 0 if page < 0 else page
-        dados = db.get_medicos_paged(LEN_PAGE, page)
-        return dados
-    else:
-        return db.get_medicos()
+
+    dados = db.get_medicos_paged(LEN_PAGE, page)
+    return dados
 
 
 @app.get("/api/medicos/{id}", response_class=JSONResponse)
@@ -140,9 +155,9 @@ async def medico(id: int):
 @app.put("/api/medicos/{id}", response_class=JSONResponse)
 async def update_medico(id: int, body=Depends(get_body)):
     if is_valid(body, 15):
-        db.update_medico(id, body)
         nome = body["nome"]
-        dados = db.get_medicos_position(nome, LEN_PAGE)
+        db.update_medico(id, body)
+        dados = db.get_medico_position(nome, LEN_PAGE)
         return dados
     else:
         raise HTTPException(status_code=422, detail=ERR_MSG)
@@ -153,7 +168,7 @@ async def add_medico(body=Depends(get_body)):
     if is_valid(body, 15):
         nome = body["nome"]
         db.add_medico(body)
-        dados = db.get_medicos_position(nome, LEN_PAGE)
+        dados = db.get_medico_position(nome, LEN_PAGE)
         return dados
     else:
         raise HTTPException(status_code=422, detail=ERR_MSG)

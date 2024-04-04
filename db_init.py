@@ -1,4 +1,5 @@
 import connection
+import db
 
 print(f"Script {__name__} executado.")
 
@@ -86,72 +87,116 @@ def tables_init():
 
     con, cur = connection.get()
 
-    medicos = [
-        (
-            "Natanael Monteiro",
-            "123456/SSP-PA",
-            "789.456.123-99",
-            "1994-07-28",
-            "masculino",
-            "DF",
-            "Águas Claras",
-            "71909-540",
-            "Rua 12 Norte, lote 6, Apto 904",
-            "123456/DF",
-            "natan@gmail.com",
-            "(61) 98181-3390",
-            "cardiologista",
-            "diurno",
-            "ativo",
-        ),
-    ]
+    medico = {
+        "rg": "3334-44",
+        "cpf": "442.456.789-10",
+        "dt_nasc": "1987-12-11",
+        "sexo": "Feminino",
+        "uf": "RJ",
+        "cidade": "Brasília",
+        "cep": "70277-020",
+        "logradouro": "Rua Doze, 6",
+        "crm": "432-df",
+        "email": "ls@gmail.com",
+        "telefone": "(61) 98181-3390",
+        "especialidade": "psicanalise",
+        "turno": "noturno",
+        "status": "inativo",
+    }
 
-    pacientes = [
-        (
-            "Dileyciane Monteiro",
-            "RG 23456/SSP-PA",
-            "123.456.789-10",
-            "1974-06-28",
-            "feminino",
-            53,
-            161,
-            "AB+",
-            "PA",
-            "Santa Maria do Pará",
-            "68700-000",
-            "Av. Bernardo Sayão, 2345",
-            "ciane@gmail.COM",
-            "(91) 98888-7654",
-            "Agendada",
-        ),
-    ]
+    paciente = {
+        "rg": "1233334/SSP-DF",
+        "cpf": "123.456.789-10",
+        "dt_nasc": "1970-04-25",
+        "sexo": "masculino",
+        "uf": "RJ",
+        "cidade": "Brasília",
+        "cep": "71909-540",
+        "logradouro": "Rua Doze, 6",
+        "email": "ls@gmail.com",
+        "telefone": "(61) 98181-3390",
+        "altura": "165",
+        "peso": "65",
+        "status": "agendada",
+    }
 
     cur.execute("DELETE FROM medicos")
     cur.execute("DELETE FROM pacientes")
-
-    ## FIX: Resolver com Strategy, futuramente
-    if connection.DB_TYPE == connection.TYPE_PSQL:
-        cur.executemany(
-            "INSERT INTO medicos VALUES (DEFAULT,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
-            medicos,
-        )
-        cur.executemany(
-            "INSERT INTO pacientes VALUES (DEFAULT,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
-            pacientes,
-        )
-    else:
-        cur.executemany(
-            "INSERT INTO medicos VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", medicos
-        )
-        cur.executemany(
-            "INSERT INTO pacientes VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-            pacientes,
-        )
-
     con.commit()
-    con.close()
+
+    for name in get_medicos():
+        medico.update({"nome": name})
+        db.add(db.TBL_MEDICOS, medico)
+
+    for name in get_pacientes():
+        paciente.update({"nome": name})
+        db.add(db.TBL_PACIENTES, paciente)
 
     print("Dados iniciais incluídos nas tabelas.")
+
+
+def get_medicos():
+    return [
+        "Dileyciane Monteiro",
+        "Madalena Vitória Dias Ortega",
+        "Luara Casanova da Lira",
+        "Karina Michele Escobar",
+        "Lena Tatiana Assunção",
+        "Helena Clarice Padilha",
+        "Renata Tatiana de Lutero",
+        "Irene Clarice Corona",
+        "Sara Meireles",
+        "Cristina Padilha Câmara",
+        "Ana Carolina Jardel Casanova",
+        "Vitória Sanches",
+    ]
+
+
+def get_pacientes():
+    return [
+        "Natanael Monteiro",
+        "Inácio Danilo Chaves",
+        "Paulo Feliciano Frias",
+        "Patrônio Benites de Guimarães",
+        "Celso Mauro Esteves",
+        "Felipe Chaves",
+        "José Faria de Gomes",
+        "Luiz Rosário de Carmona",
+        "Ali Ortiz Filho",
+        "Elói Aguiar Sobrinho",
+        "Everaldo Michel Branco",
+        "João Gomes de Madureira",
+        "Fábio Aragão Furtado",
+        "Marcos Vitor Dias Ortega",
+        "Kaio Michael Escobar",
+        "Leandro Toledo Assunção",
+        "Pedro Walter Azevedo",
+        "João Ferreira de Almeida",
+        "Cícero Lino Caldeira",
+        "Meire Dias de Reis",
+        "Renato Tomás de Lutero",
+        "Fernando Willian Guerra",
+        "Camilo Batista de Pinheiro",
+        "Ricardo de Rocha Filho",
+        "Mike Ramon Feliciano Filho",
+        "Joaquim Manoel de Arruda",
+        "Bartolomeu Ferreira da Silva",
+        "Sérgio Fábio de Meireles",
+        "Anderson Wilson Aguiar Jardim",
+        "Eric Ivan de Branco Neto",
+        "Gustavo Sales",
+        "Adílson Carmona",
+        "Kevin Batista Flores de Rosa",
+        "Cristiano Padilha Câmara",
+        "Felipe Casanova",
+        "Benjamin Luan Aranda",
+        "Helder Inácio de Uchoa",
+        "Cícero Jardel Casanova",
+        "Christian Hélio de Garcia",
+        "Amarildo Lucas de Sobrinho",
+        "Simão Otaviano de Faria",
+        "Tomás Matias de Sanches",
+    ]
 
 
 if __name__ == "__main__":

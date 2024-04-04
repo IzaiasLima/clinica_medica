@@ -10,30 +10,24 @@ def get_pacientes():
     return get_dados(TBL_PACIENTES)
 
 
+def get_pacientes_paged(len_page, page=0):
+    dados = get_dados_paged(TBL_PACIENTES, len_page, page)
+    dados.update(pagination(TBL_PACIENTES, len_page, page))
+    return dados
+
+
+def get_paciente_position(nome, len_page):
+    page = get_page(TBL_PACIENTES, nome, len_page)
+    dados = get_pacientes_paged(len_page, page)
+    return dados
+
+
 def get_paciente(id):
     return get_dados(TBL_PACIENTES, id)
 
 
 def add_paciente(new_paciente):
-    dados = {
-        "rg": "123",
-        "dt_nasc": "2024-06-02",
-        "logradouro": "Rua Doze, 6",
-        "cep": "71900-999",
-        "cidade": "Brasília",
-        "uf": "df",
-        "sexo": "masculino",
-        "tp_sanguineo": "A+",
-        "altura": 165,
-        "peso": 61,
-    }
-    new_paciente.update(dados)
     add(TBL_PACIENTES, new_paciente)
-
-    # names = get_names()
-    # for name in names:
-    #     new_paciente.update({"nome": name})
-    #     add(TBL_PACIENTES, new_paciente)
 
 
 def update_paciente(id, updated):
@@ -55,7 +49,7 @@ def get_medicos_paged(len_page, page=0):
     return dados
 
 
-def get_medicos_position(nome, len_page):
+def get_medico_position(nome, len_page):
     page = get_page(TBL_MEDICOS, nome, len_page)
     dados = get_medicos_paged(len_page, page)
     return dados
@@ -67,11 +61,6 @@ def get_medico(id):
 
 def add_medico(new_medico: dict):
     add(TBL_MEDICOS, new_medico)
-
-    # names = get_names()
-    # for name in names:
-    #     new_medico.update({"nome": name})
-    #     add(TBL_MEDICOS, new_medico)
 
 
 def update_medico(id, updated):
@@ -196,59 +185,3 @@ def pagination(tbl, len_page=0, page=0):
         pages = {"this_page": page}
 
     return pages
-
-
-def get_names():
-    return [
-        "Cleuza Ferreira",
-        "Inácio Danilo Chaves",
-        "Paula Feliciano Frias",
-        "Patrícia Benites de Guimarães",
-        "Célia Mayara Esteves",
-        "Felipe Chaves",
-        "Samanta Aguiar Bittencourt",
-        "José Faria de Gomes",
-        "Liane Rosimeire Carmona",
-        "Ali Ortiz Filho",
-        "Elói Aguiar Sobrinho",
-        "Everaldo Michel Branco",
-        "João Gomes de Madureira",
-        "Fabíola Aragão Furtado",
-        "Madalena Vitória Dias Ortega",
-        "Luara Casanova da Lira",
-        "Karina Michele Escobar",
-        "Lena Tatiana Assunção",
-        "Pedro Walter Azevedo",
-        "João Ferreira de Almeida",
-        "Cícero Lino Caldeira",
-        "Meire Dias de Reis",
-        "Renata Tatiana de Lutero",
-        "Isabella Aguiar Lozano",
-        "Irene Clarice Corona",
-        "Ivone Corona",
-        "Fernando Willian Guerra",
-        "Áureo de Mascarenhas Filho",
-        "Camilo Batista de Pinheiro",
-        "Ricardo de Rocha Filho",
-        "Batista Gil de Mendonça",
-        "Mike Ramon Feliciano Filho",
-        "Batista Santana de Solano",
-        "Joaquin Manoel de Arruda",
-        "Bartolomeu Ferreira da Silva",
-        "Sérgio Fábio de Meireles",
-        "Anderson Wilson Aguiar Jardim",
-        "Aaron Everton Faria de Paes",
-        "Eric Ivan de Branco Neto",
-        "Gustavo Sales",
-        "Adílson Carmona",
-        "Kevin Batista Flores de Rosa",
-        "Cristiano Padilha Câmara",
-        "Felipe Casanova",
-        "Benjamin Luan Aranda",
-        "Helder Inácio de Uchoa",
-        "Cícero Jardel Casanova",
-        "Christian Hélio de Garcia",
-        "Amarildo Lucas de Sobrinho",
-        "Simão Otaviano de Faria",
-        "Tomás Matias de Sanches",
-    ]

@@ -14,7 +14,7 @@
                     <td><input placeholder="Especialidade" name="especialidade" value=""></td>
                     <td><input placeholder="CPF" onkeyup="cpfMask(this)" name="cpf" value=""></td>
                     <td><input placeholder="RG" name="rg" value=""></td>
-                    <td><input placeholder="Data nascimento" onkeyup="dateMask(this)" name="dt_nasc" value=""></td>
+                    <td><input placeholder="Data nascimento" name="dt_nasc" onkeyup="dateMask(this)" value=""></td>
                     <td><input placeholder="CRM do médico" name="crm" value=""></td>
                     <td><input placeholder="E-mail do médico" name="email" value=""></td>
                     <td><input placeholder="Telefone" onkeyup="phoneMask(this)" name="telefone" value=""></td>
@@ -42,7 +42,7 @@
                     <td>
                         <select id="cidade" name="cidade" onmousedown="if(this.options.length>10){this.size=5}"
                             onchange="this.size=0" onblur="this.size=0" required>
-                            <option value="">Selecione o estado primeiro</option>
+                            <option value="">Selecione a UF primeiro</option>
                         </select>
                     </td>
 
@@ -70,7 +70,7 @@
                 Cancelar
             </a>
 
-            <a class="button" hx-trigger="click" hx-include="#dialog" hx-post="/api/medicos" hx-target="#slot_lista"
+            <a class="button" hx-trigger="click" hx-post="/api/medicos" hx-include="#dialog" hx-target="#slot_lista"
                 hx-swap="innerHTML" mustache-array-template="medicos-template">
                 Salvar
             </a>
