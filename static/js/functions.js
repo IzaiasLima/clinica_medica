@@ -25,11 +25,14 @@ document.addEventListener('htmx:responseError', evt => {
     showToast(error.detail);
 })
 
-document.addEventListener('htmx:beforeSwap', evt => {
+document.getElementById('slot-lista').addEventListener('htmx:beforeSwap', evt => {
+    console.log('ok');
     if (evt.detail.xhr.status >= 300) {
         evt.detail.shouldSwap = false
+        console.log('cancela');
         return
     }
+    console.log('close');
     closeDialog('dialog')
 })
 

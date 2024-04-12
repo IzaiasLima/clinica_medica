@@ -28,6 +28,12 @@
     border-radius: var(--border-radius);
 }
 
+.card.card-mini {
+    height: 3vw;
+    width: 9vw;
+    padding: 5px 5px 0;
+}
+
 .card:hover {
     box-shadow: 4px 4px 10px var(--hover-color);
 }

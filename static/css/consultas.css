@@ -1,0 +1,155 @@
+/* .consultas, */
+.consultas input[type=search],
+.consultas select,
+.consultas textarea,
+.search-bar,
+.medicos,
+.pacientes,
+.data-hora,
+.horario,
+.horario-cards,
+.observacao {
+    display: flex;
+    width: 65vw;
+}
+
+.search-bar {
+    margin-top: 40px;
+}
+
+.consultas h5 {
+    margin-bottom: 5px;
+}
+
+.consultas select {
+    padding: 10px;
+    font-size: 1.1rem;
+    overflow: auto;
+}
+
+.consultas textarea {
+    font-size: 1.2rem;
+}
+
+.consultas input[type="date"] {
+    height: 3rem;
+    width: 17rem;
+    appearance: auto;
+}
+
+.consultas input[type="radio"] {
+    height: 2rem;
+    display: none;
+    appearance: auto;
+}
+
+.consultas label {
+    display: inline-block;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.consultas input[type="radio"]:checked+label {
+    background-color: var(--bg-secondary);
+}
+
+td.ellipsis {
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+td.tw-1 {
+    width: 20%;
+}
+
+td.tw-2 {
+    width: 25%;
+}
+
+.agendada {
+    color: var(--success)
+}
+
+.agendada a {
+    color: var(--disabled)
+}
+
+.cancelada,
+.cancelada a {
+    color: var(--warning)
+}
+
+.medicos {
+    align-items: center;
+    min-height: 85px;
+    border: 1px solid var(--hover-color);
+    border-radius: var(--border-radius);
+    box-shadow: 4px 4px 10px var(--hover-color);
+    gap: 30px;
+}
+
+.medicos div,
+.medicos i {
+    flex-grow: 1;
+}
+
+.medicos label {
+    padding: 5px;
+}
+
+.data-hora,
+.observacoes {
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: start;
+}
+
+.horario {
+    padding: 15px 15px 0;
+    border: 1px solid var(--hover-color);
+    border-radius: var(--border-radius);
+    box-shadow: 4px 4px 10px var(--hover-color);
+    justify-content: space-between;
+}
+
+.horario-cards {
+    justify-content: space-evenly;
+    padding: 5px 15px;
+}
+
+.horario-cards label {
+    padding: 5px 10px 0;
+    margin-bottom: 15px;
+}
+
+.v-divider {
+    height: 2em;
+    padding: 15px 0 0 40px;
+}
+
+.divider {
+    height: 100%;
+    width: 1px;
+    border: 1px inset var(--bg-secondary);
+}
+
+@media (max-width: 992px) and (orientation: portrait) {
+    td.ellipsis {
+        max-width: unset;
+        overflow: visible;
+        text-overflow: unset;
+        white-space: unset;
+    }
+
+    td.tw-2,
+    td.tw-3 {
+        width: 100%;
+    }
+
+    td:last-child:before {
+        content: attr(data-th) ":\00A0";
+        font-weight: 600;
+    }
+}

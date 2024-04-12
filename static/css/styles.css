@@ -16,7 +16,10 @@
     --soft-color: #afafaa;
     --font-primary: #7d7d7d;
     --font-secondary: #dadada;
+    --link-hover: #789e6f;
+    --success: #789e6f;
     --warning: #b4293e;
+    --disabled: #afafaa;
     --border-radius: 7px;
     --hover-color: rgba(128, 128, 128, 0.4);
     --animate-duration: 1.5s;
@@ -43,6 +46,7 @@ body {
     padding: 20px 20px 10px;
     background-color: var(--bg-header);
     backdrop-filter: blur(5px);
+    z-index: 10000;
 }
 
 .header .material-symbols-outlined {
@@ -118,7 +122,7 @@ body {
     text-transform: lowercase;
 }
 
-*.fl-case:first-letter {
+.fl-case:first-letter {
     text-transform: uppercase;
 }
 
@@ -149,16 +153,19 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
-    margin: auto;
     gap: 20px;
 }
 
+.dados {
+    margin: auto;
+}
 
 ::placeholder {
     color: var(--font-primary);
     font-weight: 100;
     opacity: 0.5;
 }
+
 
 select:invalid,
 input[type="date"]:invalid {
@@ -176,11 +183,13 @@ input {
 }
 
 input:focus-visible,
-select:focus-visible {
+select:focus-visible,
+textarea:focus-visible {
     outline: var(--soft-color) solid 2px;
 }
 
-select {
+select,
+textarea {
     width: 100%;
     min-height: 2.5em;
     line-height: 2.5em;
@@ -188,8 +197,26 @@ select {
     border-radius: var(--border-radius);
 }
 
+textarea {
+    padding: 5px 15px;
+    font-size: 1em;
+}
+
+select option:hover {
+    box-shadow: 0 0 10px 100px var(--bg-secondary) inset;
+}
+
+select option:checked {
+    color: #fff;
+    box-shadow: 0 0 10px 100px var(--bg-secondary) inset;
+}
+
 a:hover {
     cursor: pointer;
+}
+
+i:hover {
+    color: var(--link-hover);
 }
 
 select,
@@ -207,7 +234,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 select:hover,
-input:hover {
+input:hover,
+textarea:hover {
     box-shadow: 4px 4px 10px var(--hover-color);
 }
 
@@ -358,7 +386,8 @@ th {
     }
 
     td:before {
-        content: attr(data-th) ": ";
+        float: left;
+        content: attr(data-th) ":\00A0";
         font-weight: 600;
     }
 

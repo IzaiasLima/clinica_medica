@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="htmx-config" content='{"responseTargetSetsError":"true"}'>
+    <title>Clínica Psicologia - Consultas</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/app/favicon.png">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/search.css">
+    <link rel="stylesheet" href="./css/cards.css">
+    <link rel="stylesheet" href="./css/consultas.css">
+    <link rel="stylesheet" href="./css/button.css">
+
+</head>
+
+<body>
+
+    <div class="header">
+        <a href="/app/home.html">
+            <i class="material-symbols-outlined">arrow_back</i>
+        </a>
+    </div>
+
+    <div class="container">
+
+        <div class="titles">
+            <h1 hx-trigger="load" hx-get="/info/title"></h1>
+            <h2>Relatório de Consultas</h2>
+        </div>
+
+        <div class="w-100" hx-ext="client-side-templates">
+
+            <div hx-get="/api/consultas" hx-trigger="load" hx-target="#slot-lista" hx-swap="innerHTML"
+                mustache-array-template="consultas-template">
+            </div>
+
+            <section id="slot-lista"></section>
+
+            <template id="consultas-template">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                <a hx-get="/api/consultas" hx-vars="'order': 0" hx-target="#slot-lista"
+                                    hx-swap="innerHTML" mustache-array-template="consultas-template">
+                                    Paciente
+                                    <i class="material-symbols-outlined">expand_all</i>
+                                </a>
+                            </th>
+                            <th class="w-2">Telefone</th>
+                            <th>
+                                <a hx-get="/api/consultas" hx-vars="'order': 1" hx-target="#slot-lista"
+                                    hx-swap="innerHTML" mustache-array-template="consultas-template">
+                                    Médico
+                                    <i class="material-symbols-outlined">expand_all</i>
+                                </a>
+                            </th>
+                            <th class="m-hidden">Especialidade</th>
+                            <th class="tw-2-large">
+                                <a hx-get="/api/consultas" hx-vars="'order': 2" hx-target="#slot-lista"
+                                    hx-swap="innerHTML" mustache-array-template="consultas-template">
+                                    Data
+                                    <i class="material-symbols-outlined">expand_all</i>
+                                </a>
+                            </th>
+                            <th>Horário</th>
+                            <th class="tw-2-large">
+                                <a hx-get="/api/consultas" hx-vars="'order': 3" hx-target="#slot-lista"
+                                    hx-swap="innerHTML" mustache-array-template="consultas-template">
+                                    Situação
+                                    <i class="material-symbols-outlined">expand_all</i>
+                                </a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- {{#data}} -->
+                        <tr>
+                            <td title="{{id}}/{{id_paciente}} - {{nm_paciente}}" class="u-case ellipsis tw-2">
+                                {{nm_paciente}}
+                            </td>
+                            <td data-th="Telefone">{{telefone}}</td>
+                            <td data-th="Médico" title="{{id_medico}} - {{nm_medico}}" class="ellipsis tw-1">
+                                <span class="u-case">{{nm_medico}}</span>
+                            </td>
+                            <td data-th="Especialidade" class="m-hidden">
+                                <div class="fl-case">{{especialidade}}</div>
+                            </td>
+                            <td data-th="Data">{{dt_consulta}}</td>
+                            <td data-th="Horário">{{hr_consulta}}</td>
+                            <td data-th="Situação" title="{{observacao}}">
+                                <div class="fl-case l-case {{status}}">
+                                    {{status}}
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- {{/data}} -->
+
+                        <!-- {{^data}} -->
+                        <tr>
+                            <td class="warning" colspan="7">Não há consultas registradas.</td>
+                        </tr>
+                        <!-- {{/data}} -->
+                    </tbody>
+                </table>
+            </template>
+
+            <div id="toast" class="animate__animated animate__faster"></div>
+
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/htmx.org@1.9.10"
+        integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
+    <script src="https://unpkg.com/mustache@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./js/functions.js"></script>
+</body>
+
+</html>

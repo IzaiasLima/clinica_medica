@@ -2,6 +2,7 @@ import connection
 
 TBL_MEDICOS = "medicos"
 TBL_PACIENTES = "pacientes"
+TBL_CONSULTAS = "consultas"
 
 con, cur = connection.get()
 
@@ -72,13 +73,27 @@ def del_medico(id):
     delete(TBL_MEDICOS, id)
 
 
+def get_consultas(tp_order=0, is_agendadas=False):
+    return get_dados_consultas(tp_order, is_agendadas)
+
+
+def get_consulta(id):
+    return get_dados_consultas(id=id)
+
+
+def add_consulta(new_consulta):
+    add(TBL_CONSULTAS, new_consulta)
+
+
 def get_dados(tbl, id=None):
     sql = f"SELECT * FROM {tbl}"
     sql += f" WHERE id={id}" if id else ""
     sql += " ORDER BY nome"
+
     cur.execute(sql)
     rows = cur.fetchall()
     dados = [dict(row) for row in rows]
+
     return dados
 
 
@@ -110,6 +125,29 @@ def search(tbl, param):
     rows = cur.fetchall()
     dados = [dict(row) for row in rows]
     return dict({"info": dados})
+
+
+def get_dados_consultas(tp_order=0, is_agendadas=False, id=None):
+    ORDER = [
+        "p.nome, dt_consulta, hr_consulta",
+        "nm_medico, status, dt_consulta, hr_consulta",
+        "dt_consulta desc, hr_consulta, nm_medico",
+        "status, dt_consulta, hr_consulta, p.nome",
+    ]
+
+    sql = "SELECT c.*, m.nome AS nm_medico, m.especialidade, p.nome AS nm_paciente, p.telefone"
+    sql += " FROM consultas AS c"
+    sql += " INNER JOIN medicos AS m ON (m.id = c.id_medico)"
+    sql += " INNER JOIN pacientes AS p ON (p.id = c.id_paciente)"
+    sql += f" WHERE id={id}" if id else ""
+    sql += f" AND c.status='agendada'" if is_agendadas else ""
+    sql += f" ORDER BY {ORDER[tp_order]}"
+
+    cur.execute(sql)
+    rows = cur.fetchall()
+    dados = [dict(row) for row in rows]
+
+    return dados
 
 
 def add(table, dados: dict):

@@ -5,11 +5,12 @@ print(f"Script {__name__} executado.")
 
 
 def drop_tables():
-    """Excluir as tabelas"""
+    """Excluir as tabelas do sistema"""
 
     con, cur = connection.get()
 
     try:
+        cur.execute("DROP TABLE consultas")
         cur.execute("DROP TABLE medicos")
         cur.execute("DROP TABLE pacientes")
     except:
@@ -20,12 +21,12 @@ def drop_tables():
 
 
 def tbl_create():
-    """Criar as tabelas MEDICOS e PACIENTES."""
+    """Criar ou recriar as tabelas do sistema"""
 
     con, cur = connection.get()
 
     PRIMARY_KEY = (
-        "id SERIAL NOT NULL PRIMARY KEY"
+        "id SERIAL PRIMARY KEY"
         if connection.DB_TYPE == connection.TYPE_PSQL
         else "id integer PRIMARY KEY AUTOINCREMENT"
     )
@@ -72,6 +73,21 @@ def tbl_create():
                 email varchar(100),
                 telefone varchar(15),
                 status varchar(30)
+            )
+        """
+    )
+
+    cur.execute(
+        f"""
+            CREATE TABLE IF NOT EXISTS consultas (
+                {PRIMARY_KEY},
+                id_medico integer,
+                id_paciente integer,
+                dt_consulta date,
+                hr_consulta time,
+                observacao text,
+                status varchar(30),
+                CONSTRAINT medico_fkey FOREIGN KEY (id_medico) REFERENCES medicos
             )
         """
     )
@@ -138,8 +154,9 @@ def tables_init():
 def get_medicos():
     return [
         "Dileyciane Monteiro",
-        "Madalena Vitória Dias Ortega",
-        "Luara Casanova da Lira",
+        "Luciana Monteiro",
+        "Madalena Dias Ortega",
+        "Laura Casanova de Lira",
         "Karina Michele Escobar",
         "Lena Tatiana Assunção",
         "Helena Clarice Padilha",
@@ -147,7 +164,7 @@ def get_medicos():
         "Irene Clarice Corona",
         "Sara Meireles",
         "Cristina Padilha Câmara",
-        "Ana Carolina Jardel Casanova",
+        "Ana Carolina Casanova",
         "Vitória Sanches",
     ]
 
@@ -157,11 +174,11 @@ def get_pacientes():
         "Natanael Monteiro",
         "Inácio Danilo Chaves",
         "Paulo Feliciano Frias",
-        "Patrônio Benites de Guimarães",
+        "Patrônio Guimarães",
         "Celso Mauro Esteves",
         "Felipe Chaves",
         "José Faria de Gomes",
-        "Luiz Rosário de Carmona",
+        "Luiz Rosário Carmona",
         "Ali Ortiz Filho",
         "Elói Aguiar Sobrinho",
         "Everaldo Michel Branco",
@@ -176,26 +193,26 @@ def get_pacientes():
         "Meire Dias de Reis",
         "Renato Tomás de Lutero",
         "Fernando Willian Guerra",
-        "Camilo Batista de Pinheiro",
+        "Camilo Batista Pinheiro",
         "Ricardo de Rocha Filho",
-        "Mike Ramon Feliciano Filho",
+        "Mike Ramon Feliciano",
         "Joaquim Manoel de Arruda",
-        "Bartolomeu Ferreira da Silva",
+        "Bento Ferreira da Silva",
         "Sérgio Fábio de Meireles",
-        "Anderson Wilson Aguiar Jardim",
+        "Wilson Aguiar Jardim",
         "Eric Ivan de Branco Neto",
         "Gustavo Sales",
         "Adílson Carmona",
-        "Kevin Batista Flores de Rosa",
+        "Kevin Batista da Rosa",
         "Cristiano Padilha Câmara",
         "Felipe Casanova",
         "Benjamin Luan Aranda",
         "Helder Inácio de Uchoa",
         "Cícero Jardel Casanova",
-        "Christian Hélio de Garcia",
-        "Amarildo Lucas de Sobrinho",
-        "Simão Otaviano de Faria",
-        "Tomás Matias de Sanches",
+        "Christian Hélio Garcia",
+        "Amarildo Lucas Sobrinho",
+        "Simão Otaviano Farias",
+        "Tomás Matias Sanches",
     ]
 
 

@@ -34,7 +34,8 @@ async def get_body(req: Request):
 
     try:
         body = json.loads(payload)
-    except:
+    except Exception as e:
+        print(e)
         lista = list(payload.split("&"))
         body = dict(l.split("=") for l in lista)
 
@@ -120,10 +121,15 @@ async def search_pacientes(body=Depends(get_body)):
     key = "search"
     search = body[key] if key in body else ""
 
-    if len(search) > 1:
-        dados = db.search_pacientes(search)
-    else:
+    if not search:
         dados = db.get_pacientes_paged(LEN_PAGE)
+
+    elif len(search) > 1:
+        dados = db.search_pacientes(search)
+
+    else:
+        # dados = db.get_pacientes_paged(LEN_PAGE)
+        raise HTTPException(status_code=204)
 
     return dados
 
@@ -193,6 +199,33 @@ async def del_medico(id: int):
     return HTMLResponse(status_code=200)
 
 
+@app.get("/api/consultas", response_class=JSONResponse)
+async def get_consultas(param=Depends(get_params)):
+    order = int(param["order"]) if param else 0
+    dados = db.get_consultas(order)
+    return dados
+
+
+@app.get("/api/consultas/agendadas", response_class=JSONResponse)
+async def get_consultas(param=Depends(get_params)):
+    order = int(param["order"]) if param else 0
+    dados = db.get_consultas(order, is_agendadas=True)
+    return dados
+
+
+@app.post("/api/consultas", response_class=JSONResponse)
+async def add_consulta(body=Depends(get_body)):
+    body.pop("search", None)
+
+    if is_valid(body, 4) or is_valid(body, 5):
+        body.update({"status": "agendada"})
+        db.add_consulta(body)
+        dados = db.get_consultas(tp_order=0, is_agendadas=True)
+        return dados
+    else:
+        raise HTTPException(status_code=422, detail=ERR_MSG)
+
+
 # -------------------------------------- #
 #       RETORNA FRAGMENTOS DE HTML       #
 # -------------------------------------- #
@@ -241,6 +274,13 @@ async def edit_medico(id: int, params=Depends(get_params)):
 async def detalhe_medico(id: int):
     dados = db.get_medico(id)
     return fragment_format("medico_detalhes", dados)
+
+
+# retornar template para incluir consulta
+@app.get("/html/consulta/new/add", response_class=HTMLResponse)
+async def add_consulta():
+    html = fragment("consulta_add")
+    return "".join(html)
 
 
 # retorna um fragmento com o menu do sistema #
