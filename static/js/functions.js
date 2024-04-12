@@ -1,40 +1,69 @@
-document.addEventListener(
-    "htmx:confirm",
-    function (evt) {
-        if (evt.detail.question !== null) {
-            evt.preventDefault();
-            Swal.fire({
-                // animation: false,
-                buttonsStyling: false,
-                showCancelButton: true,
-                reverseButtons: true,
-                // icon: 'question',
-                title: 'Favor confirmar!',
-                text: `Deseja mesmo excluir o cadastro de ${(evt.detail.question).toUpperCase()}?`,
-                showClass: { popup: 'animate__animated animate__fadeInUp animate__faster' },
-                hideClass: { popup: 'animate__animated animate__zoomOut animate__faster' },
-            }).then(function (res) {
-                if (res.isConfirmed) evt.detail.issueRequest(true)
-            })
-        }
-    }
-);
-
 document.addEventListener('htmx:responseError', evt => {
     const error = JSON.parse(evt.detail.xhr.responseText);
     showToast(error.detail);
 })
 
-document.getElementById('slot-lista').addEventListener('htmx:beforeSwap', evt => {
-    console.log('ok');
-    if (evt.detail.xhr.status >= 300) {
-        evt.detail.shouldSwap = false
-        console.log('cancela');
-        return
+let cadastros = document.getElementById('slot-lista');
+
+if (cadastros != null) {
+    cadastros.msg = 'Deseja mesmo excluir o cadastro de ';
+    cadastros.addEventListener("htmx:confirm", confirm, false);
+
+    cadastros.addEventListener('htmx:beforeSwap', evt => {
+        if (evt.detail.xhr.status >= 300) {
+            evt.detail.shouldSwap = false
+            return
+        }
+        closeDialog('dialog')
+    })
+}
+
+var agendadas = document.getElementById('slot-agendadas');
+
+if (agendadas != null) {
+    agendadas.msg = 'Deseja registrar o encerramento da consulta de ';
+    agendadas.addEventListener("htmx:confirm", confirm, false);
+
+    agendadas.addEventListener('htmx:beforeSwap', evt => {
+        if (evt.detail.xhr.status >= 300) {
+            evt.detail.shouldSwap = false
+            return
+        }
+        closeDialog('dialog')
+    })
+}
+
+let cancelamentos = document.getElementById('slot-cancelamentos');
+
+if (cancelamentos != null) {
+    cancelamentos.msg = 'Deseja mesmo cancelar a consulta de ';
+    cancelamentos.addEventListener("htmx:confirm", confirm, false);
+}
+
+function confirm(evt) {
+    if (evt.detail.question !== null) {
+        var msg = evt.currentTarget.msg;
+        // var concluir = document.getElementById('concluir');
+
+        // if (concluir != null)
+        // msg = 'Deseja registrar o encerramento da consulta de '
+
+        evt.preventDefault();
+        var msg = `${msg} ${(evt.detail.question).toUpperCase()}?`
+
+        Swal.fire({
+            buttonsStyling: false,
+            showCancelButton: true,
+            reverseButtons: true,
+            title: 'Favor confirmar!',
+            text: msg,
+            showClass: { popup: 'animate__animated animate__fadeInUp animate__faster' },
+            hideClass: { popup: 'animate__animated animate__zoomOut animate__faster' },
+        }).then(function (res) {
+            if (res.isConfirmed) evt.detail.issueRequest(true)
+        })
     }
-    console.log('close');
-    closeDialog('dialog')
-})
+}
 
 function showToast(msg) {
     const toast = document.getElementById('toast');
@@ -52,9 +81,12 @@ function showDialog(id) {
 
 function closeDialog(id) {
     const dialog = document.getElementById(id);
-    const info = document.querySelector('.info');
-    dialog.classList.remove('show');
-    info.classList.remove('animate__fadeInUp');
+
+    if (dialog != null) {
+        const info = document.querySelector('.info');
+        dialog.classList.remove('show');
+        info.classList.remove('animate__fadeInUp');
+    }
 }
 
 function allowsEditing(obj) {

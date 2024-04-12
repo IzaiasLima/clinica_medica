@@ -226,6 +226,18 @@ async def add_consulta(body=Depends(get_body)):
         raise HTTPException(status_code=422, detail=ERR_MSG)
 
 
+@app.patch("/api/consultas/{id}")
+async def close_consulta(id: int):
+    db.close_consulta(id)
+    return HTMLResponse(status_code=200)
+
+
+@app.delete("/api/consultas/{id}")
+async def del_consulta(id: int):
+    db.del_consulta(id)
+    return HTMLResponse(status_code=200)
+
+
 # -------------------------------------- #
 #       RETORNA FRAGMENTOS DE HTML       #
 # -------------------------------------- #

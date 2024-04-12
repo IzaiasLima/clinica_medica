@@ -49,6 +49,10 @@ body {
     z-index: 10000;
 }
 
+.material-symbols-outlined {
+    line-height: unset;
+}
+
 .header .material-symbols-outlined {
     font-size: 2rem;
 }
@@ -271,6 +275,7 @@ table.form td[data-th]:before {
 tr {
     padding: 0;
     vertical-align: middle;
+    line-height: 1.5;
 }
 
 td.icon {
@@ -278,12 +283,11 @@ td.icon {
 }
 
 td.icon div {
-    /* td.buttons div { */
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-evenly;
     align-items: center;
-    padding: 10px;
+    /* padding: 10px; */
     gap: 15px;
 }
 
@@ -293,6 +297,11 @@ td {
     text-align: left;
     border-bottom: 1px solid var(--secondary);
     vertical-align: middle;
+}
+
+td.center {
+    display: table-cell;
+    text-align: center !important;
 }
 
 td>input,
@@ -307,6 +316,7 @@ td>select {
 th {
     border-bottom: 2px solid var(--secondary);
 }
+
 
 @media (max-width: 992px) and (orientation: landscape) {
     .container {

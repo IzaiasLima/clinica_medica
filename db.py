@@ -85,6 +85,14 @@ def add_consulta(new_consulta):
     add(TBL_CONSULTAS, new_consulta)
 
 
+def close_consulta(id):
+    set_status(TBL_CONSULTAS, "concluída", id)
+
+
+def del_consulta(id):
+    set_status(TBL_CONSULTAS, "cancelada", id)
+
+
 def get_dados(tbl, id=None):
     sql = f"SELECT * FROM {tbl}"
     sql += f" WHERE id={id}" if id else ""
@@ -181,6 +189,12 @@ def update(id, table, outdated: dict, updated: dict):
         sql = f"UPDATE {table} SET {all_fields} WHERE id={id}"
         cur.execute(sql)
         con.commit()
+
+
+def set_status(tbl, status, id):
+    sql = f"UPDATE {tbl} SET status='{status}' WHERE id={id}"
+    cur.execute(sql)
+    con.commit()
 
 
 def delete(tbl, id):
