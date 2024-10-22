@@ -16,7 +16,7 @@ def get():
             database="postgres",
             user="postgres",
             password="postgres",
-            host="192.168.1.12",
+            host="localhost",
             port="5432",
         )
         cur = con.cursor(cursor_factory=psycopg2.extras.RealDictCursor)

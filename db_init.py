@@ -87,7 +87,8 @@ def tbl_create():
                 hr_consulta time,
                 observacao text,
                 status varchar(30),
-                CONSTRAINT medico_fkey FOREIGN KEY (id_medico) REFERENCES medicos
+                CONSTRAINT medico_fkey FOREIGN KEY (id_medico) REFERENCES medicos (id),
+                CONSTRAINT paciente_fkey FOREIGN KEY (id_paciente) REFERENCES pacientes (id)
             )
         """
     )

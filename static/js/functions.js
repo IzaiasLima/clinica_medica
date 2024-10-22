@@ -21,7 +21,7 @@ if (cadastros != null) {
 var agendadas = document.getElementById('slot-agendadas');
 
 if (agendadas != null) {
-    agendadas.msg = 'Deseja registrar o encerramento da consulta de ';
+    agendadas.msg = 'Deseja registrar o atendimento do paciente ';
     agendadas.addEventListener("htmx:confirm", confirm, false);
 
     agendadas.addEventListener('htmx:beforeSwap', evt => {
@@ -42,14 +42,9 @@ if (cancelamentos != null) {
 
 function confirm(evt) {
     if (evt.detail.question !== null) {
-        var msg = evt.currentTarget.msg;
-        // var concluir = document.getElementById('concluir');
-
-        // if (concluir != null)
-        // msg = 'Deseja registrar o encerramento da consulta de '
-
         evt.preventDefault();
-        var msg = `${msg} ${(evt.detail.question).toUpperCase()}?`
+
+        const msg = `${evt.currentTarget.msg} ${(evt.detail.question).toUpperCase()}?`
 
         Swal.fire({
             buttonsStyling: false,
@@ -66,10 +61,14 @@ function confirm(evt) {
 }
 
 function showToast(msg) {
-    const toast = document.getElementById('toast');
-    toast.innerHTML = msg;
-    toast.classList.add('show', 'animate__fadeInUp');
-    setTimeout(function () { toast.classList.remove('show', 'animate__fadeInUp') }, 3000);
+    if (msg != null) {
+        const toast = document.getElementById('toast');
+        const len = msg.length;
+
+        toast.innerHTML = msg;
+        toast.classList.add('show', 'animate__fadeInUp');
+        setTimeout(function () { toast.classList.remove('show', 'animate__fadeInUp') }, len * 100);
+    }
 }
 
 function showDialog(id) {

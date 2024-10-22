@@ -9,19 +9,22 @@ from fastapi.responses import (
 
 import json
 
-import time
 import urllib.parse as html
 
 import db
 
-
-ERR_MSG = "Todos os campos precisam ser preenchidos!"
 LEN_PAGE = 5
+DEL_DB_DESC = "ATENÇÃO: Todos os dados das tabelas serão excluídos."
+FORM_ERR_MSG = "Todos os campos precisam ser preenchidos!"
+FK_ERR_MSG = """
+        Não é permitido excluir o cadastro de 
+        Médicos ou Pacientes que tenham consultas registradas.
+    """
 
 app = FastAPI(
     title="Clínica Mentalis",
     version="0.5.1",
-    summary="Protótipo de uma API para gestão de uma clínica médica. ",
+    summary="Protótipo de uma API para gestão de uma clínica de psicologia. ",
 )
 
 app.mount("/app", StaticFiles(directory="static", html="True"), name="static")
@@ -102,7 +105,7 @@ async def update_paciente(id: int, body=Depends(get_body)):
         dados = db.get_paciente_position(nome, LEN_PAGE)
         return dados
     else:
-        raise HTTPException(status_code=422, detail=ERR_MSG)
+        raise HTTPException(status_code=422, detail=FORM_ERR_MSG)
 
 
 @app.post("/api/pacientes", response_class=JSONResponse)
@@ -113,7 +116,7 @@ async def add_paciente(body=Depends(get_body)):
         dados = db.get_paciente_position(nome, LEN_PAGE)
         return dados
     else:
-        raise HTTPException(status_code=422, detail=ERR_MSG)
+        raise HTTPException(status_code=422, detail=FORM_ERR_MSG)
 
 
 @app.post("/api/pacientes/search", response_class=JSONResponse)
@@ -166,7 +169,7 @@ async def update_medico(id: int, body=Depends(get_body)):
         dados = db.get_medico_position(nome, LEN_PAGE)
         return dados
     else:
-        raise HTTPException(status_code=422, detail=ERR_MSG)
+        raise HTTPException(status_code=422, detail=FORM_ERR_MSG)
 
 
 @app.post("/api/medicos", response_class=JSONResponse)
@@ -177,7 +180,7 @@ async def add_medico(body=Depends(get_body)):
         dados = db.get_medico_position(nome, LEN_PAGE)
         return dados
     else:
-        raise HTTPException(status_code=422, detail=ERR_MSG)
+        raise HTTPException(status_code=422, detail=FORM_ERR_MSG)
 
 
 @app.post("/api/medicos/search", response_class=JSONResponse)
@@ -195,8 +198,11 @@ async def search_medicos(body=Depends(get_body)):
 
 @app.delete("/api/medicos/{id}")
 async def del_medico(id: int):
-    db.del_medico(id)
-    return HTMLResponse(status_code=200)
+    try:
+        db.del_medico(id)
+        return HTMLResponse(status_code=200)
+    except:
+        raise HTTPException(status_code=409, detail=FK_ERR_MSG)
 
 
 @app.get("/api/consultas", response_class=JSONResponse)
@@ -208,7 +214,7 @@ async def get_consultas(param=Depends(get_params)):
 
 @app.get("/api/consultas/agendadas", response_class=JSONResponse)
 async def get_consultas(param=Depends(get_params)):
-    order = int(param["order"]) if param else 0
+    order = int(param.get("order", 1)) if param else 1
     dados = db.get_consultas(order, is_agendadas=True)
     return dados
 
@@ -223,7 +229,7 @@ async def add_consulta(body=Depends(get_body)):
         dados = db.get_consultas(tp_order=0, is_agendadas=True)
         return dados
     else:
-        raise HTTPException(status_code=422, detail=ERR_MSG)
+        raise HTTPException(status_code=422, detail=FORM_ERR_MSG)
 
 
 @app.patch("/api/consultas/{id}")
@@ -308,7 +314,7 @@ def get_menu():
 
 
 # resetar o banco de dados
-@app.get("/reset", response_class=RedirectResponse)
+@app.delete("/reset", response_class=RedirectResponse, description=DEL_DB_DESC)
 def db_reset():
     import db_init
 

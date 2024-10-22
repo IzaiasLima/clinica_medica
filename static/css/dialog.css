@@ -1,4 +1,4 @@
-/* FORMATA OS DIÁLOGOS DE DETALHES, INCLUSÃO E EDIÇÃO */
+/* FORMATA OS DIÁLOGOS DE DETALHAMENTO, INCLUSÃO E EDIÇÃO */
 
 #dialog {
     visibility: hidden;
@@ -28,7 +28,7 @@
     flex-direction: column;
     align-self: center;
     height: fit-content;
-    max-height: 90vh;
+    max-height: 85vh;
     width: 70%;
     margin: auto;
     padding: 25px;

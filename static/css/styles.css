@@ -20,8 +20,8 @@
     --success: #789e6f;
     --warning: #b4293e;
     --disabled: #afafaa;
+    --hover-color: rgba(128, 128, 128, 0.2);
     --border-radius: 7px;
-    --hover-color: rgba(128, 128, 128, 0.4);
     --animate-duration: 1.5s;
 }
 
@@ -77,6 +77,12 @@ body {
 .warning {
     color: var(--warning);
     font-weight: 500;
+}
+
+.bg-warning {
+    color: var(--font-secondary);
+    font-weight: 500;
+    background-color: var(--warning);
 }
 
 .small-icon {
@@ -272,6 +278,10 @@ table.form td[data-th]:before {
     font-weight: 600;
 }
 
+tbody tr:hover {
+    background-color: var(--hover-color);
+}
+
 tr {
     padding: 0;
     vertical-align: middle;
@@ -287,7 +297,6 @@ td.icon div {
     flex-wrap: nowrap;
     justify-content: space-evenly;
     align-items: center;
-    /* padding: 10px; */
     gap: 15px;
 }
 

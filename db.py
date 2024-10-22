@@ -77,8 +77,8 @@ def get_consultas(tp_order=0, is_agendadas=False):
     return get_dados_consultas(tp_order, is_agendadas)
 
 
-def get_consulta(id):
-    return get_dados_consultas(id=id)
+def get_consulta(idx):
+    return get_dados_consultas(id=idx)
 
 
 def add_consulta(new_consulta):
@@ -198,9 +198,13 @@ def set_status(tbl, status, id):
 
 
 def delete(tbl, id):
-    sql = f"DELETE FROM {tbl} WHERE id={id}"
-    cur.execute(sql)
-    con.commit()
+    try:
+        sql = f"DELETE FROM {tbl} WHERE id={id}"
+        cur.execute(sql)
+        con.commit()
+    except Exception as exc:
+        con.rollback()
+        raise exc
 
 
 def count(tbl):

@@ -20,8 +20,13 @@ a.button {
     text-decoration: none;
 }
 
+tr:has(.nav-buttons):hover {
+    background-color: unset;
+}
+
 td:has(button) {
     border: none;
+    background-color: unset;
 }
 
 button:hover,

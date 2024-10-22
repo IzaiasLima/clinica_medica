@@ -1,4 +1,3 @@
-/* .consultas, */
 .consultas input[type=search],
 .consultas select,
 .consultas textarea,
@@ -148,8 +147,12 @@ td.tw-2 {
         width: 100%;
     }
 
-    td:last-child:before {
+    /* td:last-child:before {
         content: attr(data-th) ":\00A0";
         font-weight: 600;
     }
+
+    td:last-child {
+        margin-bottom: 30px;
+    } */
 }
