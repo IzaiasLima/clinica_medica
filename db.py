@@ -118,14 +118,6 @@ def get_consultas(tp_order=0, is_agendadas=False):
     return get_dados_consultas(tp_order, is_agendadas)
 
 
-def get_consulta(idx):
-    return get_dados_consultas(id=idx)
-
-
-def get_consulta_disponivel(id_medico, dt_consulta, hr_consulta):
-    return get_dados_consultas(id=idx)
-
-
 def add_consulta(new_consulta):
     add(TBL_CONSULTAS, new_consulta)
 

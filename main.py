@@ -8,7 +8,7 @@ from fastapi.responses import (
 )
 
 import json
-
+import datetime as dt
 import urllib.parse as html
 
 import db
@@ -17,7 +17,9 @@ LEN_PAGE = 5
 
 DEL_DB_MSG = "ATENÇÃO: Todos os dados das tabelas serão excluídos."
 LOGIN_ERR_MSG = "Usuário ou senha inválidos!"
+
 FORM_ERR_MSG = "Todos os campos precisam ser preenchidos!"
+DT_ERR_MSG = "Por favor, informe uma data válida."
 HR_MED_ERR_MSG = "Médico indisponível nesta data/horário."
 
 FK_ERR_MSG = """
@@ -261,13 +263,20 @@ async def add_consulta(consulta=Depends(get_body)):
     consulta.pop("search", None)
 
     if is_valid(consulta, 4) or is_valid(consulta, 5):
-        if not exists(consulta):
-            consulta.update({"status": "agendada"})
-            db.add_consulta(consulta)
-            dados = db.get_consultas(tp_order=0, is_agendadas=True)
-            return dados
+
+        dts = consulta["dt_consulta"]
+
+        if dts and is_valid_date(dts):
+
+            if not exists(consulta):
+                consulta.update({"status": "agendada"})
+                db.add_consulta(consulta)
+                dados = db.get_consultas(tp_order=0, is_agendadas=True)
+                return dados
+            else:
+                raise HTTPException(status_code=409, detail=HR_MED_ERR_MSG)
         else:
-            raise HTTPException(status_code=409, detail=HR_MED_ERR_MSG)
+            raise HTTPException(status_code=422, detail=DT_ERR_MSG)
     else:
         raise HTTPException(status_code=422, detail=FORM_ERR_MSG)
 
@@ -365,6 +374,27 @@ def db_reset():
 def is_valid(body: dict, qtd: int):
     fields = sum([1 if v else 0 for _, v in body.items()])
     return fields == qtd
+
+
+def is_valid_consulta(consulta: dict):
+    import datetime as dt
+
+    valid = is_valid(consulta, 4) or is_valid(consulta, 5)
+
+    if valid:
+        dt_consulta = dt.date.fromisoformat(consulta["dt_consulta"])
+
+        valid = dt_consulta >= dt.date.today()
+
+    return valid
+
+
+def is_valid_date(date: str):
+
+    dtt = dt.date.fromisoformat(date)
+    valid = dtt >= dt.date.today()
+
+    return valid
 
 
 def exists(consulta) -> bool:
