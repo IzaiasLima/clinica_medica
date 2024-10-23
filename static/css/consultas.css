@@ -44,7 +44,7 @@
 
 .consultas label {
     display: inline-block;
-    font-size: 1rem;
+    font-size: 1.1rem;
     cursor: pointer;
 }
 
@@ -89,12 +89,6 @@ td.tw-2 {
     gap: 30px;
 }
 
-.medicos legend,
-.data-hora legend {
-    font-size: .85em;
-    font-weight: 500;
-}
-
 .medicos div,
 .medicos i {
     flex-grow: 1;
@@ -120,6 +114,12 @@ td.tw-2 {
     border: 1px solid var(--hover-color);
     border-radius: var(--border-radius);
     box-shadow: 4px 4px 10px var(--hover-color);
+}
+
+.medicos legend,
+.data-hora legend {
+    font-size: .8em;
+    font-weight: 100;
 }
 
 .horario-cards {

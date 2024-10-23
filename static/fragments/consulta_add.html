@@ -53,7 +53,7 @@
                         {{#data.info}}
                         <div>
                             <input type="radio" id="i-{{id}}" name="id_medico" value="{{id}}">
-                            <label for="i-{{id}}" hx-get="/api/medicos/horarios/{{turno}}"
+                            <label class="u-case" for="i-{{id}}" hx-get="/api/medicos/horarios/{{turno}}"
                                 hx-vars="{'page':{{data.pagination.previous_page}}}" hx-target="#slot-turnos"
                                 hx-swap="innerHTML" mustache-array-template="turnos-template">{{nome}}</label>
 

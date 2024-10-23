@@ -167,7 +167,7 @@ async def medicos_ativos(params=Depends(get_params)):
         page = int(params[key]) if key in params else 0
         page = 0 if page < 0 else page
 
-    dados = db.get_medicos_ativos(LEN_PAGE, page)
+    dados = db.get_medicos_ativos(page)
     return dados
 
 

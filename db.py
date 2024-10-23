@@ -50,7 +50,8 @@ def get_medicos_paged(len_page, page=0):
     return dados
 
 
-def get_medicos_ativos(len_page, page=0):
+def get_medicos_ativos(page=0):
+    len_page = 3
     dados = get_dados_paged(TBL_MEDICOS, len_page, page, status="ativo")
     dados.update(pagination(TBL_MEDICOS, len_page, page))
     return dados
