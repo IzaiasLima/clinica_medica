@@ -71,7 +71,6 @@
                                 </a>
                             </th>
                             <th>Horário</th>
-                            <!-- <th>Concluir</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -92,7 +91,7 @@
                                 <a title="Registrar o fim do atendimento" hx-confirm="{{nm_paciente}}"
                                     hx-patch="/api/consultas/{{id}}" hx-target="closest tr"
                                     hx-swap="outerHTML swap:0.5s">
-                                    <button class="mini w-100">Concluir</button>
+                                    <button class="btn-table">Concluir</button>
                                     <!-- <i class="material-symbols-outlined">check</i> -->
                                 </a>
                             </td>
@@ -109,8 +108,6 @@
             </template>
 
             <div class="buttons w-3">
-                <!-- <a class="button alone" href="/app/add_consulta.html">Agendar Consulta</a> -->
-
                 <button class="alone w-100" hx-get="/html/consulta/new/add" hx-trigger="click" hx-target="#slot-dialogo"
                     hx-target="innerHTML">
                     Agendar Consulta

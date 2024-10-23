@@ -16,6 +16,7 @@ import db
 LEN_PAGE = 5
 
 DEL_DB_MSG = "ATENÇÃO: Todos os dados das tabelas serão excluídos."
+LOGIN_ERR_MSG = "Usuário ou senha inválidos!"
 FORM_ERR_MSG = "Todos os campos precisam ser preenchidos!"
 HR_MED_ERR_MSG = "Médico indisponível nesta data/horário."
 
@@ -71,6 +72,11 @@ def get_info():
     return app.title
 
 
+@app.exception_handler(404)
+async def custom_404_handler(_, __):
+    return RedirectResponse("/app/404.html")
+
+
 @app.get("/api", response_class=RedirectResponse)
 async def api_root():
     return "/app/login.html"
@@ -79,6 +85,15 @@ async def api_root():
 @app.get("/api/capitulo", response_class=JSONResponse)
 async def capitulo():
     return {"capitulo": sort_chapter()}
+
+
+@app.post("/api/usuarios")
+async def usuario(body=Depends(get_body)):
+    dados = body and db.is_usuario(body)
+    if dados:
+        return "<script>location.href='home.html'</script>"
+    else:
+        raise HTTPException(status_code=403, detail=LOGIN_ERR_MSG)
 
 
 @app.get("/api/pacientes", response_class=JSONResponse)

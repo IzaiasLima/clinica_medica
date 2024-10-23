@@ -1,10 +1,44 @@
+import bcrypt
+
 import connection
 
 TBL_MEDICOS = "medicos"
 TBL_PACIENTES = "pacientes"
 TBL_CONSULTAS = "consultas"
+TBL_USUARIOS = "usuarios"
 
 con, cur = connection.get()
+
+
+def get_usuarios():
+    return get_dados(TBL_USUARIOS)
+
+
+def is_usuario(body):
+    senha = str.encode(body["senha"])
+    dados = get_usuario(TBL_USUARIOS, body)
+    if dados:
+        senha_crypt = str.encode(dados[0]["senha"])
+        return bcrypt.checkpw(senha, senha_crypt)
+    else:
+        return False
+
+
+def get_usuario(tbl, dados):
+    if dados:
+        values = [v for _, v in dados.items()]
+        usuario = values[0]
+
+        sql = f"SELECT * FROM {tbl}"
+        sql += f" WHERE usuario='{usuario}'"
+
+        cur.execute(sql)
+        rows = cur.fetchall()
+        dados = [dict(row) for row in rows]
+
+        return dados
+    else:
+        return {}
 
 
 def get_pacientes():

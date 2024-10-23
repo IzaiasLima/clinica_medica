@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <title>Clínica Médica - login</title> -->
     <link rel="icon" type="image/png" sizes="32x32" href="/app/favicon.png">
     <title>Clínica Psicologia - Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -13,21 +14,35 @@
 
 <body>
     <div class="container">
-        <div class="login">
+        <div id="form-login" class="login">
+
             <div class="icon">
                 <i class="fa fa-user-md"></i>
             </div>
-            <input type="text" id="login-medico" placeholder="Login do médico">
-            <input type="password" id="senha-medico" placeholder="Senha">
-
-            <a class="button" href="home.html">Entrar</a>
-
-            <div class="buttons">
-                <button class="mini secondary">Esqueci a senha</button>
-                <button class="mini secondary">Cadastrar</button>
+            <form class="login">
+                <input type="text" name="login" placeholder="Login">
+                <input type="password" name="senha" placeholder="Senha">
+            </form>
+            <div class="content">
+                <a class="button" hx-trigger="click" hx-include="#form-login" hx-post="/api/usuarios" title="Entrar"
+                    hx-target="#redirect" hx-swap="outerHTM">
+                    Entrar
+                </a>
+                <div class="buttons">
+                    <a class="button btn-mini secondary" href="senha.html">Esqueci a senha</a>
+                    <a class="button btn-mini secondary" href="usuario.html">Cadastrar</a>
+                </div>
             </div>
+            <div id="redirect" style="display: none;"></div>
         </div>
-    </div>
+        <div id="toast" class="animate__animated animate__faster">
+            <!-- Exibir mensagem de erro -->
+        </div>
+        <script src="https://unpkg.com/htmx.org@1.9.10"
+            integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="./js/functions.js"></script>
 </body>
 
 </html>

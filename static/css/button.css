@@ -34,12 +34,20 @@ a.button:hover {
     box-shadow: 4px 4px 10px rgba(128, 128, 128, 0.4);
 }
 
-button.mini {
+button.btn-mini,
+a.button.btn-mini,
+.btn-table {
     height: 1.9em;
     width: 13em;
     font-size: 0.75em;
     font-weight: 500;
 }
+
+.btn-table {
+    width: 100%;
+    margin-top: .7em;
+}
+
 
 div.buttons {
     display: flex;
@@ -53,7 +61,7 @@ div.buttons:has(.alone) {
     justify-content: flex-end;
 }
 
-div.buttons:has(.mini) {
+div.buttons:has(.btn-mini) {
     margin: 10px 0;
 }
 

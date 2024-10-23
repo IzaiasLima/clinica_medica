@@ -13,6 +13,7 @@ def drop_tables():
         cur.execute("DROP TABLE consultas")
         cur.execute("DROP TABLE medicos")
         cur.execute("DROP TABLE pacientes")
+        cur.execute("DROP TABLE usuarios")
     except:
         pass
 
@@ -29,6 +30,17 @@ def tbl_create():
         "id SERIAL PRIMARY KEY"
         if connection.DB_TYPE == connection.TYPE_PSQL
         else "id integer PRIMARY KEY AUTOINCREMENT"
+    )
+
+    cur.execute(
+        f"""
+            CREATE TABLE IF NOT EXISTS usuarios
+            (   {PRIMARY_KEY},
+                usuario varchar(50),
+                senha varchar(100),
+                status varchar(20)
+            )
+        """
     )
 
     cur.execute(
@@ -87,8 +99,7 @@ def tbl_create():
                 hr_consulta time,
                 observacao text,
                 status varchar(30),
-                CONSTRAINT medico_fkey FOREIGN KEY (id_medico) REFERENCES medicos (id),
-                CONSTRAINT paciente_fkey FOREIGN KEY (id_paciente) REFERENCES pacientes (id)
+                CONSTRAINT medico_fkey FOREIGN KEY (id_medico) REFERENCES medicos
             )
         """
     )
@@ -103,6 +114,27 @@ def tables_init():
     """Incluir dados iniciais de teste nas tabelas."""
 
     con, cur = connection.get()
+
+    usuarios = [
+        {
+            "usuario": "admin@admin.com",
+            "senha": "$2b$12$qlnzL47SmbO5CoY2zwZDoeqzO7DjS8IDMG4S3MxrTVlslN7M4HBGW",
+            "status": "ADMIN",
+        },
+        {
+            "usuario": "diego@professor.com",
+            "senha": "$2b$05$xcXNsssoit63YKBe3vmaA.g736ZdWnrNomAkSgcONmoNYNWhYq5tC",
+            "status": "ATIVO",
+        },
+    ]
+
+    cur.execute("DELETE FROM usuarios")
+    con.commit()
+
+    for usuario in usuarios:
+        db.add(db.TBL_USUARIOS, usuario)
+
+    con.commit()
 
     medico = {
         "rg": "3334-44",
