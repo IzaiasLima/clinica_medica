@@ -33,7 +33,7 @@ if (agendadas != null) {
     })
 }
 
-let cancelamentos = document.getElementById('slot-cancelamentos');
+let cancelamentos = document.getElementById('slot-cancelamento');
 
 if (cancelamentos != null) {
     cancelamentos.msg = 'Deseja mesmo cancelar a consulta de ';
@@ -44,12 +44,16 @@ function confirm(evt) {
     if (evt.detail.question !== null) {
         evt.preventDefault();
 
+        const isDelete = (evt.detail.verb == "delete");
         const msg = `${evt.currentTarget.msg} ${(evt.detail.question).toUpperCase()}?`
 
         Swal.fire({
+            customClass: { confirmButton: isDelete ? "bg-warning" : "" },
             buttonsStyling: false,
             showCancelButton: true,
             reverseButtons: true,
+            confirmButtonText: "SIM",
+            cancelButtonText: "NÃO",
             title: 'Favor confirmar!',
             text: msg,
             showClass: { popup: 'animate__animated animate__fadeInUp animate__faster' },

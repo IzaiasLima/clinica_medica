@@ -50,6 +50,12 @@ def get_medicos_paged(len_page, page=0):
     return dados
 
 
+def get_medicos_ativos(len_page, page=0):
+    dados = get_dados_paged(TBL_MEDICOS, len_page, page, status="ativo")
+    dados.update(pagination(TBL_MEDICOS, len_page, page))
+    return dados
+
+
 def get_medico_position(nome, len_page):
     page = get_page(TBL_MEDICOS, nome, len_page)
     dados = get_medicos_paged(len_page, page)
@@ -81,6 +87,10 @@ def get_consulta(idx):
     return get_dados_consultas(id=idx)
 
 
+def get_consulta_disponivel(id_medico, dt_consulta, hr_consulta):
+    return get_dados_consultas(id=idx)
+
+
 def add_consulta(new_consulta):
     add(TBL_CONSULTAS, new_consulta)
 
@@ -105,8 +115,10 @@ def get_dados(tbl, id=None):
     return dados
 
 
-def get_dados_paged(tbl, len_page=0, page=-1):
-    sql = f"SELECT * FROM {tbl} ORDER BY nome"
+def get_dados_paged(tbl, len_page=0, page=-1, status=None):
+    sql = f"SELECT * FROM {tbl}"
+    sql += f" WHERE status = '{status}'" if status else ""
+    sql += f" ORDER BY nome"
     sql += f" LIMIT {len_page} OFFSET {page * len_page}" if page >= 0 else ""
     cur.execute(sql)
     rows = cur.fetchall()
@@ -150,6 +162,19 @@ def get_dados_consultas(tp_order=0, is_agendadas=False, id=None):
     sql += f" WHERE id={id}" if id else ""
     sql += f" AND c.status='agendada'" if is_agendadas else ""
     sql += f" ORDER BY {ORDER[tp_order]}"
+
+    cur.execute(sql)
+    rows = cur.fetchall()
+    dados = [dict(row) for row in rows]
+
+    return dados
+
+
+def get_id_consulta(id_medico, dt_consulta, hr_consulta):
+    sql = f"SELECT id FROM {TBL_CONSULTAS}"
+    sql += f" WHERE id_medico = {id_medico}"
+    sql += f" AND dt_consulta = '{dt_consulta}'"
+    sql += f" AND hr_consulta = '{hr_consulta}'"
 
     cur.execute(sql)
     rows = cur.fetchall()

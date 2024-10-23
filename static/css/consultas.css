@@ -44,7 +44,7 @@
 
 .consultas label {
     display: inline-block;
-    font-size: 1.1rem;
+    font-size: 1rem;
     cursor: pointer;
 }
 
@@ -89,6 +89,12 @@ td.tw-2 {
     gap: 30px;
 }
 
+.medicos legend,
+.data-hora legend {
+    font-size: .85em;
+    font-weight: 500;
+}
+
 .medicos div,
 .medicos i {
     flex-grow: 1;
@@ -107,10 +113,13 @@ td.tw-2 {
 
 .horario {
     padding: 15px 15px 0;
+    justify-content: space-between;
+}
+
+.data-hora fieldset {
     border: 1px solid var(--hover-color);
     border-radius: var(--border-radius);
     box-shadow: 4px 4px 10px var(--hover-color);
-    justify-content: space-between;
 }
 
 .horario-cards {
@@ -125,7 +134,7 @@ td.tw-2 {
 
 .v-divider {
     height: 2em;
-    padding: 15px 0 0 40px;
+    padding: 8px 0 0 40px;
 }
 
 .divider {
@@ -146,13 +155,4 @@ td.tw-2 {
     td.tw-3 {
         width: 100%;
     }
-
-    /* td:last-child:before {
-        content: attr(data-th) ":\00A0";
-        font-weight: 600;
-    }
-
-    td:last-child {
-        margin-bottom: 30px;
-    } */
 }

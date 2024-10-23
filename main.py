@@ -14,8 +14,11 @@ import urllib.parse as html
 import db
 
 LEN_PAGE = 5
-DEL_DB_DESC = "ATENÇÃO: Todos os dados das tabelas serão excluídos."
+
+DEL_DB_MSG = "ATENÇÃO: Todos os dados das tabelas serão excluídos."
 FORM_ERR_MSG = "Todos os campos precisam ser preenchidos!"
+HR_MED_ERR_MSG = "Médico indisponível nesta data/horário."
+
 FK_ERR_MSG = """
         Não é permitido excluir o cadastro de 
         Médicos ou Pacientes que tenham consultas registradas.
@@ -131,7 +134,6 @@ async def search_pacientes(body=Depends(get_body)):
         dados = db.search_pacientes(search)
 
     else:
-        # dados = db.get_pacientes_paged(LEN_PAGE)
         raise HTTPException(status_code=204)
 
     return dados
@@ -144,7 +146,7 @@ async def del_paciente(id: int):
 
 
 @app.get("/api/medicos", response_class=JSONResponse)
-async def medicos(params=Depends(get_params)):
+async def medicos_ativos(params=Depends(get_params)):
     page = 0
 
     if params:
@@ -156,9 +158,29 @@ async def medicos(params=Depends(get_params)):
     return dados
 
 
+@app.get("/api/medicos/ativos", response_class=JSONResponse)
+async def medicos_ativos(params=Depends(get_params)):
+    page = 0
+
+    if params:
+        key = "page"
+        page = int(params[key]) if key in params else 0
+        page = 0 if page < 0 else page
+
+    dados = db.get_medicos_ativos(LEN_PAGE, page)
+    return dados
+
+
 @app.get("/api/medicos/{id}", response_class=JSONResponse)
 async def medico(id: int):
     return db.get_medico(id)
+
+
+@app.get("/api/medicos/horarios/{turno}", response_class=JSONResponse)
+async def turnos(turno: str):
+    from horarios import turnos
+
+    return turnos.get(turno.lower())
 
 
 @app.put("/api/medicos/{id}", response_class=JSONResponse)
@@ -220,14 +242,17 @@ async def get_consultas(param=Depends(get_params)):
 
 
 @app.post("/api/consultas", response_class=JSONResponse)
-async def add_consulta(body=Depends(get_body)):
-    body.pop("search", None)
+async def add_consulta(consulta=Depends(get_body)):
+    consulta.pop("search", None)
 
-    if is_valid(body, 4) or is_valid(body, 5):
-        body.update({"status": "agendada"})
-        db.add_consulta(body)
-        dados = db.get_consultas(tp_order=0, is_agendadas=True)
-        return dados
+    if is_valid(consulta, 4) or is_valid(consulta, 5):
+        if not exists(consulta):
+            consulta.update({"status": "agendada"})
+            db.add_consulta(consulta)
+            dados = db.get_consultas(tp_order=0, is_agendadas=True)
+            return dados
+        else:
+            raise HTTPException(status_code=409, detail=HR_MED_ERR_MSG)
     else:
         raise HTTPException(status_code=422, detail=FORM_ERR_MSG)
 
@@ -314,7 +339,7 @@ def get_menu():
 
 
 # resetar o banco de dados
-@app.delete("/reset", response_class=RedirectResponse, description=DEL_DB_DESC)
+@app.delete("/reset", response_class=RedirectResponse, description=DEL_DB_MSG)
 def db_reset():
     import db_init
 
@@ -325,6 +350,15 @@ def db_reset():
 def is_valid(body: dict, qtd: int):
     fields = sum([1 if v else 0 for _, v in body.items()])
     return fields == qtd
+
+
+def exists(consulta) -> bool:
+    id_medico = consulta["id_medico"]
+    dt_consulta = consulta["dt_consulta"]
+    hr_consulta = consulta["hr_consulta"]
+    dados = db.get_id_consulta(id_medico, dt_consulta, hr_consulta)
+
+    return len(dados) > 0
 
 
 def fragment(frag):
