@@ -210,6 +210,39 @@ def get_id_consulta(id_medico, dt_consulta, hr_consulta):
     return dados
 
 
+def consultas_por_medico():
+    sql = f"SELECT nome, COUNT(*) AS qtd FROM {TBL_CONSULTAS} AS c"
+    sql += f" INNER JOIN {TBL_MEDICOS} AS m ON (c.id_medico=m.id)"
+    sql += " WHERE c.status = 'concluída'"
+    sql += " GROUP BY m.id"
+
+    cur.execute(sql)
+    rows = cur.fetchall()
+    dados = [dict(row) for row in rows]
+    return dados
+
+
+def consultas_por_mes():
+    sql = ""
+
+    if connection.DB_TYPE == connection.TYPE_PSQL:
+        sql += "SELECT CAST(to_char(dt_consulta, 'mm') AS INT) AS mes, COUNT(*) AS qtd"
+
+    elif connection.DB_TYPE == connection.TYPE_SQLITE:
+        sql += (
+            "SELECT CAST(strftime('%m', dt_consulta) AS INT) AS mes, COUNT(*) AS qtd "
+        )
+    else:
+        raise NotImplementedError("Tipo de Banco de Dados desconhecido.")
+
+    sql += f" FROM {TBL_CONSULTAS} GROUP BY mes"
+
+    cur.execute(sql)
+    rows = cur.fetchall()
+    dados = [dict(row) for row in rows]
+    return dados
+
+
 def add(table, dados: dict):
     if dados:
         values = [f"'{v}'" for _, v in dados.items()]

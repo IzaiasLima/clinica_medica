@@ -7,7 +7,7 @@ TYPE_PSQL = "psql"
 TYPE_SQLITE = "sqlite"
 TYPE_MYSQL = "mysql"
 
-DB_TYPE = TYPE_PSQL
+DB_TYPE = TYPE_SQLITE
 
 
 def get():
@@ -32,4 +32,4 @@ def get():
         raise NotImplementedError("Conexão com o MySql não implementada.")
 
     else:
-        raise NotImplementedError("Tipo de DB desconhecido.")
+        raise NotImplementedError("Tipo de Banco de Dados desconhecido.")
