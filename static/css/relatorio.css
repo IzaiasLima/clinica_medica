@@ -1,0 +1,98 @@
+:root {
+    --graph-wd: 2;
+}
+
+/* body {} */
+
+.charts {
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    padding-bottom: 5rem;
+    width: 80vw;
+    max-width: 950px;
+    font-size: 1.1rem;
+    box-shadow: 4px 4px 10px rgba(128, 128, 128, 0.4);
+}
+
+.charts h1,
+.charts h2 {
+    color: var(--secondary);
+    text-align: center;
+}
+
+/* table.bar-chart tr td {
+    border-bottom: unset;
+}
+
+table.bar-chart tbody tr:hover {
+    background-color: unset;
+} */
+
+.chart {
+    display: table;
+    height: 250px;
+    width: 95%;
+    margin: 0 auto;
+    table-layout: fixed;
+    padding-right: 30px;
+    background: rgb(0, 0, 0);
+    background: linear-gradient(90deg, rgba(193, 192, 192, 1) 0%, rgb(113, 116, 128) 100%);
+}
+
+.chart li {
+    display: table-cell;
+    height: 200px;
+    position: relative;
+    vertical-align: bottom;
+}
+
+.chart span {
+    display: block;
+    width: 50px !important;
+    margin: 0 auto;
+    background: #c3ffb4;
+    animation: draw 1s ease-in-out;
+}
+
+.chart span::before {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin: 5px 0 0;
+    text-align: center;
+    content: attr(title);
+    word-wrap: break-word;
+}
+
+.chart span::after {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    padding: 5px 0 0;
+    /* color: white; */
+    text-align: center;
+    content: attr(aria-label);
+    word-wrap: break-word;
+}
+
+.bar-chart {
+    display: grid;
+    padding: 5px 30px;
+    grid-template-columns: 25% 75%;
+}
+
+.bar-chart span {
+    padding: 5px 10px;
+    text-align: right;
+    background-color: rgb(180, 255, 203);
+}
+
+@keyframes draw {
+    0% {
+        height: 0;
+    }
+}
