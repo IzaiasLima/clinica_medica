@@ -234,7 +234,7 @@ def consultas_por_mes():
     else:
         raise NotImplementedError("Tipo de Banco de Dados desconhecido.")
 
-    sql += f" FROM {TBL_CONSULTAS} GROUP BY mes"
+    sql += f" FROM {TBL_CONSULTAS} WHERE status='concluída' GROUP BY mes"
 
     cur.execute(sql)
     rows = cur.fetchall()

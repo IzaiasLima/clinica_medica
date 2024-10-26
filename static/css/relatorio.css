@@ -1,6 +1,7 @@
 :root {
     --bar-height: 15%;
     --bar-length: 90px;
+    --chart-width: 50px;
 }
 
 body {
@@ -44,7 +45,7 @@ body {
 
 .chart span {
     display: block;
-    width: 50px !important;
+    width: var(--chart-width) !important;
     margin: 0 auto;
     background: #c3ffb4;
     animation: draw 1s ease-in-out;
@@ -76,7 +77,14 @@ body {
 .bar-chart {
     display: grid;
     padding: 5px 30px;
-    grid-template-columns: 25% 75%;
+    grid-template-columns: 30% 70%;
+}
+
+.bar-chart p {
+    margin: 5px;
+    padding-right: 5px;
+    text-align: left;
+    line-height: 1em;
 }
 
 .bar-chart span {
@@ -89,5 +97,12 @@ body {
 @keyframes draw {
     0% {
         height: 0;
+    }
+}
+
+@media (max-width: 992px) {
+    :root {
+        --bar-length: 30px;
+        --chart-width: 30px;
     }
 }

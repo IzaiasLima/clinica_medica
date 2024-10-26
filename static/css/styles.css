@@ -57,6 +57,10 @@ body {
     font-size: 2rem;
 }
 
+.header.logout {
+    justify-content: flex-end;
+}
+
 .container {
     display: flex;
     flex-wrap: wrap;
