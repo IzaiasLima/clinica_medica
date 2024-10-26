@@ -223,15 +223,14 @@ def consultas_por_medico():
 
 
 def consultas_por_mes():
-    sql = ""
+    import mes
+
+    sql = None
 
     if connection.DB_TYPE == connection.TYPE_PSQL:
-        sql += "SELECT CAST(to_char(dt_consulta, 'mm') AS INT) AS mes, COUNT(*) AS qtd"
-
+        sql = "SELECT CAST(to_char(dt_consulta, 'mm') AS INT) AS mes, COUNT(*) AS qtd"
     elif connection.DB_TYPE == connection.TYPE_SQLITE:
-        sql += (
-            "SELECT CAST(strftime('%m', dt_consulta) AS INT) AS mes, COUNT(*) AS qtd "
-        )
+        sql = "SELECT CAST(strftime('%m', dt_consulta) AS INT) AS mes, COUNT(*) AS qtd "
     else:
         raise NotImplementedError("Tipo de Banco de Dados desconhecido.")
 
@@ -240,6 +239,7 @@ def consultas_por_mes():
     cur.execute(sql)
     rows = cur.fetchall()
     dados = [dict(row) for row in rows]
+    [d.update({"mes": mes.to_str(d.get("mes"))}) for d in dados]
     return dados
 
 

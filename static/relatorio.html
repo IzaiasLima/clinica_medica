@@ -18,70 +18,51 @@
         </a>
     </div>
 
-    <div class="container">
+    <div class="container" hx-ext="client-side-templates">
         <div class="titles">
             <h1 hx-trigger="load" hx-get="/info/title"></h1>
             <h2>Relatório de Consultas Realizadas</h2>
         </div>
 
-        <section class="charts">
-            <h2>Quantidade por mês</h2>
-            <ul class="chart">
-                <li> <span style="height:1%" aria-label="1" title="JAN"></span> </li>
-                <li> <span style="height:62%" aria-label="62" title="FEV"></span> </li>
-                <li> <span style="height:50%" aria-label="50" title="MAR"></span> </li>
-                <li> <span style="height:33%" aria-label="33" title="ABR"></span> </li>
-                <li> <span style="height:35%" aria-label="35" title="MAI"></span> </li>
-                <li> <span style="height:95%" aria-label="95" title="JUN"></span> </li>
-                <li> <span style="height:70%" aria-label="70" title="JUL"></span> </li>
-                <li> <span style="height:50%" aria-label="50" title="AGO"></span> </li>
-                <li> <span style="height:65%" aria-label="65" title="SET"></span> </li>
-                <li> <span style="height:35%" aria-label="35" title="OUT"></span> </li>
-                <li> <span style="height:95%" aria-label="95" title="NOV"></span> </li>
-                <li> <span style="height:55%" aria-label="55" title="DEZ"></span> </li>
-            </ul>
-        </section>
+        <section id="slot-graficos"></section>
 
-        <p>&nbsp;</p>
-
-        <div class="charts">
-
-            <h2>Quantidade por médico</h2>
-
-            <div class="bar-chart">
-                <div>Luciana Lima</div>
-                <span style='width: calc(var(--graph-wd)*6px)'> 6 </span>
-            </div>
-
-            <div class="bar-chart">
-                <div>Natanael Monteiro</div>
-                <span style='width: calc(var(--graph-wd)*104px)'> 104 </span>
-            </div>
-
-            <div class="bar-chart">
-                <div>Naele de Paula</div>
-                <span style='width: calc(var(--graph-wd)*203px)'> 203 </span>
-            </div>
-
-            <div class="bar-chart">
-                <div>Ciane de Paula</div>
-                <span style='width: calc(var(--graph-wd)*1px)'> 1 </span>
-            </div>
-
-            <div class="bar-chart">
-                <div>Ciane de Novo</div>
-                <span style='width: calc(var(--graph-wd)*76px)'> 76 </span>
-            </div>
-
-            <div class="bar-chart">
-                <div>Naelle de Novo</div>
-                <span style='width: calc(var(--graph-wd)*160px)'> 160 </span>
-            </div>
+        <div hx-get="/api/relatorios" hx-trigger="load" hx-target="#slot-graficos"
+            mustache-array-template="graficos-template">
         </div>
+
+        <template id="graficos-template">
+            <div class="charts">
+                <h2>Quantidade por mês</h2>
+                <ul class="chart">
+
+                    <!-- {{#data.meses}} -->
+                    <li>
+                        <span style="height: calc(var(--bar-height) * {{qtd}} )" aria-label="{{qtd}}" title="{{mes}}">
+                        </span>
+                    </li>
+                    <!-- {{/data.meses}} -->
+                </ul>
+            </div>
+
+            <p>&nbsp;</p>
+
+            <div class="charts">
+                <h2>Quantidade por médico</h2>
+
+                <!-- {{#data.medicos}} -->
+                <div class="bar-chart">
+                    <div>{{nome}}</div>
+                    <span style='width: calc(var(--bar-length)*{{qtd}})'> {{qtd}} </span>
+                </div>
+                <!-- {{/data.medicos}} -->
+            </div>
+        </template>
     </div>
     <script src="https://unpkg.com/htmx.org@1.9.10"
         integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
         crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
+    <script src="https://unpkg.com/mustache@latest"></script>
 </body>
 
 </html>

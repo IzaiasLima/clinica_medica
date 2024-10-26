@@ -258,6 +258,15 @@ async def get_consultas(param=Depends(get_params)):
     return dados
 
 
+@app.get("/api/relatorios", response_class=JSONResponse)
+async def get_relatorios(param=Depends(get_params)):
+    dados = {
+        "meses": db.consultas_por_mes(),
+        "medicos": db.consultas_por_medico(),
+    }
+    return dados
+
+
 @app.post("/api/consultas", response_class=JSONResponse)
 async def add_consulta(consulta=Depends(get_body)):
     consulta.pop("search", None)
