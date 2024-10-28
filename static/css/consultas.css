@@ -80,6 +80,25 @@ td.tw-2 {
     color: var(--warning)
 }
 
+/* .bg-agendada {
+    background-color: var(--bg-secondary)
+}
+
+.bg-confirmada {
+    background-color: var(--warning)
+}
+
+.bg-atendimento {
+    background-color: var(--btn-primary)
+} */
+
+.status .material-symbols-outlined {
+    padding-left: .3em;
+    font-size: 1.7em;
+    font-weight: 800;
+}
+
+
 .medicos {
     align-items: center;
     min-height: 85px;

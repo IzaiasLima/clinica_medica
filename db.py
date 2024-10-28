@@ -25,20 +25,19 @@ def is_usuario(body):
 
 
 def get_usuario(tbl, dados):
-    if dados:
-        values = [v for _, v in dados.items()]
-        usuario = values[0]
-
-        sql = f"SELECT * FROM {tbl}"
-        sql += f" WHERE usuario='{usuario}'"
-
-        cur.execute(sql)
-        rows = cur.fetchall()
-        dados = [dict(row) for row in rows]
-
-        return dados
-    else:
+    if not dados:
         return {}
+
+    values = [v for _, v in dados.items()]
+    usuario = values[0]
+
+    sql = f"SELECT * FROM {tbl}"
+    sql += f" WHERE usuario='{usuario}'"
+
+    cur.execute(sql)
+    rows = cur.fetchall()
+    dados = [dict(row) for row in rows]
+    return dados
 
 
 def get_pacientes():
@@ -122,8 +121,8 @@ def add_consulta(new_consulta):
     add(TBL_CONSULTAS, new_consulta)
 
 
-def close_consulta(id):
-    set_status(TBL_CONSULTAS, "concluída", id)
+def set_status_consulta(id, status):
+    set_status(TBL_CONSULTAS, status, id)
 
 
 def del_consulta(id):
@@ -187,7 +186,11 @@ def get_dados_consultas(tp_order=0, is_agendadas=False, id=None):
     sql += " INNER JOIN medicos AS m ON (m.id = c.id_medico)"
     sql += " INNER JOIN pacientes AS p ON (p.id = c.id_paciente)"
     sql += f" WHERE id={id}" if id else ""
-    sql += f" AND c.status='agendada'" if is_agendadas else ""
+    sql += (
+        f" AND c.status IN ('agendada', 'confirmada', 'atendimento') "
+        if is_agendadas
+        else ""
+    )
     sql += f" ORDER BY {ORDER[tp_order]}"
 
     cur.execute(sql)
@@ -244,26 +247,25 @@ def consultas_por_mes():
 
 
 def add(table, dados: dict):
-    if dados:
-        values = [f"'{v}'" for _, v in dados.items()]
-        all_values = ",".join(values)
+    if not dados:
+        return
 
-        fields = [f"{k}" for k, _ in dados.items()]
-        all_fields = ",".join(fields)
+    values = [f"'{v}'" for _, v in dados.items()]
+    all_values = ",".join(values)
 
-        if connection.DB_TYPE == connection.TYPE_PSQL:
-            sql = (
-                f"INSERT INTO {table} (id, {all_fields}) values (DEFAULT, {all_values})"
-            )
-        else:
-            sql = f"INSERT INTO {table} (id, {all_fields}) values (NULL, {all_values})"
+    fields = [f"{k}" for k, _ in dados.items()]
+    all_fields = ",".join(fields)
 
-        cur.execute(sql)
-        con.commit()
+    if connection.DB_TYPE == connection.TYPE_PSQL:
+        sql = f"INSERT INTO {table} (id, {all_fields}) values (DEFAULT, {all_values})"
+    else:
+        sql = f"INSERT INTO {table} (id, {all_fields}) values (NULL, {all_values})"
+
+    cur.execute(sql)
+    con.commit()
 
 
 def update(id, table, outdated: dict, updated: dict):
-
     if outdated:
         dados = outdated[0]
         dados.update(updated)

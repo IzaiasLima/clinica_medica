@@ -21,7 +21,7 @@ if (cadastros != null) {
 var agendadas = document.getElementById('slot-agendadas');
 
 if (agendadas != null) {
-    agendadas.msg = 'Deseja registrar o atendimento do paciente ';
+    agendadas.msg = 'Deseja alterar a situação da consulta do paciente ';
     agendadas.addEventListener("htmx:confirm", confirm, false);
 
     agendadas.addEventListener('htmx:beforeSwap', evt => {
@@ -191,6 +191,11 @@ function getEstados() {
     }
 }
 
+function defaultOption(id, defaultValue) {
+    const select = document.getElementById(id);
+    select.value = defaultValue;
+}
+
 function selCidades(uf, default_value) {
     if (uf == "") return;
 
@@ -242,9 +247,4 @@ function getAddress(cep) {
         .catch((error) => {
             console.error('CEP não localizado: ', error);
         });
-}
-
-function defaultOption(id, defaultValue) {
-    const select = document.getElementById(id);
-    select.value = defaultValue;
 }

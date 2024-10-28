@@ -290,10 +290,12 @@ async def add_consulta(consulta=Depends(get_body)):
         raise HTTPException(status_code=422, detail=FORM_ERR_MSG)
 
 
-@app.patch("/api/consultas/{id}")
-async def close_consulta(id: int):
-    db.close_consulta(id)
-    return HTMLResponse(status_code=200)
+@app.patch("/api/consultas/{id}/{status}")
+async def set_status_consulta(id: int, status: str):
+    db.set_status_consulta(id, status)
+    dados = db.get_consultas(is_agendadas=True)
+    return dados
+    # return HTMLResponse(status_code=200)
 
 
 @app.delete("/api/consultas/{id}")

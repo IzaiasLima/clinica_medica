@@ -62,7 +62,6 @@
                                     <i class="material-symbols-outlined">expand_all</i>
                                 </a>
                             </th>
-                            <th class="m-hidden">Especialidade</th>
                             <th class="tw-2">
                                 <a hx-get="/api/consultas/agendadas" hx-vars="'order': 2" hx-target="#slot-agendadas"
                                     hx-swap="innerHTML" mustache-array-template="consultas-template">
@@ -71,6 +70,14 @@
                                 </a>
                             </th>
                             <th>Horário</th>
+                            <th>
+                                <a hx-get="/api/consultas/agendadas" hx-vars="'order': 3" hx-target="#slot-agendadas"
+                                    hx-swap="innerHTML" mustache-array-template="consultas-template">
+                                    Situação
+                                    <i class="material-symbols-outlined">expand_all</i>
+                                </a>
+                            </th>
+                            <th>&nbsp;</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -80,19 +87,28 @@
                                 {{nm_paciente}}
                             </td>
                             <td data-th="Telefone">{{telefone}}</td>
-                            <td data-th="Médico" title="{{id_medico}} - {{nm_medico}}" class="u-case ellipsis tw-1">
+                            <td data-th="Médico" title="{{especialidade}}" class="u-case ellipsis tw-1">
                                 {{nm_medico}}
                             </td>
-                            <td data-th="Especialidade" class="m-hidden fl-case l-case">{{especialidade}}</td>
                             <td data-th="Data">{{dt_consulta}}</td>
                             <td data-th="Horário">{{hr_consulta}}</td>
+                            <td data-th="Situação" class="u-case">{{status}}</td>
 
-                            <td title="Concluir consulta" class="center">
-                                <a title="Registrar o fim do atendimento" hx-confirm="{{nm_paciente}}"
-                                    hx-patch="/api/consultas/{{id}}" hx-target="closest tr"
-                                    hx-swap="outerHTML swap:0.5s">
-                                    <button class="btn-table">Concluir</button>
-                                    <!-- <i class="material-symbols-outlined">check</i> -->
+                            <td class="center">
+                                <a class="status" title="Alterar a situação da consulta" hx-confirm="{{nm_paciente}}"
+                                    hx-patch="/api/consultas/{{id}}/confirmada" hx-target="#slot-agendadas"
+                                    hx-swap="innerHTML" mustache-array-template="consultas-template">
+                                    <i title="Confirmar consulta" class="material-symbols-outlined">check</i>
+                                </a>
+                                <a class="status" title="Alterar a situação da consulta" hx-confirm="{{nm_paciente}}"
+                                    hx-patch="/api/consultas/{{id}}/atendimento" hx-target="#slot-agendadas"
+                                    hx-swap="innerHTML" mustache-array-template="consultas-template">
+                                    <i title="Paciente em atendimento" class="material-symbols-outlined">stethoscope</i>
+                                </a>
+                                <a class="status" title="Alterar a situação da consulta" hx-confirm="{{nm_paciente}}"
+                                    hx-patch="/api/consultas/{{id}}/concluída" hx-target="#slot-agendadas"
+                                    hx-swap="innerHTML" mustache-array-template="consultas-template">
+                                    <i title="Concluir consulta" class="material-symbols-outlined">done_all</i>
                                 </a>
                             </td>
                         </tr>
